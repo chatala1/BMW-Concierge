@@ -23,8 +23,17 @@
                     <i data-lucide="settings" class="icon-small"></i>
                     BMW Concierge
                 </a>
-                <div class="nav-menu">
+                
+                <!-- Mobile Hamburger Button -->
+                <button class="nav-toggle" id="nav-toggle" aria-label="Toggle navigation menu" aria-expanded="false">
+                    <span class="hamburger-line"></span>
+                    <span class="hamburger-line"></span>
+                    <span class="hamburger-line"></span>
+                </button>
+                
+                <div class="nav-menu" id="nav-menu">
                     <a href="{{ '/' | relative_url }}" class="nav-link">Home</a>
+                    <a href="{{ '/protected.html' | relative_url }}" class="nav-link">Dashboard</a>
                     <div class="auth-section">
                         <span id="user-info" class="user-info" style="display: none;"></span>
                         <button id="login-btn" class="btn btn-primary">Login with GitHub</button>
@@ -58,6 +67,65 @@
 
     <script src="{{ '/assets/js/auth.js' | relative_url }}"></script>
     <script src="{{ '/assets/js/vehicle-api.js' | relative_url }}"></script>
+    
+    <!-- Mobile Navigation Toggle Script -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const navToggle = document.getElementById('nav-toggle');
+            const navMenu = document.getElementById('nav-menu');
+            
+            if (navToggle && navMenu) {
+                navToggle.addEventListener('click', function() {
+                    const isExpanded = navToggle.getAttribute('aria-expanded') === 'true';
+                    
+                    // Toggle the menu
+                    navMenu.classList.toggle('nav-menu-open');
+                    navToggle.classList.toggle('nav-toggle-open');
+                    document.body.classList.toggle('nav-open');
+                    
+                    // Update ARIA state
+                    navToggle.setAttribute('aria-expanded', !isExpanded);
+                });
+                
+                // Close menu function
+                function closeMenu() {
+                    navMenu.classList.remove('nav-menu-open');
+                    navToggle.classList.remove('nav-toggle-open');
+                    document.body.classList.remove('nav-open');
+                    navToggle.setAttribute('aria-expanded', 'false');
+                }
+                
+                // Close menu when clicking outside
+                document.addEventListener('click', function(event) {
+                    if (!navToggle.contains(event.target) && !navMenu.contains(event.target)) {
+                        closeMenu();
+                    }
+                });
+                
+                // Close menu when pressing Escape
+                document.addEventListener('keydown', function(event) {
+                    if (event.key === 'Escape') {
+                        closeMenu();
+                    }
+                });
+                
+                // Close menu when navigation link is clicked (mobile)
+                const navLinks = navMenu.querySelectorAll('.nav-link');
+                navLinks.forEach(link => {
+                    link.addEventListener('click', function() {
+                        closeMenu();
+                    });
+                });
+                
+                // Close menu on window resize to desktop size
+                window.addEventListener('resize', function() {
+                    if (window.innerWidth > 768) {
+                        closeMenu();
+                    }
+                });
+            }
+        });
+    </script>
     
     <!-- Initialize Lucide icons -->
     <script>
