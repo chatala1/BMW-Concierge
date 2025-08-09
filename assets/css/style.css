@@ -11,7 +11,6 @@
     --bmw-dark-gray: #333333; /* Dark Gray */
     --bmw-black: #000000; /* Pure Black */
     --bmw-red: #E31E24; /* BMW Red */
-    --bmw-teal: #00A3AD; /* BMW Teal */
     --bmw-silver: #C4C4C4; /* BMW Silver */
     --bmw-carbon: #1A1A1A; /* Carbon Black */
     
@@ -254,7 +253,7 @@ body {
 .hero {
     text-align: center;
     padding: var(--spacing-xxl) var(--spacing-lg);
-    background: linear-gradient(135deg, var(--bmw-blue) 0%, var(--bmw-dark-blue) 50%, var(--bmw-teal) 100%);
+    background: linear-gradient(135deg, var(--bmw-blue) 0%, var(--bmw-dark-blue) 50%, var(--bmw-light-blue) 100%);
     color: var(--bmw-white);
     border-radius: var(--border-radius-xl);
     margin-bottom: var(--spacing-xxl);
@@ -323,7 +322,7 @@ body {
     left: 0;
     right: 0;
     height: 4px;
-    background: linear-gradient(90deg, var(--bmw-blue), var(--bmw-teal));
+    background: linear-gradient(90deg, var(--bmw-blue), var(--bmw-light-blue));
     border-radius: var(--border-radius-lg) var(--border-radius-lg) 0 0;
 }
 
@@ -352,6 +351,7 @@ body {
     grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
     gap: var(--spacing-xl);
     margin-top: var(--spacing-xxl);
+    margin-bottom: var(--spacing-xxl);
 }
 
 .feature-card {
@@ -454,7 +454,7 @@ body {
     left: 0;
     right: 0;
     height: 6px;
-    background: linear-gradient(90deg, var(--bmw-blue) 0%, var(--bmw-teal) 50%, var(--bmw-blue) 100%);
+    background: linear-gradient(90deg, var(--bmw-blue) 0%, var(--bmw-light-blue) 50%, var(--bmw-blue) 100%);
     background-size: 200% 100%;
     animation: bmwShimmer 3s ease infinite;
 }
@@ -791,7 +791,7 @@ a:hover {
     left: 0;
     right: 0;
     height: 3px;
-    background: linear-gradient(90deg, var(--bmw-blue), var(--bmw-teal), var(--bmw-blue));
+    background: linear-gradient(90deg, var(--bmw-blue), var(--bmw-light-blue), var(--bmw-blue));
 }
 
 .footer-container {
@@ -807,14 +807,14 @@ a:hover {
 }
 
 .footer-container a {
-    color: var(--bmw-teal);
+    color: var(--bmw-light-blue);
     text-decoration: none;
     transition: all var(--transition-base);
     font-weight: var(--font-weight-medium);
 }
 
 .footer-container a:hover {
-    color: var(--bmw-light-blue);
+    color: var(--bmw-blue);
     text-decoration: underline;
 }
 
@@ -908,17 +908,14 @@ a:hover {
 
 /* BMW Color Accents */
 .accent-blue { color: var(--bmw-blue); }
-.accent-teal { color: var(--bmw-teal); }
 .accent-red { color: var(--bmw-red); }
 .accent-silver { color: var(--bmw-silver); }
 
 .bg-blue { background-color: var(--bmw-blue); }
-.bg-teal { background-color: var(--bmw-teal); }
 .bg-red { background-color: var(--bmw-red); }
 .bg-light { background-color: var(--bmw-off-white); }
 
 .border-blue { border-color: var(--bmw-blue); }
-.border-teal { border-color: var(--bmw-teal); }
 .border-red { border-color: var(--bmw-red); }
 
 /* Enhanced Shadows */
@@ -970,7 +967,7 @@ a:hover {
 }
 
 .premium-button {
-    background: linear-gradient(135deg, var(--bmw-blue), var(--bmw-teal));
+    background: linear-gradient(135deg, var(--bmw-blue), var(--bmw-light-blue));
     position: relative;
     overflow: hidden;
 }
