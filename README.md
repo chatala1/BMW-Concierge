@@ -18,7 +18,7 @@ A tailored companion experience to the MyBMW Application. [^1] [^2]
 
 
 [^1]: All logos and brand names are property of their respective owners, and the use does not imply endorsement of or affiliation with Smartcar.<br>
-[^2]: This project is not affiliated with BMW AG or its subsidiaries.
+[^2]: This project is not affiliated with BMW Group, BMW M GmbH, BMW AG or any subsidiaries.
 
 
 [Landing Page](https://chatala1.github.io/BMW-Concierge/)
