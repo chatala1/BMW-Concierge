@@ -151,7 +151,7 @@ class BMWAuth {
         if (userInfo && authData.user) {
             userInfo.innerHTML = `
                 <img src="${authData.user.avatar_url}" alt="${authData.user.name}" 
-                     style="width: 24px; height: 24px; border-radius: 50%; margin-right: 8px;">
+                     style="width: 24px; height: 24px; margin-right: 8px;">
                 ${authData.user.name || authData.user.login}
             `;
             userInfo.style.display = 'flex';
@@ -184,23 +184,23 @@ class BMWAuth {
             if (isAuthenticated) {
                 element.classList.remove('access-denied');
                 element.innerHTML = `
-                    <h3>✅ Access Granted</h3>
+                    <h3>Access Granted</h3>
                     <p>Welcome to the BMW Concierge protected area! You now have access to exclusive features.</p>
                     <div class="mt-lg">
                         <h4>Available Features:</h4>
                         <ul style="margin-top: 1rem; text-align: left;">
-                            <li>🚗 Vehicle Status Dashboard</li>
-                            <li>🔧 Service Scheduling</li>
-                            <li>📱 Remote Vehicle Controls</li>
-                            <li>📊 Usage Analytics</li>
-                            <li>🛠️ Maintenance Reminders</li>
+                            <li>Vehicle Status Dashboard</li>
+                            <li>Service Scheduling</li>
+                            <li>Remote Vehicle Controls</li>
+                            <li>Usage Analytics</li>
+                            <li>Maintenance Reminders</li>
                         </ul>
                     </div>
                 `;
             } else {
                 element.classList.add('access-denied');
                 element.innerHTML = `
-                    <h3>🔒 Authentication Required</h3>
+                    <h3>Authentication Required</h3>
                     <p>Please log in with your GitHub account to access this content.</p>
                     <button onclick="bmwAuth.login()" class="btn btn-primary mt-lg">
                         Login with GitHub
@@ -243,7 +243,6 @@ class BMWAuth {
                 background: ${type === 'success' ? '#28a745' : '#dc3545'};
                 color: white;
                 padding: 1rem 1.5rem;
-                border-radius: 8px;
                 box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
                 z-index: 1000;
                 max-width: 300px;

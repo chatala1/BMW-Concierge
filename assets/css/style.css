@@ -25,8 +25,8 @@
     --spacing-xl: 3rem;
     
     /* Border radius */
-    --border-radius: 8px;
-    --border-radius-lg: 12px;
+    --border-radius: 0;
+    --border-radius-lg: 0;
     
     /* Shadows */
     --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.1);
@@ -356,13 +356,26 @@ body {
 .mt-lg { margin-top: var(--spacing-lg); }
 .hidden { display: none; }
 
+/* SVG Icons */
+.icon {
+    width: 3rem;
+    height: 3rem;
+    color: var(--bmw-blue);
+    margin-bottom: var(--spacing-md);
+}
+
+.icon-small {
+    width: 1.25rem;
+    height: 1.25rem;
+}
+
 /* Loading Animation */
 .loading {
     display: inline-block;
     width: 20px;
     height: 20px;
     border: 2px solid var(--bmw-light-blue);
-    border-radius: 50%;
+    border-radius: 50%; /* Keep circular for functional loading spinner */
     border-top-color: transparent;
     animation: spin 1s ease-in-out infinite;
 }
