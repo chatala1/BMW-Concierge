@@ -3,4 +3,4 @@
 # BMW Concierge
 A tailored unofficial companion experience to the MyBMW Application.
 
-[^BMW]: All logos and brand names are property of their respective owners, and the use does not imply endorsement of or affiliation with Smartcar. This project is not affiliated with BMW AG or its subsidiaries.
+[^bmw]: All logos and brand names are property of their respective owners, and the use does not imply endorsement of or affiliation with Smartcar. This project is not affiliated with BMW AG or its subsidiaries.
