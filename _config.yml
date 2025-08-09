@@ -1,0 +1,35 @@
+# Jekyll configuration for BMW Concierge
+title: BMW Concierge
+description: A tailored unofficial companion experience to the MyBMW Application.
+baseurl: ""
+url: "https://chatala1.github.io/BMW-Concierge"
+
+# Theme
+theme: minima
+
+# Build settings
+markdown: kramdown
+highlighter: rouge
+incremental: false
+
+# Plugins
+plugins:
+  - jekyll-feed
+  - jekyll-sitemap
+  - jekyll-seo-tag
+
+# Exclude from processing
+exclude:
+  - Gemfile
+  - Gemfile.lock
+  - node_modules
+  - vendor/bundle/
+  - vendor/cache/
+  - vendor/gems/
+  - vendor/ruby/
+  - _site/
+
+# GitHub Pages settings
+repository: chatala1/BMW-Concierge
+github:
+  repository_url: https://github.com/chatala1/BMW-Concierge
