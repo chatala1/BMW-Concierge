@@ -1,3 +1,8 @@
+---
+title: BMW Concierge
+layout: default
+---
+
 <img width="50" height="47" alt="BMW-Logo" src="https://github.com/user-attachments/assets/9ba64150-410c-4a1c-90a5-b900e21771eb" />
 
 # BMW Concierge

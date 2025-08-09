@@ -1,0 +1,24 @@
+# Jekyll configuration for BMW Concierge GitHub Pages
+title: BMW Concierge
+description: A tailored unofficial companion experience to the MyBMW Application
+baseurl: ""
+url: "https://chatala1.github.io"
+
+# Theme configuration
+theme: minima
+
+# GitHub Pages and Jekyll plugins
+plugins:
+  - jekyll-feed
+  - jekyll-sitemap
+
+# Site settings
+markdown: kramdown
+highlighter: rouge
+permalink: /:title/
+
+# Exclude files from processing
+exclude:
+  - .github/
+  - LICENSE
+  - .gitignore
