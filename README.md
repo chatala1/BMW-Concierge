@@ -7,7 +7,7 @@ A tailored unofficial companion experience to the MyBMW Application.
 
 **GNU License**
 
-[![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
+[![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0) [^Note]
 
-[^1]: All logos and brand names are property of their respective owners, and the use does not imply endorsement of or affiliation with Smartcar. [^1] 
-[^2]: This project is not affiliated with BMW AG or its subsidiaries. [^2]
+[^Note]: All logos and brand names are property of their respective owners, and the use does not imply endorsement of or affiliation with Smartcar.
+[^Note]: This project is not affiliated with BMW AG or its subsidiaries.
