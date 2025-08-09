@@ -1,3 +1,11 @@
+copilot/fix-5
+remote_theme: jekyll/minima
+plugins:
+  - jekyll-remote-theme
+
+minima:
+  skin: dark
+
 # Jekyll configuration for BMW Concierge
 title: BMW Concierge
 description: A tailored unofficial companion experience to the MyBMW Application
@@ -35,3 +43,4 @@ defaults:
       type: "pages"
     values:
       layout: "default"
+main
