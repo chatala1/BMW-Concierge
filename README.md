@@ -21,4 +21,4 @@ A tailored companion experience to the MyBMW Application. [^1] [^2]
 [^2] This project is not affiliated with BMW AG or its subsidiaries.
 
 
-![App](https://chatala1.github.io/BMW-Concierge/)
+[App](https://chatala1.github.io/BMW-Concierge/)
