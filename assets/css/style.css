@@ -287,6 +287,21 @@ body {
     box-shadow: var(--shadow-md);
 }
 
+/* Hero section outline button styling - white outline and text */
+.hero .btn-outline {
+    background: transparent;
+    color: var(--bmw-white);
+    border: 2px solid var(--bmw-white);
+    box-shadow: none;
+}
+
+.hero .btn-outline:hover {
+    background: var(--bmw-white);
+    color: var(--bmw-blue);
+    transform: translateY(-1px);
+    box-shadow: var(--shadow-md);
+}
+
 /* Main Content */
 .main-content {
     flex: 1;
