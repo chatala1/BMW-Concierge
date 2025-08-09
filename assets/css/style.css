@@ -1,21 +1,24 @@
-/* BMW Concierge - Modern Design System */
+/* BMW Concierge - Premium Design System */
 :root {
-    /* BMW M-Inspired Brand Colors */
-    --bmw-blue: #0033A0; /* M Power Blue */
-    --bmw-dark-blue: #0033A0;
-    --bmw-light-blue: #00B2A9; /* Electric Teal */
-    --bmw-white: #F4F4F4; /* Ice White */
-    --bmw-light-gray: #A6A9B6; /* Metallic Silver */
-    --bmw-gray: #4B4B4B; /* Asphalt Gray */
-    --bmw-dark-gray: #1C1C1C; /* Carbon Black */
-    --bmw-red: #D5001F; /* Performance Red */
-    --bmw-teal: #00B2A9; /* Electric Teal */
-    --bmw-silver: #A6A9B6; /* Metallic Silver */
-    --bmw-carbon: #1C1C1C; /* Carbon Black */
+    /* BMW Official Brand Colors */
+    --bmw-blue: #0066CC; /* BMW Primary Blue */
+    --bmw-dark-blue: #003D82; /* BMW Dark Blue */
+    --bmw-light-blue: #4A90E2; /* BMW Light Blue */
+    --bmw-white: #FFFFFF; /* Pure White */
+    --bmw-off-white: #FAFAFA; /* Off White */
+    --bmw-light-gray: #E8E8E8; /* Light Gray */
+    --bmw-gray: #666666; /* Medium Gray */
+    --bmw-dark-gray: #333333; /* Dark Gray */
+    --bmw-black: #000000; /* Pure Black */
+    --bmw-red: #E31E24; /* BMW Red */
+    --bmw-teal: #00A3AD; /* BMW Teal */
+    --bmw-silver: #C4C4C4; /* BMW Silver */
+    --bmw-carbon: #1A1A1A; /* Carbon Black */
     
     /* Typography */
-    --font-family: BMWTypeNextLatin, Helvetica, Arial, "Hiragino Kaku Gothic ProN", "Hiragino Sans", Meiryo, sans-serif;
+    --font-family: "BMW Helvetica", "Helvetica Neue", Helvetica, Arial, sans-serif;
     --font-size-base: 16px;
+    --font-weight-light: 300;
     --font-weight-normal: 400;
     --font-weight-medium: 500;
     --font-weight-semibold: 600;
@@ -27,15 +30,25 @@
     --spacing-md: 1.5rem;
     --spacing-lg: 2rem;
     --spacing-xl: 3rem;
+    --spacing-xxl: 4rem;
     
     /* Border radius */
-    --border-radius: 0;
-    --border-radius-lg: 0;
+    --border-radius-sm: 4px;
+    --border-radius: 8px;
+    --border-radius-lg: 12px;
+    --border-radius-xl: 16px;
     
     /* Shadows */
-    --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.1);
-    --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1);
-    --shadow-lg: 0 10px 25px rgba(0, 0, 0, 0.15);
+    --shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.05);
+    --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.1), 0 1px 2px rgba(0, 0, 0, 0.06);
+    --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.07), 0 2px 4px rgba(0, 0, 0, 0.06);
+    --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1), 0 4px 6px rgba(0, 0, 0, 0.05);
+    --shadow-xl: 0 20px 25px rgba(0, 0, 0, 0.1), 0 10px 10px rgba(0, 0, 0, 0.04);
+    
+    /* Transitions */
+    --transition-fast: 0.15s ease-out;
+    --transition-base: 0.3s ease-out;
+    --transition-slow: 0.5s ease-out;
 }
 
 * {
@@ -47,12 +60,15 @@
 body {
     font-family: var(--font-family);
     font-size: var(--font-size-base);
+    font-weight: var(--font-weight-normal);
     line-height: 1.6;
     color: var(--bmw-dark-gray);
-    background-color: var(--bmw-white);
+    background-color: var(--bmw-off-white);
     min-height: 100vh;
     display: flex;
     flex-direction: column;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
 }
 
 /* Header and Navigation */
@@ -63,16 +79,18 @@ body {
     position: sticky;
     top: 0;
     z-index: 100;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
 }
 
 .navbar {
-    padding: var(--spacing-sm) 0;
+    padding: var(--spacing-md) 0;
 }
 
 .nav-container {
     max-width: 1200px;
     margin: 0 auto;
-    padding: 0 var(--spacing-md);
+    padding: 0 var(--spacing-lg);
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -81,94 +99,146 @@ body {
 .nav-brand {
     display: flex;
     align-items: center;
-    gap: var(--spacing-xs);
-    font-size: 1.5rem;
+    gap: var(--spacing-sm);
+    font-size: 1.75rem;
     font-weight: var(--font-weight-bold);
     color: var(--bmw-blue);
     text-decoration: none;
-    transition: color 0.3s ease;
+    transition: all var(--transition-base);
+    letter-spacing: -0.02em;
 }
 
 .nav-brand:hover {
     color: var(--bmw-dark-blue);
-}
-
-.bmw-logo {
-    font-size: 2rem;
+    transform: translateY(-1px);
 }
 
 .nav-menu {
     display: flex;
     align-items: center;
-    gap: var(--spacing-lg);
+    gap: var(--spacing-xl);
 }
 
 .nav-link {
     color: var(--bmw-gray);
     text-decoration: none;
     font-weight: var(--font-weight-medium);
-    transition: color 0.3s ease;
+    font-size: 0.95rem;
+    transition: all var(--transition-base);
+    padding: var(--spacing-xs) var(--spacing-sm);
+    border-radius: var(--border-radius);
+    position: relative;
 }
 
 .nav-link:hover {
     color: var(--bmw-blue);
+    background: rgba(0, 102, 204, 0.05);
+}
+
+.nav-link::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 50%;
+    width: 0;
+    height: 2px;
+    background: var(--bmw-blue);
+    transition: all var(--transition-base);
+    transform: translateX(-50%);
+}
+
+.nav-link:hover::after {
+    width: 80%;
 }
 
 .auth-section {
     display: flex;
     align-items: center;
-    gap: var(--spacing-sm);
+    gap: var(--spacing-md);
 }
 
 .user-info {
     color: var(--bmw-gray);
     font-weight: var(--font-weight-medium);
+    font-size: 0.9rem;
 }
 
 /* Buttons */
 .btn {
-    padding: var(--spacing-xs) var(--spacing-md);
+    padding: var(--spacing-sm) var(--spacing-lg);
     border: none;
     border-radius: var(--border-radius);
-    font-weight: var(--font-weight-medium);
+    font-weight: var(--font-weight-semibold);
+    font-size: 0.95rem;
     text-decoration: none;
     cursor: pointer;
-    transition: all 0.3s ease;
-    font-size: 0.9rem;
+    transition: all var(--transition-base);
     display: inline-flex;
     align-items: center;
+    justify-content: center;
     gap: var(--spacing-xs);
+    min-height: 48px;
+    position: relative;
+    overflow: hidden;
+    letter-spacing: 0.025em;
+}
+
+.btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    transition: left var(--transition-slow);
+}
+
+.btn:hover::before {
+    left: 100%;
 }
 
 .btn-primary {
-    background: var(--bmw-blue);
+    background: linear-gradient(135deg, var(--bmw-blue), var(--bmw-dark-blue));
     color: var(--bmw-white);
+    box-shadow: var(--shadow-md);
 }
 
 .btn-primary:hover {
-    background: var(--bmw-dark-blue);
-    transform: translateY(-1px);
-    box-shadow: var(--shadow-md);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-lg);
+    background: linear-gradient(135deg, var(--bmw-dark-blue), var(--bmw-blue));
+}
+
+.btn-primary:active {
+    transform: translateY(0);
+    box-shadow: var(--shadow-sm);
 }
 
 .btn-secondary {
     background: var(--bmw-gray);
     color: var(--bmw-white);
+    box-shadow: var(--shadow-sm);
 }
 
 .btn-secondary:hover {
     background: var(--bmw-dark-gray);
+    transform: translateY(-1px);
+    box-shadow: var(--shadow-md);
 }
 
 .btn-outline {
     background: transparent;
     color: var(--bmw-blue);
     border: 2px solid var(--bmw-blue);
+    box-shadow: none;
 }
 
 .btn-outline:hover {
     background: var(--bmw-blue);
     color: var(--bmw-white);
+    transform: translateY(-1px);
+    box-shadow: var(--shadow-md);
 }
 
 /* Main Content */
@@ -176,152 +246,316 @@ body {
     flex: 1;
     max-width: 1200px;
     margin: 0 auto;
-    padding: var(--spacing-xl) var(--spacing-md);
+    padding: var(--spacing-xxl) var(--spacing-lg);
     width: 100%;
 }
 
 /* Hero Section */
 .hero {
     text-align: center;
-    padding: var(--spacing-xl) 0;
-    background: linear-gradient(135deg, var(--bmw-blue), var(--bmw-teal));
+    padding: var(--spacing-xxl) var(--spacing-lg);
+    background: linear-gradient(135deg, var(--bmw-blue) 0%, var(--bmw-dark-blue) 50%, var(--bmw-teal) 100%);
     color: var(--bmw-white);
-    border-radius: var(--border-radius-lg);
-    margin-bottom: var(--spacing-xl);
+    border-radius: var(--border-radius-xl);
+    margin-bottom: var(--spacing-xxl);
+    position: relative;
+    overflow: hidden;
+    box-shadow: var(--shadow-xl);
+}
+
+.hero::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    right: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
+    animation: float 6s ease-in-out infinite;
+}
+
+@keyframes float {
+    0%, 100% { transform: translateY(0px) rotate(0deg); }
+    50% { transform: translateY(-20px) rotate(180deg); }
 }
 
 .hero h1 {
-    font-size: 3rem;
+    font-size: clamp(2.5rem, 5vw, 4rem);
     font-weight: var(--font-weight-bold);
     margin-bottom: var(--spacing-md);
+    letter-spacing: -0.02em;
+    line-height: 1.1;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .hero p {
-    font-size: 1.25rem;
-    margin-bottom: var(--spacing-lg);
-    opacity: 0.9;
+    font-size: clamp(1.1rem, 2.5vw, 1.5rem);
+    margin-bottom: var(--spacing-xl);
+    opacity: 0.95;
+    font-weight: var(--font-weight-light);
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 /* Cards */
 .card {
     background: var(--bmw-white);
     border-radius: var(--border-radius-lg);
-    padding: var(--spacing-lg);
+    padding: var(--spacing-xl);
     box-shadow: var(--shadow-md);
-    margin-bottom: var(--spacing-lg);
+    margin-bottom: var(--spacing-xl);
+    border: 1px solid var(--bmw-light-gray);
+    transition: all var(--transition-base);
+    position: relative;
+}
+
+.card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-xl);
+    border-color: rgba(0, 102, 204, 0.2);
+}
+
+.card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, var(--bmw-blue), var(--bmw-teal));
+    border-radius: var(--border-radius-lg) var(--border-radius-lg) 0 0;
 }
 
 .card h2 {
+    color: var(--bmw-dark-gray);
+    margin-bottom: var(--spacing-lg);
+    font-weight: var(--font-weight-bold);
+    font-size: 1.75rem;
+    letter-spacing: -0.01em;
+}
+
+.card h3 {
     color: var(--bmw-blue);
     margin-bottom: var(--spacing-md);
+    font-weight: var(--font-weight-semibold);
+    font-size: 1.25rem;
+}
+
+.card p {
+    line-height: 1.7;
+    color: var(--bmw-gray);
 }
 
 .features-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: var(--spacing-lg);
-    margin-top: var(--spacing-xl);
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: var(--spacing-xl);
+    margin-top: var(--spacing-xxl);
 }
 
 .feature-card {
     background: var(--bmw-white);
-    padding: var(--spacing-lg);
+    padding: var(--spacing-xl);
     border-radius: var(--border-radius-lg);
     box-shadow: var(--shadow-md);
     text-align: center;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    transition: all var(--transition-base);
+    border: 1px solid var(--bmw-light-gray);
+    position: relative;
+    overflow: hidden;
+}
+
+.feature-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(0, 102, 204, 0.05), transparent);
+    transition: left var(--transition-slow);
+}
+
+.feature-card:hover::before {
+    left: 100%;
 }
 
 .feature-card:hover {
-    transform: translateY(-5px);
-    box-shadow: var(--shadow-lg);
+    transform: translateY(-8px);
+    box-shadow: var(--shadow-xl);
+    border-color: rgba(0, 102, 204, 0.3);
 }
 
 .feature-icon {
-    font-size: 3rem;
-    margin-bottom: var(--spacing-md);
+    font-size: 3.5rem;
+    margin-bottom: var(--spacing-lg);
+    color: var(--bmw-blue);
 }
 
 /* Login Page Styles */
 .login-container {
-    max-width: 400px;
-    margin: var(--spacing-xl) auto;
+    max-width: 450px;
+    margin: var(--spacing-xxl) auto;
     text-align: center;
 }
 
 .login-card {
     background: var(--bmw-white);
-    padding: var(--spacing-xl);
-    border-radius: var(--border-radius-lg);
-    box-shadow: var(--shadow-lg);
+    padding: var(--spacing-xxl);
+    border-radius: var(--border-radius-xl);
+    box-shadow: var(--shadow-xl);
+    border: 1px solid var(--bmw-light-gray);
+    position: relative;
+}
+
+.login-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, var(--bmw-blue), var(--bmw-teal));
+    border-radius: var(--border-radius-xl) var(--border-radius-xl) 0 0;
 }
 
 .login-header {
-    margin-bottom: var(--spacing-lg);
+    margin-bottom: var(--spacing-xl);
 }
 
 .login-header h1 {
-    color: var(--bmw-blue);
+    color: var(--bmw-dark-gray);
     margin-bottom: var(--spacing-sm);
+    font-weight: var(--font-weight-bold);
+    font-size: 2rem;
+    letter-spacing: -0.01em;
 }
 
 .github-login-btn {
     width: 100%;
-    padding: var(--spacing-md);
+    padding: var(--spacing-lg);
     font-size: 1.1rem;
-    background: var(--bmw-dark-gray);
+    background: linear-gradient(135deg, var(--bmw-dark-gray), var(--bmw-carbon));
     color: var(--bmw-white);
     border: none;
     border-radius: var(--border-radius);
     cursor: pointer;
-    transition: all 0.3s ease;
+    transition: all var(--transition-base);
     display: flex;
     align-items: center;
     justify-content: center;
     gap: var(--spacing-sm);
+    font-weight: var(--font-weight-semibold);
+    box-shadow: var(--shadow-md);
 }
 
 .github-login-btn:hover {
-    background: var(--bmw-carbon);
+    background: linear-gradient(135deg, var(--bmw-carbon), var(--bmw-dark-gray));
     transform: translateY(-2px);
-    box-shadow: var(--shadow-md);
+    box-shadow: var(--shadow-lg);
 }
 
 /* Protected Content */
 .protected-content {
     background: var(--bmw-white);
-    padding: var(--spacing-lg);
+    padding: var(--spacing-xl);
     border-radius: var(--border-radius-lg);
     border-left: 4px solid var(--bmw-blue);
+    box-shadow: var(--shadow-md);
+    border: 1px solid var(--bmw-light-gray);
 }
 
 .access-denied {
-    background: #ffe6e6;
+    background: #fff5f5;
     border-left-color: var(--bmw-red);
     color: var(--bmw-red);
+    border-color: rgba(227, 30, 36, 0.2);
+}
+
+/* Enhanced Typography */
+h1, h2, h3, h4, h5, h6 {
+    font-weight: var(--font-weight-bold);
+    line-height: 1.3;
+    letter-spacing: -0.01em;
+    margin-bottom: var(--spacing-md);
+}
+
+h1 { font-size: 2.5rem; }
+h2 { font-size: 2rem; }
+h3 { font-size: 1.5rem; }
+h4 { font-size: 1.25rem; }
+h5 { font-size: 1.125rem; }
+h6 { font-size: 1rem; }
+
+p {
+    margin-bottom: var(--spacing-md);
+    line-height: 1.7;
+}
+
+/* Lists */
+ol, ul {
+    margin-bottom: var(--spacing-md);
+    padding-left: var(--spacing-lg);
+}
+
+li {
+    margin-bottom: var(--spacing-xs);
+    line-height: 1.6;
+}
+
+/* Links */
+a {
+    color: var(--bmw-blue);
+    text-decoration: none;
+    transition: all var(--transition-base);
+}
+
+a:hover {
+    color: var(--bmw-dark-blue);
+    text-decoration: underline;
 }
 
 /* Footer */
 .site-footer {
-    background: var(--bmw-dark-gray);
+    background: linear-gradient(135deg, var(--bmw-dark-gray), var(--bmw-carbon));
     color: var(--bmw-white);
-    padding: var(--spacing-lg) 0;
+    padding: var(--spacing-xl) 0;
     margin-top: auto;
+    position: relative;
+}
+
+.site-footer::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--bmw-blue), var(--bmw-teal), var(--bmw-blue));
 }
 
 .footer-container {
     max-width: 1200px;
     margin: 0 auto;
-    padding: 0 var(--spacing-md);
+    padding: 0 var(--spacing-lg);
     text-align: center;
+}
+
+.footer-container p {
+    margin-bottom: var(--spacing-sm);
+    opacity: 0.9;
 }
 
 .footer-container a {
     color: var(--bmw-teal);
     text-decoration: none;
+    transition: all var(--transition-base);
+    font-weight: var(--font-weight-medium);
 }
 
 .footer-container a:hover {
+    color: var(--bmw-light-blue);
     text-decoration: underline;
 }
 
@@ -329,12 +563,54 @@ body {
 @media (max-width: 768px) {
     .nav-container {
         flex-direction: column;
-        gap: var(--spacing-sm);
+        gap: var(--spacing-md);
+        padding: 0 var(--spacing-md);
     }
     
     .nav-menu {
         flex-direction: column;
-        gap: var(--spacing-sm);
+        gap: var(--spacing-md);
+    }
+    
+    .hero {
+        padding: var(--spacing-xl) var(--spacing-md);
+        margin-bottom: var(--spacing-xl);
+    }
+    
+    .hero h1 {
+        font-size: 2.5rem;
+    }
+    
+    .hero p {
+        font-size: 1.1rem;
+    }
+    
+    .main-content {
+        padding: var(--spacing-xl) var(--spacing-md);
+    }
+    
+    .features-grid {
+        grid-template-columns: 1fr;
+        gap: var(--spacing-lg);
+    }
+    
+    .card {
+        padding: var(--spacing-lg);
+    }
+    
+    .feature-card {
+        padding: var(--spacing-lg);
+    }
+    
+    .login-card {
+        padding: var(--spacing-xl);
+        margin: var(--spacing-md);
+    }
+}
+
+@media (max-width: 480px) {
+    .nav-brand {
+        font-size: 1.5rem;
     }
     
     .hero h1 {
@@ -345,54 +621,161 @@ body {
         font-size: 1rem;
     }
     
-    .main-content {
-        padding: var(--spacing-lg) var(--spacing-sm);
-    }
-    
-    .features-grid {
-        grid-template-columns: 1fr;
+    .btn {
+        padding: var(--spacing-sm) var(--spacing-md);
+        font-size: 0.9rem;
     }
 }
 
 /* Utility Classes */
 .text-center { text-align: center; }
-.mb-lg { margin-bottom: var(--spacing-lg); }
-.mt-lg { margin-top: var(--spacing-lg); }
-.hidden { display: none; }
+.text-left { text-align: left; }
+.text-right { text-align: right; }
 
-/* BMW M Color Accents */
+.mb-xs { margin-bottom: var(--spacing-xs); }
+.mb-sm { margin-bottom: var(--spacing-sm); }
+.mb-md { margin-bottom: var(--spacing-md); }
+.mb-lg { margin-bottom: var(--spacing-lg); }
+.mb-xl { margin-bottom: var(--spacing-xl); }
+
+.mt-xs { margin-top: var(--spacing-xs); }
+.mt-sm { margin-top: var(--spacing-sm); }
+.mt-md { margin-top: var(--spacing-md); }
+.mt-lg { margin-top: var(--spacing-lg); }
+.mt-xl { margin-top: var(--spacing-xl); }
+
+.hidden { display: none; }
+.visible { display: block; }
+
+/* BMW Color Accents */
+.accent-blue { color: var(--bmw-blue); }
 .accent-teal { color: var(--bmw-teal); }
 .accent-red { color: var(--bmw-red); }
 .accent-silver { color: var(--bmw-silver); }
+
+.bg-blue { background-color: var(--bmw-blue); }
 .bg-teal { background-color: var(--bmw-teal); }
 .bg-red { background-color: var(--bmw-red); }
+.bg-light { background-color: var(--bmw-off-white); }
+
+.border-blue { border-color: var(--bmw-blue); }
 .border-teal { border-color: var(--bmw-teal); }
 .border-red { border-color: var(--bmw-red); }
 
+/* Enhanced Shadows */
+.shadow-none { box-shadow: none; }
+.shadow-xs { box-shadow: var(--shadow-xs); }
+.shadow-sm { box-shadow: var(--shadow-sm); }
+.shadow-md { box-shadow: var(--shadow-md); }
+.shadow-lg { box-shadow: var(--shadow-lg); }
+.shadow-xl { box-shadow: var(--shadow-xl); }
+
 /* SVG Icons */
 .icon {
-    width: 3rem;
-    height: 3rem;
+    width: 4rem;
+    height: 4rem;
     color: var(--bmw-blue);
-    margin-bottom: var(--spacing-md);
+    margin-bottom: var(--spacing-lg);
+    filter: drop-shadow(0 2px 4px rgba(0, 102, 204, 0.2));
 }
 
 .icon-small {
-    width: 1.25rem;
-    height: 1.25rem;
+    width: 1.5rem;
+    height: 1.5rem;
+}
+
+.icon-medium {
+    width: 2rem;
+    height: 2rem;
 }
 
 /* Loading Animation */
 .loading {
     display: inline-block;
-    width: 20px;
-    height: 20px;
-    border: 2px solid var(--bmw-teal);
-    border-radius: 50%; /* Keep circular for functional loading spinner */
-    border-top-color: transparent;
+    width: 24px;
+    height: 24px;
+    border: 3px solid var(--bmw-light-gray);
+    border-radius: 50%;
+    border-top-color: var(--bmw-blue);
     animation: spin 1s ease-in-out infinite;
 }
 
 @keyframes spin {
     to { transform: rotate(360deg); }
+}
+
+/* Premium Enhancements */
+.premium-card {
+    background: linear-gradient(135deg, var(--bmw-white) 0%, rgba(0, 102, 204, 0.02) 100%);
+    border: 1px solid rgba(0, 102, 204, 0.1);
+}
+
+.premium-button {
+    background: linear-gradient(135deg, var(--bmw-blue), var(--bmw-teal));
+    position: relative;
+    overflow: hidden;
+}
+
+.premium-button::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    transition: width 0.6s, height 0.6s;
+}
+
+.premium-button:hover::after {
+    width: 300px;
+    height: 300px;
+}
+
+/* Accessibility Improvements */
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+}
+
+/* Focus States */
+.btn:focus,
+.nav-link:focus,
+a:focus {
+    outline: 2px solid var(--bmw-blue);
+    outline-offset: 2px;
+}
+
+/* High Contrast Mode Support */
+@media (prefers-contrast: high) {
+    :root {
+        --bmw-blue: #0052CC;
+        --bmw-dark-blue: #003388;
+        --bmw-gray: #555555;
+        --bmw-dark-gray: #222222;
+    }
+}
+
+/* Reduced Motion Support */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+    
+    .hero::before {
+        animation: none;
+    }
 }
