@@ -17,5 +17,5 @@ A tailored companion experience to the MyBMW Application. [^1] [^2]
 &nbsp;
 
 
-[^1]: All logos and brand names are property of their respective owners, and the use does not imply endorsement of or affiliation with Smartcar. 
-[^2]: This project is not affiliated with BMW AG or its subsidiaries.
+<small>All logos and brand names are property of their respective owners, and the use does not imply endorsement of or affiliation with Smartcar.<br>
+This project is not affiliated with BMW AG or its subsidiaries.</small>
