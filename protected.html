@@ -23,21 +23,33 @@ description: "BMW Concierge Dashboard - Your personalized vehicle management cen
         <div class="feature-card">
             <i data-lucide="car" class="icon"></i>
             <h3>Vehicle Status</h3>
-            <div style="text-align: left; margin-top: 1rem;">
+            <div id="vehicle-status-data" style="text-align: left; margin-top: 1rem;">
                 <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
                     <span>Battery Level:</span>
-                    <span style="color: #28a745; font-weight: 600;">85%</span>
+                    <span id="battery-level" style="color: #28a745; font-weight: 600;">85%</span>
+                </div>
+                <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                    <span>Fuel Level:</span>
+                    <span id="fuel-level" style="color: #28a745; font-weight: 600;">78%</span>
                 </div>
                 <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
                     <span>Range:</span>
-                    <span style="color: var(--bmw-blue); font-weight: 600;">245 miles</span>
+                    <span id="vehicle-range" style="color: var(--bmw-blue); font-weight: 600;">245 miles</span>
+                </div>
+                <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                    <span>Doors:</span>
+                    <span id="door-status" style="color: #28a745; font-weight: 600;">Locked</span>
+                </div>
+                <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                    <span>Vehicle Status:</span>
+                    <span id="vehicle-status" style="color: #28a745; font-weight: 600;">Secure</span>
                 </div>
                 <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
                     <span>Last Updated:</span>
-                    <span style="color: var(--bmw-gray);">2 min ago</span>
+                    <span id="last-updated" style="color: var(--bmw-gray);">2 min ago</span>
                 </div>
             </div>
-            <button class="btn btn-primary" style="width: 100%; margin-top: 1rem;">
+            <button onclick="refreshVehicleStatus()" class="btn btn-primary" style="width: 100%; margin-top: 1rem;">
                 Refresh Status
             </button>
         </div>
@@ -304,6 +316,93 @@ function refreshVehicleData() {
             lucide.createIcons();
         }
     }, 2000);
+}
+
+function refreshVehicleStatus() {
+    // Show loading state
+    const button = event.target;
+    const originalText = button.innerHTML;
+    button.innerHTML = '<i data-lucide="loader" class="spinning" style="margin-right: 0.5rem;"></i>Refreshing...';
+    button.disabled = true;
+    
+    // Simulate fetching updated vehicle data
+    setTimeout(function() {
+        // Generate realistic demo data with some variation
+        const batteryLevel = Math.floor(Math.random() * 30) + 70; // 70-100%
+        const fuelLevel = Math.floor(Math.random() * 40) + 60; // 60-100%
+        const range = Math.floor(Math.random() * 100) + 200; // 200-300 miles
+        const doorStates = ['Locked', 'Unlocked'];
+        const vehicleStates = ['Secure', 'Ready', 'Parked', 'Charging'];
+        
+        const doorStatus = doorStates[Math.floor(Math.random() * doorStates.length)];
+        const vehicleStatus = vehicleStates[Math.floor(Math.random() * vehicleStates.length)];
+        
+        // Update the display with new data
+        updateVehicleStatusDisplay({
+            batteryLevel: batteryLevel,
+            fuelLevel: fuelLevel,
+            range: range,
+            doorStatus: doorStatus,
+            vehicleStatus: vehicleStatus,
+            lastUpdated: 'Just now'
+        });
+        
+        // Restore button
+        button.innerHTML = originalText;
+        button.disabled = false;
+        
+        // Show success notification
+        bmwAuth.showSuccess('Vehicle status refreshed successfully');
+        
+        // Re-initialize icons
+        if (typeof lucide !== 'undefined') {
+            lucide.createIcons();
+        }
+    }, 2000);
+}
+
+function updateVehicleStatusDisplay(data) {
+    // Update individual elements with new data
+    const batteryElement = document.getElementById('battery-level');
+    const fuelElement = document.getElementById('fuel-level');
+    const rangeElement = document.getElementById('vehicle-range');
+    const doorElement = document.getElementById('door-status');
+    const statusElement = document.getElementById('vehicle-status');
+    const updatedElement = document.getElementById('last-updated');
+    
+    if (batteryElement) {
+        batteryElement.textContent = data.batteryLevel + '%';
+        batteryElement.style.color = data.batteryLevel > 80 ? '#28a745' : data.batteryLevel > 30 ? '#ffc107' : '#dc3545';
+    }
+    
+    if (fuelElement) {
+        fuelElement.textContent = data.fuelLevel + '%';
+        fuelElement.style.color = data.fuelLevel > 80 ? '#28a745' : data.fuelLevel > 30 ? '#ffc107' : '#dc3545';
+    }
+    
+    if (rangeElement) {
+        rangeElement.textContent = data.range + ' miles';
+    }
+    
+    if (doorElement) {
+        doorElement.textContent = data.doorStatus;
+        doorElement.style.color = data.doorStatus === 'Locked' ? '#28a745' : '#ffc107';
+    }
+    
+    if (statusElement) {
+        statusElement.textContent = data.vehicleStatus;
+        const statusColors = {
+            'Secure': '#28a745',
+            'Ready': '#17a2b8',
+            'Parked': '#6c757d',
+            'Charging': '#28a745'
+        };
+        statusElement.style.color = statusColors[data.vehicleStatus] || '#6c757d';
+    }
+    
+    if (updatedElement) {
+        updatedElement.textContent = data.lastUpdated;
+    }
 }
 </script>
 
