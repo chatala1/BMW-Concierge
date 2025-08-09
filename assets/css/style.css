@@ -1035,3 +1035,226 @@ a:focus {
         animation: none;
     }
 }
+
+/* API Mode Indicators */
+.api-mode-indicator {
+    margin: 1rem 0;
+}
+
+.api-mode-demo {
+    background: #fff3cd;
+    border: 1px solid #ffeaa7;
+    border-radius: 4px;
+    padding: 0.75rem;
+    color: #856404;
+    font-size: 0.9rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.api-mode-live {
+    background: #d1ecf1;
+    border: 1px solid #bee5eb;
+    border-radius: 4px;
+    padding: 0.75rem;
+    color: #0c5460;
+    font-size: 0.9rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.data-source-info {
+    margin-top: 0.5rem;
+    padding-top: 0.5rem;
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+    font-size: 0.8rem;
+    color: var(--bmw-gray);
+}
+
+.demo-data-warning {
+    background: #fff3cd;
+    border: 1px solid #ffeaa7;
+    border-radius: 4px;
+    padding: 1rem;
+    margin: 1rem 0;
+    color: #856404;
+}
+
+.demo-data-warning h4 {
+    margin: 0 0 0.5rem 0;
+    color: #856404;
+    font-size: 1rem;
+}
+
+.demo-data-warning p {
+    margin: 0 0 0.5rem 0;
+    font-size: 0.9rem;
+    line-height: 1.4;
+}
+
+.demo-data-warning ul {
+    margin: 0.5rem 0 0 1.5rem;
+    font-size: 0.85rem;
+}
+
+.demo-data-warning li {
+    margin-bottom: 0.25rem;
+}
+
+/* Loading States */
+.loading-data {
+    color: var(--bmw-gray);
+    font-style: italic;
+}
+
+.error-data {
+    color: #dc3545;
+    font-weight: 500;
+}
+
+/* Enhanced Status Indicators */
+.status-online {
+    color: #28a745;
+    font-weight: 600;
+}
+
+.status-offline {
+    color: #6c757d;
+    font-weight: 600;
+}
+
+.status-demo {
+    color: #856404;
+    font-weight: 600;
+}
+
+.status-error {
+    color: #dc3545;
+    font-weight: 600;
+}
+
+/* Vehicle Status Enhancements */
+.vehicle-status-card {
+    position: relative;
+}
+
+.vehicle-status-card.demo-mode {
+    border-left: 4px solid #ffc107;
+}
+
+.vehicle-status-card.live-mode {
+    border-left: 4px solid #28a745;
+}
+
+/* Spinning animation for refresh buttons */
+@keyframes spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+.spinning {
+    animation: spin 1s linear infinite;
+}
+
+/* API Configuration Panel */
+.api-config-panel {
+    background: #f8f9fa;
+    border: 1px solid #dee2e6;
+    border-radius: 4px;
+    padding: 1.5rem;
+    margin: 1rem 0;
+}
+
+.api-config-title {
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin: 0 0 1rem 0;
+    color: var(--bmw-dark-gray);
+}
+
+.api-config-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.5rem 0;
+    border-bottom: 1px solid #dee2e6;
+    font-size: 0.9rem;
+}
+
+.api-config-item:last-child {
+    border-bottom: none;
+}
+
+.api-config-label {
+    font-weight: 500;
+    color: var(--bmw-gray);
+}
+
+.api-config-value {
+    font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+    background: #e9ecef;
+    padding: 0.25rem 0.5rem;
+    border-radius: 3px;
+    font-size: 0.8rem;
+}
+
+/* Badge Styles for Status */
+.status-badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.25rem 0.5rem;
+    border-radius: 12px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.status-badge.demo {
+    background: #fff3cd;
+    color: #856404;
+    border: 1px solid #ffeaa7;
+}
+
+.status-badge.live {
+    background: #d1ecf1;
+    color: #0c5460;
+    border: 1px solid #bee5eb;
+}
+
+.status-badge.error {
+    background: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+}
+
+/* Tooltip-like Information */
+.info-tooltip {
+    position: relative;
+    display: inline-block;
+    cursor: help;
+}
+
+.info-tooltip::after {
+    content: attr(data-tooltip);
+    position: absolute;
+    bottom: 125%;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(0, 0, 0, 0.9);
+    color: white;
+    padding: 0.5rem;
+    border-radius: 4px;
+    font-size: 0.8rem;
+    white-space: nowrap;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+    z-index: 1000;
+}
+
+.info-tooltip:hover::after {
+    opacity: 1;
+}
