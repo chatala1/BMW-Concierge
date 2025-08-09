@@ -5,13 +5,13 @@ description: "BMW Concierge Dashboard - Your personalized vehicle management cen
 ---
 
 <div class="hero" style="background: linear-gradient(135deg, #28a745, #20c997);">
-    <h1>🚗 BMW Concierge Dashboard</h1>
+    <h1>BMW Concierge Dashboard</h1>
     <p>Your personalized vehicle management center</p>
 </div>
 
 <div class="protected-content">
     <!-- Content will be dynamically updated by auth.js based on authentication status -->
-    <h3>🔒 Authentication Required</h3>
+    <h3>Authentication Required</h3>
     <p>Please log in with your GitHub account to access this content.</p>
     <button onclick="bmwAuth.login()" class="btn btn-primary mt-lg">
         Login with GitHub
@@ -21,7 +21,11 @@ description: "BMW Concierge Dashboard - Your personalized vehicle management cen
 <div class="auth-required">
     <div class="features-grid">
         <div class="feature-card">
-            <div class="feature-icon">🚗</div>
+            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M5 17h-.5A2.5 2.5 0 0 1 2 14.5v-2A2.5 2.5 0 0 1 4.5 10H7l.5-2h9l.5 2h2.5A2.5 2.5 0 0 1 22 12.5v2a2.5 2.5 0 0 1-2.5 2.5H19"/>
+                <circle cx="7" cy="17" r="2"/>
+                <circle cx="17" cy="17" r="2"/>
+            </svg>
             <h3>Vehicle Status</h3>
             <div style="text-align: left; margin-top: 1rem;">
                 <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
@@ -43,11 +47,13 @@ description: "BMW Concierge Dashboard - Your personalized vehicle management cen
         </div>
 
         <div class="feature-card">
-            <div class="feature-icon">🔧</div>
+            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/>
+            </svg>
             <h3>Service & Maintenance</h3>
             <div style="text-align: left; margin-top: 1rem;">
-                <div style="background: #fff3cd; padding: 1rem; border-radius: 6px; margin-bottom: 1rem;">
-                    <strong style="color: #856404;">⚠️ Service Reminder</strong>
+                <div style="background: #fff3cd; padding: 1rem; margin-bottom: 1rem;">
+                    <strong style="color: #856404;">Service Reminder</strong>
                     <p style="margin: 0.5rem 0; color: #856404;">Oil change due in 500 miles</p>
                 </div>
                 <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
@@ -61,28 +67,36 @@ description: "BMW Concierge Dashboard - Your personalized vehicle management cen
         </div>
 
         <div class="feature-card">
-            <div class="feature-icon">📱</div>
+            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <rect x="2" y="3" width="20" height="14" rx="2" ry="2"/>
+                <line x1="8" y1="21" x2="16" y2="21"/>
+                <line x1="12" y1="17" x2="12" y2="21"/>
+            </svg>
             <h3>Remote Controls</h3>
             <div style="margin-top: 1rem;">
                 <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem;">
                     <button class="btn btn-outline" style="font-size: 0.8rem; padding: 0.5rem;">
-                        🔓 Unlock
+                        Unlock
                     </button>
                     <button class="btn btn-outline" style="font-size: 0.8rem; padding: 0.5rem;">
-                        🔒 Lock
+                        Lock
                     </button>
                     <button class="btn btn-outline" style="font-size: 0.8rem; padding: 0.5rem;">
-                        🌡️ Climate
+                        Climate
                     </button>
                     <button class="btn btn-outline" style="font-size: 0.8rem; padding: 0.5rem;">
-                        📍 Locate
+                        Locate
                     </button>
                 </div>
             </div>
         </div>
 
         <div class="feature-card">
-            <div class="feature-icon">📊</div>
+            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M18 20V10"/>
+                <path d="M12 20V4"/>
+                <path d="M6 20v-6"/>
+            </svg>
             <h3>Driving Analytics</h3>
             <div style="text-align: left; margin-top: 1rem;">
                 <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
@@ -104,11 +118,15 @@ description: "BMW Concierge Dashboard - Your personalized vehicle management cen
         </div>
 
         <div class="feature-card">
-            <div class="feature-icon">🗺️</div>
+            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polygon points="1,6 1,22 8,18 16,22 23,18 23,2 16,6 8,2 1,6"/>
+                <line x1="8" y1="2" x2="8" y2="18"/>
+                <line x1="16" y1="6" x2="16" y2="22"/>
+            </svg>
             <h3>Trip Planning</h3>
             <div style="margin-top: 1rem; text-align: left;">
                 <p style="margin-bottom: 1rem; color: var(--bmw-gray);">Plan your next journey with optimized routes and charging stops.</p>
-                <div style="background: var(--bmw-light-gray); padding: 1rem; border-radius: 6px;">
+                <div style="background: var(--bmw-light-gray); padding: 1rem;">
                     <strong>Recent Trip:</strong>
                     <p style="margin: 0.5rem 0; font-size: 0.9rem;">San Francisco → Los Angeles</p>
                     <p style="margin: 0; font-size: 0.8rem; color: var(--bmw-gray);">380 miles • 2 charging stops</p>
@@ -120,7 +138,10 @@ description: "BMW Concierge Dashboard - Your personalized vehicle management cen
         </div>
 
         <div class="feature-card">
-            <div class="feature-icon">⚙️</div>
+            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="12" cy="12" r="3"/>
+                <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/>
+            </svg>
             <h3>Settings</h3>
             <div style="margin-top: 1rem; text-align: left;">
                 <div style="margin-bottom: 1rem;">
@@ -145,7 +166,7 @@ description: "BMW Concierge Dashboard - Your personalized vehicle management cen
     </div>
 
     <div class="card">
-        <h2>📈 Recent Activity</h2>
+        <h2>Recent Activity</h2>
         <div style="margin-top: 1.5rem;">
             <div style="border-left: 4px solid var(--bmw-blue); padding-left: 1rem; margin-bottom: 1rem;">
                 <strong>Vehicle locked</strong>
@@ -174,29 +195,29 @@ description: "BMW Concierge Dashboard - Your personalized vehicle management cen
     </div>
 
     <div class="card">
-        <h2>🔗 Quick Links</h2>
+        <h2>Quick Links</h2>
         <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin-top: 1.5rem;">
             <a href="https://www.bmw.com/en/myaccount.html" target="_blank" class="btn btn-outline" style="text-decoration: none;">
-                🏠 Official MyBMW
+                Official MyBMW
             </a>
             <a href="https://www.bmw.com/en/automotive-life/connected-drive.html" target="_blank" class="btn btn-outline" style="text-decoration: none;">
-                📱 ConnectedDrive
+                ConnectedDrive
             </a>
             <a href="https://www.bmw.com/en/footer/service-and-support.html" target="_blank" class="btn btn-outline" style="text-decoration: none;">
-                🔧 BMW Service
+                BMW Service
             </a>
             <a href="{{ '/privacy.html' | relative_url }}" class="btn btn-outline" style="text-decoration: none;">
-                🛡️ Privacy Policy
+                Privacy Policy
             </a>
         </div>
     </div>
 </div>
 
 <div class="card auth-only">
-    <h2>🔐 Access Required</h2>
+    <h2>Access Required</h2>
     <p>The BMW Concierge dashboard contains personalized vehicle information and requires authentication to ensure your data privacy and security.</p>
     
-    <div style="background: var(--bmw-light-gray); padding: 1.5rem; border-radius: 8px; margin: 1.5rem 0;">
+    <div style="background: var(--bmw-light-gray); padding: 1.5rem; margin: 1.5rem 0;">
         <h3>Why do we require login?</h3>
         <ul style="margin: 1rem 0 0 1.5rem;">
             <li>Protect your personal vehicle data</li>
@@ -208,7 +229,7 @@ description: "BMW Concierge Dashboard - Your personalized vehicle management cen
 
     <div style="text-align: center;">
         <a href="{{ '/login.html' | relative_url }}" class="btn btn-primary" style="margin-right: 1rem;">
-            🔑 Go to Login Page
+            Go to Login Page
         </a>
         <button onclick="bmwAuth.login()" class="btn btn-outline">
             Quick Login
