@@ -1,5 +1,4 @@
 ---
-title: BMW Concierge
 layout: default
 ---
 

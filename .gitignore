@@ -1,0 +1,14 @@
+# Jekyll build output
+_site/
+
+# System files
+.DS_Store
+Thumbs.db
+
+# Local config
+.env
+
+# Temporary files
+*.tmp
+*.swp
+*~

@@ -3,6 +3,7 @@ title: BMW Concierge
 description: A tailored unofficial companion experience to the MyBMW Application
 baseurl: ""
 url: "https://chatala1.github.io"
+github_username: chatala1
 
 # Theme configuration
 theme: minima
