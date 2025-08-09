@@ -415,10 +415,22 @@ class BMWAuth {
     }
 
     showSmartcarError(message) {
+        // Try to call the callback page's showCallbackError function
         if (typeof showCallbackError === 'function') {
             showCallbackError(message);
         } else {
-            this.showError('Smartcar connection failed: ' + message);
+            // If on callback page but function not available yet, try again after short delay
+            if (window.location.pathname.includes('/smartcar/callback')) {
+                setTimeout(() => {
+                    if (typeof showCallbackError === 'function') {
+                        showCallbackError(message);
+                    } else {
+                        this.showError('Smartcar connection failed: ' + message);
+                    }
+                }, 200);
+            } else {
+                this.showError('Smartcar connection failed: ' + message);
+            }
         }
     }
 }

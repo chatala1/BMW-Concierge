@@ -31,7 +31,10 @@ description: "Smartcar API OAuth callback endpoint for BMW Concierge"
         </div>
 
         <div id="callback-error" class="callback-result" style="display: none;">
-            <i data-lucide="alert-circle" class="icon" style="color: #dc3545;"></i>
+            <div class="error-icon" style="color: #dc3545; font-size: 3rem; margin-bottom: 1rem;">
+                <i data-lucide="alert-circle" class="icon"></i>
+                <span class="icon-fallback" style="display: none;">⚠️</span>
+            </div>
             <h2 style="color: #dc3545;">Connection Failed</h2>
             <p id="error-message">There was an issue connecting your vehicle. Please try again.</p>
             
@@ -73,18 +76,13 @@ description: "Smartcar API OAuth callback endpoint for BMW Concierge"
 // Smartcar OAuth callback handling
 document.addEventListener('DOMContentLoaded', function() {
     // Initialize Smartcar callback processing
-    if (window.bmwAuth) {
-        window.bmwAuth.handleSmartcarCallback();
-    } else {
-        // Fallback if auth system isn't loaded yet
-        setTimeout(function() {
-            if (window.bmwAuth) {
-                window.bmwAuth.handleSmartcarCallback();
-            } else {
-                showCallbackError('Authentication system not available');
-            }
-        }, 1000);
-    }
+    setTimeout(function() {
+        if (window.bmwAuth) {
+            window.bmwAuth.handleSmartcarCallback();
+        } else {
+            showCallbackError('Authentication system not available');
+        }
+    }, 100); // Small delay to ensure all scripts are loaded
 });
 
 function retryConnection() {
@@ -114,6 +112,20 @@ function showCallbackError(message) {
     if (message) {
         document.getElementById('error-message').textContent = message;
     }
+    
+    // Show fallback icon if Lucide is not available
+    setTimeout(() => {
+        const lucideIcon = document.querySelector('#callback-error i[data-lucide]');
+        const fallbackIcon = document.querySelector('#callback-error .icon-fallback');
+        
+        if (lucideIcon && fallbackIcon) {
+            // Check if Lucide icon was rendered (has children or specific attributes)
+            if (!lucideIcon.querySelector('svg') && typeof lucide === 'undefined') {
+                lucideIcon.style.display = 'none';
+                fallbackIcon.style.display = 'inline-block';
+            }
+        }
+    }, 100);
 }
 </script>
 
