@@ -865,6 +865,10 @@ a:hover {
         padding: var(--spacing-xl);
         margin: var(--spacing-md);
     }
+    
+    .btn {
+        margin-bottom: var(--spacing-md);
+    }
 }
 
 @media (max-width: 480px) {
@@ -883,6 +887,7 @@ a:hover {
     .btn {
         padding: var(--spacing-sm) var(--spacing-md);
         font-size: 0.9rem;
+        margin-bottom: var(--spacing-md);
     }
 }
 
