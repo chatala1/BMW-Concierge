@@ -43,6 +43,31 @@ description: "Smartcar API OAuth callback endpoint for BMW Concierge"
                 <a href="{{ '/' | relative_url }}" class="btn btn-outline">Back to Home</a>
             </div>
         </div>
+
+        <div id="callback-demo" class="callback-result" style="display: none;">
+            <div class="demo-icon" style="color: var(--bmw-blue); font-size: 3rem; margin-bottom: 1rem;">
+                <i data-lucide="play-circle" class="icon"></i>
+                <span class="icon-fallback" style="display: none;">🎯</span>
+            </div>
+            <h2 style="color: var(--bmw-blue);">Demo Mode</h2>
+            <p>BMW Concierge is running in demo mode. Smartcar integration requires configuration with valid API credentials.</p>
+            
+            <div style="background: #e7f3ff; border: 1px solid #b3d7ff; border-radius: 4px; padding: 1rem; margin: 1.5rem 0; text-align: left;">
+                <h3 style="margin-top: 0; color: var(--bmw-blue); font-size: 1rem;">For Developers:</h3>
+                <p style="margin: 0.5rem 0; font-size: 0.9rem;">To enable real Smartcar integration:</p>
+                <ol style="margin: 0.5rem 0 0 1.5rem; font-size: 0.9rem;">
+                    <li>Sign up for a Smartcar developer account</li>
+                    <li>Configure your client ID in the application</li>
+                    <li>Set the redirect URI to: <code style="background: #f8f9fa; padding: 0.2rem;">{{ site.url }}{{ site.baseurl }}/smartcar/callback</code></li>
+                </ol>
+            </div>
+            
+            <div class="callback-actions">
+                <button onclick="simulateDemoConnection()" class="btn btn-primary">Try Demo Connection</button>
+                <a href="{{ '/protected.html' | relative_url }}" class="btn btn-outline">Go to Dashboard</a>
+                <a href="{{ '/' | relative_url }}" class="btn btn-outline">Back to Home</a>
+            </div>
+        </div>
     </div>
 </div>
 
@@ -90,6 +115,7 @@ function retryConnection() {
     document.getElementById('callback-status').style.display = 'block';
     document.getElementById('callback-success').style.display = 'none';
     document.getElementById('callback-error').style.display = 'none';
+    document.getElementById('callback-demo').style.display = 'none';
     
     if (window.bmwAuth) {
         window.bmwAuth.handleSmartcarCallback();
@@ -102,12 +128,39 @@ function showCallbackSuccess() {
     document.getElementById('callback-status').style.display = 'none';
     document.getElementById('callback-success').style.display = 'block';
     document.getElementById('callback-error').style.display = 'none';
+    document.getElementById('callback-demo').style.display = 'none';
+}
+
+function showCallbackDemoMode() {
+    document.getElementById('callback-status').style.display = 'none';
+    document.getElementById('callback-success').style.display = 'none';
+    document.getElementById('callback-error').style.display = 'none';
+    document.getElementById('callback-demo').style.display = 'block';
+    
+    // Initialize Lucide icons for the new content
+    if (typeof lucide !== 'undefined') {
+        lucide.createIcons();
+    } else {
+        // Show fallback icons if Lucide is not available
+        setTimeout(() => {
+            const lucideIcon = document.querySelector('#callback-demo i[data-lucide]');
+            const fallbackIcon = document.querySelector('#callback-demo .icon-fallback');
+            
+            if (lucideIcon && fallbackIcon) {
+                if (!lucideIcon.querySelector('svg') && typeof lucide === 'undefined') {
+                    lucideIcon.style.display = 'none';
+                    fallbackIcon.style.display = 'inline-block';
+                }
+            }
+        }, 100);
+    }
 }
 
 function showCallbackError(message) {
     document.getElementById('callback-status').style.display = 'none';
     document.getElementById('callback-success').style.display = 'none';
     document.getElementById('callback-error').style.display = 'block';
+    document.getElementById('callback-demo').style.display = 'none';
     
     if (message) {
         document.getElementById('error-message').textContent = message;
@@ -126,6 +179,27 @@ function showCallbackError(message) {
             }
         }
     }, 100);
+}
+
+function simulateDemoConnection() {
+    // Show loading state
+    showCallbackStatus();
+    
+    // Simulate demo connection after delay
+    setTimeout(function() {
+        if (window.bmwAuth) {
+            window.bmwAuth.simulateSmartcarConnection('demo_code');
+        } else {
+            showCallbackSuccess();
+        }
+    }, 2000);
+}
+
+function showCallbackStatus() {
+    document.getElementById('callback-status').style.display = 'block';
+    document.getElementById('callback-success').style.display = 'none';
+    document.getElementById('callback-error').style.display = 'none';
+    document.getElementById('callback-demo').style.display = 'none';
 }
 </script>
 

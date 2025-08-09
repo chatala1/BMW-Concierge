@@ -320,9 +320,19 @@ class BMWAuth {
             return;
         }
 
+        // Check if we're in demo mode (no Smartcar client ID configured)
+        const isDemoMode = !this.smartcarClientId;
+
         if (!code || !state) {
-            this.showSmartcarError('Missing authorization code or state parameter');
-            return;
+            if (isDemoMode) {
+                // In demo mode, simulate a successful connection without OAuth parameters
+                this.showSmartcarDemoMode();
+                return;
+            } else {
+                // In real mode, this is an actual error
+                this.showSmartcarError('Missing authorization code or state parameter');
+                return;
+            }
         }
 
         const storedState = sessionStorage.getItem('smartcar_oauth_state');
@@ -411,6 +421,28 @@ class BMWAuth {
             showCallbackSuccess();
         } else {
             this.showSuccess('Vehicle connected successfully!');
+        }
+    }
+
+    showSmartcarDemoMode() {
+        // Try to call the callback page's showCallbackDemoMode function
+        if (typeof showCallbackDemoMode === 'function') {
+            showCallbackDemoMode();
+        } else {
+            // If on callback page but function not available yet, try again after short delay
+            if (window.location.pathname.includes('/smartcar/callback')) {
+                setTimeout(() => {
+                    if (typeof showCallbackDemoMode === 'function') {
+                        showCallbackDemoMode();
+                    } else {
+                        // Fallback: simulate a demo connection
+                        this.simulateSmartcarConnection('demo_code');
+                    }
+                }, 200);
+            } else {
+                // Not on callback page, just show success
+                this.showSuccess('Demo vehicle connection simulated');
+            }
         }
     }
 
