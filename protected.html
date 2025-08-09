@@ -23,30 +23,36 @@ description: "BMW Concierge Dashboard - Your personalized vehicle management cen
         <div class="feature-card">
             <i data-lucide="car" class="icon"></i>
             <h3>Vehicle Status</h3>
+            <div id="api-mode-indicator" class="api-mode-indicator" style="margin-bottom: 1rem;">
+                <!-- Will be populated by JavaScript -->
+            </div>
             <div id="vehicle-status-data" style="text-align: left; margin-top: 1rem;">
                 <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
                     <span>Battery Level:</span>
-                    <span id="battery-level" style="color: #28a745; font-weight: 600;">85%</span>
+                    <span id="battery-level" style="color: #28a745; font-weight: 600;">Loading...</span>
                 </div>
                 <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
                     <span>Fuel Level:</span>
-                    <span id="fuel-level" style="color: #28a745; font-weight: 600;">78%</span>
+                    <span id="fuel-level" style="color: #28a745; font-weight: 600;">Loading...</span>
                 </div>
                 <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
                     <span>Range:</span>
-                    <span id="vehicle-range" style="color: var(--bmw-blue); font-weight: 600;">245 miles</span>
+                    <span id="vehicle-range" style="color: var(--bmw-blue); font-weight: 600;">Loading...</span>
                 </div>
                 <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
                     <span>Doors:</span>
-                    <span id="door-status" style="color: #28a745; font-weight: 600;">Locked</span>
+                    <span id="door-status" style="color: #28a745; font-weight: 600;">Loading...</span>
                 </div>
                 <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
                     <span>Vehicle Status:</span>
-                    <span id="vehicle-status" style="color: #28a745; font-weight: 600;">Secure</span>
+                    <span id="vehicle-status" style="color: #28a745; font-weight: 600;">Loading...</span>
                 </div>
                 <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
                     <span>Last Updated:</span>
-                    <span id="last-updated" style="color: var(--bmw-gray);">2 min ago</span>
+                    <span id="last-updated" style="color: var(--bmw-gray);">Loading...</span>
+                </div>
+                <div id="data-source-info" style="margin-top: 0.5rem; font-size: 0.8rem; color: var(--bmw-gray);">
+                    <!-- Will show data source information -->
                 </div>
             </div>
             <button onclick="refreshVehicleStatus()" class="btn btn-primary" style="width: 100%; margin-top: 1rem;">
@@ -226,8 +232,75 @@ document.addEventListener('DOMContentLoaded', function() {
         if (window.bmwAuth) {
             updateSmartcarStatus();
         }
+        if (window.vehicleAPI) {
+            loadInitialVehicleData();
+            updateApiModeIndicator();
+        }
     }, 500);
 });
+
+// Load initial vehicle data using the new API
+async function loadInitialVehicleData() {
+    try {
+        const result = await window.vehicleAPI.getVehicleStatus();
+        if (result.success) {
+            updateVehicleStatusDisplay(result.data, result.metadata);
+        } else {
+            console.error('Failed to load vehicle data:', result);
+            showDataError('Failed to load vehicle data');
+        }
+    } catch (error) {
+        console.error('Error loading vehicle data:', error);
+        showDataError('Error loading vehicle data');
+    }
+}
+
+// Update the API mode indicator
+function updateApiModeIndicator() {
+    const indicator = document.getElementById('api-mode-indicator');
+    if (!indicator || !window.vehicleAPI) return;
+
+    const config = window.vehicleAPI.getConfig();
+    
+    if (config.isDemoMode) {
+        indicator.innerHTML = `
+            <div style="
+                background: #fff3cd; 
+                border: 1px solid #ffeaa7; 
+                border-radius: 4px; 
+                padding: 0.5rem; 
+                display: flex; 
+                align-items: center; 
+                gap: 0.5rem;
+                font-size: 0.85rem;
+            ">
+                <i data-lucide="info" style="width: 16px; height: 16px; color: #856404;"></i>
+                <span style="color: #856404;"><strong>Demo Mode:</strong> Displaying simulated vehicle data</span>
+            </div>
+        `;
+    } else {
+        indicator.innerHTML = `
+            <div style="
+                background: #d1ecf1; 
+                border: 1px solid #bee5eb; 
+                border-radius: 4px; 
+                padding: 0.5rem; 
+                display: flex; 
+                align-items: center; 
+                gap: 0.5rem;
+                font-size: 0.85rem;
+            ">
+                <i data-lucide="wifi" style="width: 16px; height: 16px; color: #0c5460;"></i>
+                <span style="color: #0c5460;"><strong>Live Mode:</strong> Connected to vehicle API</span>
+            </div>
+        `;
+    }
+    
+    // Re-initialize Lucide icons for the new content
+    if (typeof lucide !== 'undefined') {
+        lucide.createIcons();
+    }
+}
 
 function updateSmartcarStatus() {
     const statusElement = document.getElementById('smartcar-status');
@@ -318,50 +391,52 @@ function refreshVehicleData() {
     }, 2000);
 }
 
-function refreshVehicleStatus() {
+async function refreshVehicleStatus() {
     // Show loading state
     const button = event.target;
     const originalText = button.innerHTML;
     button.innerHTML = '<i data-lucide="loader" class="spinning" style="margin-right: 0.5rem;"></i>Refreshing...';
     button.disabled = true;
     
-    // Simulate fetching updated vehicle data
-    setTimeout(function() {
-        // Generate realistic demo data with some variation
-        const batteryLevel = Math.floor(Math.random() * 30) + 70; // 70-100%
-        const fuelLevel = Math.floor(Math.random() * 40) + 60; // 60-100%
-        const range = Math.floor(Math.random() * 100) + 200; // 200-300 miles
-        const doorStates = ['Locked', 'Unlocked'];
-        const vehicleStates = ['Secure', 'Ready', 'Parked', 'Charging'];
-        
-        const doorStatus = doorStates[Math.floor(Math.random() * doorStates.length)];
-        const vehicleStatus = vehicleStates[Math.floor(Math.random() * vehicleStates.length)];
-        
-        // Update the display with new data
-        updateVehicleStatusDisplay({
-            batteryLevel: batteryLevel,
-            fuelLevel: fuelLevel,
-            range: range,
-            doorStatus: doorStatus,
-            vehicleStatus: vehicleStatus,
-            lastUpdated: 'Just now'
-        });
-        
-        // Restore button
+    try {
+        if (window.vehicleAPI) {
+            // Use the new API system
+            const result = await window.vehicleAPI.refreshVehicleStatus();
+            
+            if (result.success) {
+                updateVehicleStatusDisplay(result.data, result.metadata);
+                
+                // Show appropriate notification based on demo mode
+                const config = window.vehicleAPI.getConfig();
+                if (config.isDemoMode) {
+                    bmwAuth.showSuccess('Demo vehicle status refreshed successfully');
+                } else {
+                    bmwAuth.showSuccess('Vehicle status refreshed from live API');
+                }
+            } else {
+                console.error('Failed to refresh vehicle status:', result);
+                bmwAuth.showError('Failed to refresh vehicle status');
+            }
+        } else {
+            // Fallback to old system if API not available
+            bmwAuth.showError('Vehicle API not available');
+        }
+    } catch (error) {
+        console.error('Error refreshing vehicle status:', error);
+        bmwAuth.showError('Error refreshing vehicle status: ' + error.message);
+    } finally {
+        // Restore button state
         button.innerHTML = originalText;
         button.disabled = false;
-        
-        // Show success notification
-        bmwAuth.showSuccess('Vehicle status refreshed successfully');
         
         // Re-initialize icons
         if (typeof lucide !== 'undefined') {
             lucide.createIcons();
         }
-    }, 2000);
+    }
 }
 
-function updateVehicleStatusDisplay(data) {
+function updateVehicleStatusDisplay(data, metadata = {}) {
     // Update individual elements with new data
     const batteryElement = document.getElementById('battery-level');
     const fuelElement = document.getElementById('fuel-level');
@@ -369,6 +444,7 @@ function updateVehicleStatusDisplay(data) {
     const doorElement = document.getElementById('door-status');
     const statusElement = document.getElementById('vehicle-status');
     const updatedElement = document.getElementById('last-updated');
+    const sourceElement = document.getElementById('data-source-info');
     
     if (batteryElement) {
         batteryElement.textContent = data.batteryLevel + '%';
@@ -401,7 +477,72 @@ function updateVehicleStatusDisplay(data) {
     }
     
     if (updatedElement) {
-        updatedElement.textContent = data.lastUpdated;
+        if (data.lastUpdated) {
+            const lastUpdated = new Date(data.lastUpdated);
+            const now = new Date();
+            const diffMinutes = Math.floor((now - lastUpdated) / (1000 * 60));
+            
+            if (diffMinutes < 1) {
+                updatedElement.textContent = 'Just now';
+            } else if (diffMinutes === 1) {
+                updatedElement.textContent = '1 minute ago';
+            } else if (diffMinutes < 60) {
+                updatedElement.textContent = diffMinutes + ' minutes ago';
+            } else {
+                updatedElement.textContent = lastUpdated.toLocaleTimeString();
+            }
+        } else {
+            updatedElement.textContent = 'Just now';
+        }
+    }
+    
+    // Update data source information
+    if (sourceElement && metadata) {
+        if (metadata.isDemoMode) {
+            sourceElement.innerHTML = `
+                <div style="display: flex; align-items: center; gap: 0.25rem;">
+                    <i data-lucide="database" style="width: 12px; height: 12px;"></i>
+                    <span>Source: ${metadata.dataSource || 'Demo Data'}</span>
+                </div>
+            `;
+        } else {
+            sourceElement.innerHTML = `
+                <div style="display: flex; align-items: center; gap: 0.25rem;">
+                    <i data-lucide="wifi" style="width: 12px; height: 12px;"></i>
+                    <span>Source: Live Vehicle API</span>
+                </div>
+            `;
+        }
+        
+        // Re-initialize Lucide icons for the new content
+        if (typeof lucide !== 'undefined') {
+            lucide.createIcons();
+        }
+    }
+}
+
+function showDataError(message) {
+    const elements = ['battery-level', 'fuel-level', 'vehicle-range', 'door-status', 'vehicle-status', 'last-updated'];
+    elements.forEach(id => {
+        const element = document.getElementById(id);
+        if (element) {
+            element.textContent = 'Error';
+            element.style.color = '#dc3545';
+        }
+    });
+    
+    const sourceElement = document.getElementById('data-source-info');
+    if (sourceElement) {
+        sourceElement.innerHTML = `
+            <div style="color: #dc3545; display: flex; align-items: center; gap: 0.25rem;">
+                <i data-lucide="alert-triangle" style="width: 12px; height: 12px;"></i>
+                <span>${message}</span>
+            </div>
+        `;
+        
+        if (typeof lucide !== 'undefined') {
+            lucide.createIcons();
+        }
     }
 }
 </script>

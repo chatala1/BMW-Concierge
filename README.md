@@ -3,6 +3,29 @@
 # BMW Concierge
 A tailored companion experience to the MyBMW Application. [^1] [^2]
 
+## Features
+
+### 🔒 Secure Authentication
+- GitHub OAuth integration for secure access
+- Session management and user privacy protection
+
+### 🚗 Vehicle Dashboard
+- **Demo Mode**: Transparent simulation of vehicle data for demonstration
+- **API Ready**: Structured for future integration with real vehicle APIs
+- **Clear Indicators**: Always shows whether data is simulated or live
+
+### 📊 Analytics & Insights
+- Driving pattern tracking and efficiency monitoring
+- Service reminders and maintenance scheduling
+- Trip planning with charging station optimization
+
+### 🎯 Transparent Operation
+- **Demo Mode Indicators**: Clear labeling when viewing simulated data
+- **API Abstraction**: Clean separation between demo and production functionality
+- **Future Ready**: Easy configuration switch for real API integration
+
+For detailed information about API transparency and demo mode implementation, see [API_TRANSPARENCY.md](API_TRANSPARENCY.md).
+
 &nbsp;
 &nbsp;
 &nbsp;
