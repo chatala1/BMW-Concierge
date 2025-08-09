@@ -1,6 +1,46 @@
+copilot/fix-5
 remote_theme: jekyll/minima
 plugins:
   - jekyll-remote-theme
 
 minima:
   skin: dark
+
+# Jekyll configuration for BMW Concierge
+title: BMW Concierge
+description: A tailored unofficial companion experience to the MyBMW Application
+baseurl: "/BMW-Concierge"
+url: "https://chatala1.github.io"
+
+# Build settings
+markdown: kramdown
+theme: minima
+plugins:
+  - jekyll-feed
+
+# Exclude files from build
+exclude:
+  - README.md
+  - LICENSE
+  - .gitignore
+  - .github/
+
+# GitHub OAuth settings (these would be set as environment variables)
+github:
+  client_id: "" # To be configured in GitHub Pages settings
+
+# Site settings
+author: BMW Concierge Team
+email: ""
+
+# Social links
+github_username: chatala1
+
+# Default layouts
+defaults:
+  - scope:
+      path: ""
+      type: "pages"
+    values:
+      layout: "default"
+main
