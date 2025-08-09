@@ -1,7 +1,7 @@
 <img width="50" height="47" alt="BMW-Logo" src="https://github.com/user-attachments/assets/9ba64150-410c-4a1c-90a5-b900e21771eb" />
 
-# BMW Concierge [^1]
-A tailored companion experience to the MyBMW Application. [^2]
+# BMW Concierge
+A tailored companion experience to the MyBMW Application. [^1] [^2]
 
 &nbsp;
 &nbsp;
