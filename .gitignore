@@ -1,0 +1,16 @@
+# Jekyll build artifacts
+_site/
+
+# Sass cache
+.sass-cache/
+.jekyll-cache/
+.jekyll-metadata
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Editor files
+*.swp
+*.swo
+*~
