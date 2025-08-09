@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - BMW Concierge</title>
+    <meta name="description" content="BMW Concierge Dashboard - Your personalized vehicle management center">
+    
+    <!-- BMW Brand Colors and Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/BMW-Concierge/assets/css/style.css">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E🚗%3C/text%3E%3C/svg%3E">
+</head>
+<body>
+    <header class="site-header">
+        <nav class="navbar">
+            <div class="nav-container">
+                <a href="/BMW-Concierge/" class="nav-brand">
+                    <span class="bmw-logo">🏆</span>
+                    BMW Concierge
+                </a>
+                <div class="nav-menu">
+                    <a href="/BMW-Concierge/" class="nav-link">Home</a>
+                    <div class="auth-section">
+                        <span id="user-info" class="user-info" style="display: none;"></span>
+                        <button id="login-btn" class="btn btn-primary">Login with GitHub</button>
+                        <button id="logout-btn" class="btn btn-secondary" style="display: none;">Logout</button>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main class="main-content">
+        <div class="hero" style="background: linear-gradient(135deg, #28a745, #20c997);">
+    <h1>🚗 BMW Concierge Dashboard</h1>
+    <p>Your personalized vehicle management center</p>
+</div>
+
+<div class="protected-content">
+    <!-- Content will be dynamically updated by auth.js based on authentication status -->
+    <h3>🔒 Authentication Required</h3>
+    <p>Please log in with your GitHub account to access this content.</p>
+    <button onclick="bmwAuth.login()" class="btn btn-primary mt-lg">
+        Login with GitHub
+    </button>
+</div>
+
+<div class="auth-required">
+    <div class="features-grid">
+        <div class="feature-card">
+            <div class="feature-icon">🚗</div>
+            <h3>Vehicle Status</h3>
+            <div style="text-align: left; margin-top: 1rem;">
+                <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                    <span>Battery Level:</span>
+                    <span style="color: #28a745; font-weight: 600;">85%</span>
+                </div>
+                <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                    <span>Range:</span>
+                    <span style="color: var(--bmw-blue); font-weight: 600;">245 miles</span>
+                </div>
+                <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                    <span>Last Updated:</span>
+                    <span style="color: var(--bmw-gray);">2 min ago</span>
+                </div>
+            </div>
+            <button class="btn btn-primary" style="width: 100%; margin-top: 1rem;">
+                Refresh Status
+            </button>
+        </div>
+
+        <div class="feature-card">
+            <div class="feature-icon">🔧</div>
+            <h3>Service & Maintenance</h3>
+            <div style="text-align: left; margin-top: 1rem;">
+                <div style="background: #fff3cd; padding: 1rem; border-radius: 6px; margin-bottom: 1rem;">
+                    <strong style="color: #856404;">⚠️ Service Reminder</strong>
+                    <p style="margin: 0.5rem 0; color: #856404;">Oil change due in 500 miles</p>
+                </div>
+                <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                    <span>Next Service:</span>
+                    <span style="color: var(--bmw-blue); font-weight: 600;">Jan 15, 2024</span>
+                </div>
+            </div>
+            <button class="btn btn-outline" style="width: 100%; margin-top: 1rem;">
+                Schedule Service
+            </button>
+        </div>
+
+        <div class="feature-card">
+            <div class="feature-icon">📱</div>
+            <h3>Remote Controls</h3>
+            <div style="margin-top: 1rem;">
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem;">
+                    <button class="btn btn-outline" style="font-size: 0.8rem; padding: 0.5rem;">
+                        🔓 Unlock
+                    </button>
+                    <button class="btn btn-outline" style="font-size: 0.8rem; padding: 0.5rem;">
+                        🔒 Lock
+                    </button>
+                    <button class="btn btn-outline" style="font-size: 0.8rem; padding: 0.5rem;">
+                        🌡️ Climate
+                    </button>
+                    <button class="btn btn-outline" style="font-size: 0.8rem; padding: 0.5rem;">
+                        📍 Locate
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="feature-card">
+            <div class="feature-icon">📊</div>
+            <h3>Driving Analytics</h3>
+            <div style="text-align: left; margin-top: 1rem;">
+                <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                    <span>This Month:</span>
+                    <span style="color: var(--bmw-blue); font-weight: 600;">1,245 miles</span>
+                </div>
+                <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                    <span>Avg Efficiency:</span>
+                    <span style="color: #28a745; font-weight: 600;">3.2 mi/kWh</span>
+                </div>
+                <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                    <span>Eco Score:</span>
+                    <span style="color: #28a745; font-weight: 600;">92/100</span>
+                </div>
+            </div>
+            <button class="btn btn-outline" style="width: 100%; margin-top: 1rem;">
+                View Details
+            </button>
+        </div>
+
+        <div class="feature-card">
+            <div class="feature-icon">🗺️</div>
+            <h3>Trip Planning</h3>
+            <div style="margin-top: 1rem; text-align: left;">
+                <p style="margin-bottom: 1rem; color: var(--bmw-gray);">Plan your next journey with optimized routes and charging stops.</p>
+                <div style="background: var(--bmw-light-gray); padding: 1rem; border-radius: 6px;">
+                    <strong>Recent Trip:</strong>
+                    <p style="margin: 0.5rem 0; font-size: 0.9rem;">San Francisco → Los Angeles</p>
+                    <p style="margin: 0; font-size: 0.8rem; color: var(--bmw-gray);">380 miles • 2 charging stops</p>
+                </div>
+            </div>
+            <button class="btn btn-primary" style="width: 100%; margin-top: 1rem;">
+                Plan New Trip
+            </button>
+        </div>
+
+        <div class="feature-card">
+            <div class="feature-icon">⚙️</div>
+            <h3>Settings</h3>
+            <div style="margin-top: 1rem; text-align: left;">
+                <div style="margin-bottom: 1rem;">
+                    <label style="display: flex; align-items: center; margin-bottom: 0.5rem;">
+                        <input type="checkbox" checked style="margin-right: 0.5rem;">
+                        <span style="font-size: 0.9rem;">Push notifications</span>
+                    </label>
+                    <label style="display: flex; align-items: center; margin-bottom: 0.5rem;">
+                        <input type="checkbox" checked style="margin-right: 0.5rem;">
+                        <span style="font-size: 0.9rem;">Service reminders</span>
+                    </label>
+                    <label style="display: flex; align-items: center;">
+                        <input type="checkbox" style="margin-right: 0.5rem;">
+                        <span style="font-size: 0.9rem;">Location sharing</span>
+                    </label>
+                </div>
+            </div>
+            <button class="btn btn-outline" style="width: 100%; margin-top: 1rem;">
+                Manage Settings
+            </button>
+        </div>
+    </div>
+
+    <div class="card">
+        <h2>📈 Recent Activity</h2>
+        <div style="margin-top: 1.5rem;">
+            <div style="border-left: 4px solid var(--bmw-blue); padding-left: 1rem; margin-bottom: 1rem;">
+                <strong>Vehicle locked</strong>
+                <p style="margin: 0.25rem 0; color: var(--bmw-gray); font-size: 0.9rem;">Successfully locked your BMW via remote command</p>
+                <small style="color: var(--bmw-gray);">2 hours ago</small>
+            </div>
+            
+            <div style="border-left: 4px solid #28a745; padding-left: 1rem; margin-bottom: 1rem;">
+                <strong>Charging completed</strong>
+                <p style="margin: 0.25rem 0; color: var(--bmw-gray); font-size: 0.9rem;">Battery charged to 100% at home station</p>
+                <small style="color: var(--bmw-gray);">Yesterday, 11:30 PM</small>
+            </div>
+            
+            <div style="border-left: 4px solid #ffc107; padding-left: 1rem; margin-bottom: 1rem;">
+                <strong>Service reminder</strong>
+                <p style="margin: 0.25rem 0; color: var(--bmw-gray); font-size: 0.9rem;">Oil change recommended within 500 miles</p>
+                <small style="color: var(--bmw-gray);">2 days ago</small>
+            </div>
+            
+            <div style="border-left: 4px solid var(--bmw-light-blue); padding-left: 1rem;">
+                <strong>Trip completed</strong>
+                <p style="margin: 0.25rem 0; color: var(--bmw-gray); font-size: 0.9rem;">San Francisco to Palo Alto • 35 miles • Eco score: 94</p>
+                <small style="color: var(--bmw-gray);">3 days ago</small>
+            </div>
+        </div>
+    </div>
+
+    <div class="card">
+        <h2>🔗 Quick Links</h2>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin-top: 1.5rem;">
+            <a href="https://www.bmw.com/en/myaccount.html" target="_blank" class="btn btn-outline" style="text-decoration: none;">
+                🏠 Official MyBMW
+            </a>
+            <a href="https://www.bmw.com/en/automotive-life/connected-drive.html" target="_blank" class="btn btn-outline" style="text-decoration: none;">
+                📱 ConnectedDrive
+            </a>
+            <a href="https://www.bmw.com/en/footer/service-and-support.html" target="_blank" class="btn btn-outline" style="text-decoration: none;">
+                🔧 BMW Service
+            </a>
+            <a href="/BMW-Concierge/privacy.html" class="btn btn-outline" style="text-decoration: none;">
+                🛡️ Privacy Policy
+            </a>
+        </div>
+    </div>
+</div>
+
+<div class="card auth-only">
+    <h2>🔐 Access Required</h2>
+    <p>The BMW Concierge dashboard contains personalized vehicle information and requires authentication to ensure your data privacy and security.</p>
+    
+    <div style="background: var(--bmw-light-gray); padding: 1.5rem; border-radius: 8px; margin: 1.5rem 0;">
+        <h3>Why do we require login?</h3>
+        <ul style="margin: 1rem 0 0 1.5rem;">
+            <li>Protect your personal vehicle data</li>
+            <li>Ensure secure access to remote vehicle controls</li>
+            <li>Personalize your experience based on your preferences</li>
+            <li>Maintain session security and data integrity</li>
+        </ul>
+    </div>
+
+    <div style="text-align: center;">
+        <a href="/BMW-Concierge/login.html" class="btn btn-primary" style="margin-right: 1rem;">
+            🔑 Go to Login Page
+        </a>
+        <button onclick="bmwAuth.login()" class="btn btn-outline">
+            Quick Login
+        </button>
+    </div>
+</div>
+    </main>
+
+    <footer class="site-footer">
+        <div class="footer-container">
+            <p>&copy; 2025 BMW Concierge. This project is not affiliated with BMW AG.</p>
+            <p>
+                <a href="/BMW-Concierge/privacy.html">Privacy Policy</a> |
+                <a href="https://github.com/chatala1/BMW-Concierge" target="_blank">GitHub</a>
+            </p>
+        </div>
+    </footer>
+
+    <script src="/BMW-Concierge/assets/js/auth.js"></script>
+</body>
+</html>

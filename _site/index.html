@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home - BMW Concierge</title>
+    <meta name="description" content="BMW Concierge - Your ultimate companion for the MyBMW experience">
+    
+    <!-- BMW Brand Colors and Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/BMW-Concierge/assets/css/style.css">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E🚗%3C/text%3E%3C/svg%3E">
+</head>
+<body>
+    <header class="site-header">
+        <nav class="navbar">
+            <div class="nav-container">
+                <a href="/BMW-Concierge/" class="nav-brand">
+                    <span class="bmw-logo">🏆</span>
+                    BMW Concierge
+                </a>
+                <div class="nav-menu">
+                    <a href="/BMW-Concierge/" class="nav-link">Home</a>
+                    <div class="auth-section">
+                        <span id="user-info" class="user-info" style="display: none;"></span>
+                        <button id="login-btn" class="btn btn-primary">Login with GitHub</button>
+                        <button id="logout-btn" class="btn btn-secondary" style="display: none;">Logout</button>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main class="main-content">
+        <div class="hero">
+    <h1>Welcome to BMW Concierge</h1>
+    <p>Your tailored unofficial companion experience to the MyBMW Application</p>
+    <div style="margin-top: 2rem;">
+        <a href="#features" class="btn btn-outline" style="margin-right: 1rem;">Explore Features</a>
+        <a href="/BMW-Concierge/protected.html" class="btn btn-primary">Access Dashboard</a>
+    </div>
+</div>
+
+<div class="card">
+    <h2>🚗 About BMW Concierge</h2>
+    <p>BMW Concierge is an open-source companion application designed to enhance your MyBMW experience. Built with modern web technologies and integrated with GitHub authentication, it provides a secure and personalized interface for BMW enthusiasts.</p>
+    
+    <div class="auth-only">
+        <div style="background: #e8f4f8; padding: 1.5rem; border-radius: 8px; margin-top: 1.5rem; border-left: 4px solid var(--bmw-blue);">
+            <h3>🔐 Secure Access Required</h3>
+            <p>To access the full BMW Concierge experience, please authenticate with your GitHub account. This ensures secure access to your personalized dashboard and vehicle management features.</p>
+            <button onclick="bmwAuth.login()" class="btn btn-primary" style="margin-top: 1rem;">
+                🔑 Login with GitHub
+            </button>
+        </div>
+    </div>
+
+    <div class="auth-required">
+        <div style="background: #e8f5e8; padding: 1.5rem; border-radius: 8px; margin-top: 1.5rem; border-left: 4px solid #28a745;">
+            <h3>✅ Welcome Back!</h3>
+            <p>You're successfully authenticated. Access your personalized BMW Concierge dashboard and explore all available features.</p>
+            <a href="/BMW-Concierge/protected.html" class="btn btn-primary" style="margin-top: 1rem;">
+                🚗 Go to Dashboard
+            </a>
+        </div>
+    </div>
+</div>
+
+<div id="features" class="features-grid">
+    <div class="feature-card">
+        <div class="feature-icon">🔐</div>
+        <h3>Secure Authentication</h3>
+        <p>GitHub OAuth integration ensures secure access to your personalized BMW experience with industry-standard authentication protocols.</p>
+    </div>
+
+    <div class="feature-card">
+        <div class="feature-icon">📱</div>
+        <h3>Mobile Responsive</h3>
+        <p>Optimized for all devices - from desktop to mobile, ensuring you can access your BMW Concierge wherever you are.</p>
+    </div>
+
+    <div class="feature-card">
+        <div class="feature-icon">🚗</div>
+        <h3>Vehicle Management</h3>
+        <p>Comprehensive vehicle status monitoring, remote controls, and maintenance scheduling - all in one unified interface.</p>
+    </div>
+
+    <div class="feature-card">
+        <div class="feature-icon">📊</div>
+        <h3>Analytics & Insights</h3>
+        <p>Track your driving patterns, fuel efficiency, and receive personalized insights to optimize your BMW experience.</p>
+    </div>
+
+    <div class="feature-card">
+        <div class="feature-icon">🔧</div>
+        <h3>Service Integration</h3>
+        <p>Seamlessly schedule maintenance, track service history, and receive timely reminders for optimal vehicle care.</p>
+    </div>
+
+    <div class="feature-card">
+        <div class="feature-icon">🛡️</div>
+        <h3>Privacy Focused</h3>
+        <p>Your data privacy is our priority. All information is processed securely with transparent privacy practices.</p>
+    </div>
+</div>
+
+<div class="card">
+    <h2>🚀 Getting Started</h2>
+    <ol style="margin-left: 1.5rem; margin-top: 1rem;">
+        <li><strong>Authenticate:</strong> Click the "Login with GitHub" button to securely access your account</li>
+        <li><strong>Explore:</strong> Navigate to your personalized dashboard to see available features</li>
+        <li><strong>Connect:</strong> Link your BMW account to access vehicle-specific functions</li>
+        <li><strong>Customize:</strong> Set up your preferences and notification settings</li>
+        <li><strong>Enjoy:</strong> Experience an enhanced MyBMW companion application</li>
+    </ol>
+</div>
+
+<div class="card">
+    <h2>📋 Important Disclaimers</h2>
+    <ul style="margin-left: 1.5rem; margin-top: 1rem;">
+        <li>This project is <strong>not affiliated with BMW AG</strong> or its subsidiaries</li>
+        <li>All BMW logos and brand names are property of their respective owners</li>
+        <li>This is an unofficial companion application for educational and enhancement purposes</li>
+        <li>Use of this application does not imply endorsement by BMW AG</li>
+        <li>This project is released under the GNU General Public License v3.0</li>
+    </ul>
+    
+    <div style="margin-top: 1.5rem;">
+        <a href="/BMW-Concierge/privacy.html" class="btn btn-outline">Privacy Policy</a>
+        <a href="https://github.com/chatala1/BMW-Concierge/blob/main/LICENSE" target="_blank" class="btn btn-outline" style="margin-left: 1rem;">View License</a>
+    </div>
+</div>
+    </main>
+
+    <footer class="site-footer">
+        <div class="footer-container">
+            <p>&copy; 2025 BMW Concierge. This project is not affiliated with BMW AG.</p>
+            <p>
+                <a href="/BMW-Concierge/privacy.html">Privacy Policy</a> |
+                <a href="https://github.com/chatala1/BMW-Concierge" target="_blank">GitHub</a>
+            </p>
+        </div>
+    </footer>
+
+    <script src="/BMW-Concierge/assets/js/auth.js"></script>
+</body>
+</html>
