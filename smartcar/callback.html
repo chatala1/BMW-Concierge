@@ -1,0 +1,199 @@
+---
+layout: default
+title: "Smartcar OAuth Callback"
+description: "Smartcar API OAuth callback endpoint for BMW Concierge"
+---
+
+<div class="callback-container">
+    <div class="callback-card">
+        <div class="callback-header">
+            <i data-lucide="car" class="icon" style="color: var(--bmw-blue);"></i>
+            <h1>Smartcar Authentication</h1>
+            <p>Processing your vehicle connection...</p>
+        </div>
+
+        <div id="callback-status" class="callback-status">
+            <div class="loading-spinner">
+                <div class="spinner"></div>
+                <p>Connecting to your vehicle...</p>
+            </div>
+        </div>
+
+        <div id="callback-success" class="callback-result" style="display: none;">
+            <i data-lucide="check-circle" class="icon" style="color: #28a745;"></i>
+            <h2 style="color: #28a745;">Vehicle Connected Successfully!</h2>
+            <p>Your vehicle has been successfully connected to BMW Concierge via Smartcar.</p>
+            
+            <div class="callback-actions">
+                <a href="{{ '/' | relative_url }}" class="btn btn-outline">Back to Home</a>
+                <a href="{{ '/protected.html' | relative_url }}" class="btn btn-primary">Go to Dashboard</a>
+            </div>
+        </div>
+
+        <div id="callback-error" class="callback-result" style="display: none;">
+            <i data-lucide="alert-circle" class="icon" style="color: #dc3545;"></i>
+            <h2 style="color: #dc3545;">Connection Failed</h2>
+            <p id="error-message">There was an issue connecting your vehicle. Please try again.</p>
+            
+            <div class="callback-actions">
+                <button onclick="retryConnection()" class="btn btn-primary">Try Again</button>
+                <a href="{{ '/' | relative_url }}" class="btn btn-outline">Back to Home</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="card" style="max-width: 600px; margin: 2rem auto;">
+    <h2>About Smartcar Integration</h2>
+    <p>BMW Concierge uses Smartcar's secure API to connect with your vehicle. This integration allows you to:</p>
+    
+    <ul style="margin: 1rem 0 1rem 1.5rem;">
+        <li><strong>Vehicle Status:</strong> Access real-time battery, fuel, and odometer data</li>
+        <li><strong>Location Services:</strong> View your vehicle's current location</li>
+        <li><strong>Remote Controls:</strong> Lock/unlock doors and control climate</li>
+        <li><strong>Security:</strong> Industry-standard OAuth 2.0 authentication</li>
+    </ul>
+
+    <div style="background: #f8f9fa; padding: 1.5rem; margin-top: 1.5rem;">
+        <h3 style="margin-bottom: 1rem;">Privacy & Security:</h3>
+        <ul style="margin-left: 1.5rem;">
+            <li>Your vehicle data is securely transmitted via Smartcar's encrypted API</li>
+            <li>BMW Concierge only accesses data necessary for the dashboard features</li>
+            <li>You can revoke access at any time through your vehicle's connected services</li>
+            <li>No sensitive personal data is stored locally</li>
+        </ul>
+        
+        <p style="margin-top: 1rem; font-size: 0.9rem; color: var(--bmw-gray);">
+            <strong>Note:</strong> This integration requires a compatible vehicle with Smartcar support.
+        </p>
+    </div>
+</div>
+
+<script>
+// Smartcar OAuth callback handling
+document.addEventListener('DOMContentLoaded', function() {
+    // Initialize Smartcar callback processing
+    if (window.bmwAuth) {
+        window.bmwAuth.handleSmartcarCallback();
+    } else {
+        // Fallback if auth system isn't loaded yet
+        setTimeout(function() {
+            if (window.bmwAuth) {
+                window.bmwAuth.handleSmartcarCallback();
+            } else {
+                showCallbackError('Authentication system not available');
+            }
+        }, 1000);
+    }
+});
+
+function retryConnection() {
+    // Reset the UI and retry the connection
+    document.getElementById('callback-status').style.display = 'block';
+    document.getElementById('callback-success').style.display = 'none';
+    document.getElementById('callback-error').style.display = 'none';
+    
+    if (window.bmwAuth) {
+        window.bmwAuth.handleSmartcarCallback();
+    } else {
+        showCallbackError('Authentication system not available');
+    }
+}
+
+function showCallbackSuccess() {
+    document.getElementById('callback-status').style.display = 'none';
+    document.getElementById('callback-success').style.display = 'block';
+    document.getElementById('callback-error').style.display = 'none';
+}
+
+function showCallbackError(message) {
+    document.getElementById('callback-status').style.display = 'none';
+    document.getElementById('callback-success').style.display = 'none';
+    document.getElementById('callback-error').style.display = 'block';
+    
+    if (message) {
+        document.getElementById('error-message').textContent = message;
+    }
+}
+</script>
+
+<style>
+.callback-container {
+    min-height: 60vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem 1rem;
+}
+
+.callback-card {
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    padding: 3rem 2rem;
+    text-align: center;
+    max-width: 500px;
+    width: 100%;
+}
+
+.callback-header {
+    margin-bottom: 2rem;
+}
+
+.callback-header .icon {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+}
+
+.callback-status {
+    margin: 2rem 0;
+}
+
+.loading-spinner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+}
+
+.spinner {
+    border: 3px solid #f3f3f3;
+    border-top: 3px solid var(--bmw-blue);
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.callback-result {
+    margin: 2rem 0;
+}
+
+.callback-result .icon {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+}
+
+.callback-actions {
+    margin-top: 2rem;
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+@media (max-width: 480px) {
+    .callback-card {
+        padding: 2rem 1rem;
+    }
+    
+    .callback-actions {
+        flex-direction: column;
+    }
+}
+</style>

@@ -8,6 +8,13 @@ class BMWAuth {
         this.clientId = 'Ov23liNCmhgdtQrBTgfI'; // This would normally be set in GitHub Pages environment
         this.redirectUri = window.location.origin + window.location.pathname;
         this.storageKey = 'bmw_concierge_auth';
+        this.smartcarStorageKey = 'bmw_concierge_smartcar_auth';
+        
+        // Smartcar configuration
+        this.smartcarClientId = ''; // To be configured with actual Smartcar client ID
+        this.smartcarRedirectUri = window.location.origin + '/BMW-Concierge/smartcar/callback';
+        this.smartcarScope = ['read_vehicle_info', 'read_location', 'read_odometer', 'control_security', 'control_climate'];
+        
         this.init();
     }
 
@@ -278,6 +285,141 @@ class BMWAuth {
     getAccessToken() {
         const authData = this.getStoredAuth();
         return authData && this.isTokenValid(authData) ? authData.access_token : null;
+    }
+
+    // Smartcar OAuth methods
+    initiateSmartcarAuth() {
+        if (!this.smartcarClientId) {
+            this.showError('Smartcar client ID not configured. Please contact support.');
+            return;
+        }
+
+        const state = this.generateState();
+        sessionStorage.setItem('smartcar_oauth_state', state);
+        
+        const authUrl = new URL('https://connect.smartcar.com/oauth/authorize');
+        authUrl.searchParams.append('response_type', 'code');
+        authUrl.searchParams.append('client_id', this.smartcarClientId);
+        authUrl.searchParams.append('redirect_uri', this.smartcarRedirectUri);
+        authUrl.searchParams.append('scope', this.smartcarScope.join(' '));
+        authUrl.searchParams.append('state', state);
+        
+        window.location.href = authUrl.toString();
+    }
+
+    handleSmartcarCallback() {
+        const urlParams = new URLSearchParams(window.location.search);
+        const code = urlParams.get('code');
+        const state = urlParams.get('state');
+        const error = urlParams.get('error');
+        const errorDescription = urlParams.get('error_description');
+
+        if (error) {
+            console.error('Smartcar OAuth error:', error, errorDescription);
+            this.showSmartcarError(errorDescription || error);
+            return;
+        }
+
+        if (!code || !state) {
+            this.showSmartcarError('Missing authorization code or state parameter');
+            return;
+        }
+
+        const storedState = sessionStorage.getItem('smartcar_oauth_state');
+        if (state !== storedState) {
+            console.error('Smartcar OAuth state mismatch');
+            this.showSmartcarError('Security validation failed. Please try again.');
+            return;
+        }
+
+        // Clean URL
+        window.history.replaceState({}, document.title, window.location.pathname);
+        
+        // Exchange code for token (this would normally be done server-side)
+        // For demo purposes, we'll simulate a successful connection
+        this.simulateSmartcarConnection(code);
+    }
+
+    simulateSmartcarConnection(code) {
+        // Simulate API call to exchange code for tokens
+        setTimeout(() => {
+            const smartcarData = {
+                access_token: 'sc_token_' + Date.now(),
+                refresh_token: 'sc_refresh_' + Date.now(),
+                expires_at: Date.now() + (60 * 60 * 1000), // 1 hour
+                token_type: 'Bearer',
+                vehicle_id: 'demo_vehicle_' + Math.random().toString(36).substr(2, 9),
+                connected_at: new Date().toISOString()
+            };
+
+            this.storeSmartcarAuth(smartcarData);
+            this.showSmartcarSuccess();
+        }, 2000); // Simulate network delay
+    }
+
+    storeSmartcarAuth(smartcarData) {
+        try {
+            localStorage.setItem(this.smartcarStorageKey, JSON.stringify(smartcarData));
+        } catch (error) {
+            console.error('Error storing Smartcar auth:', error);
+        }
+    }
+
+    getStoredSmartcarAuth() {
+        try {
+            const stored = localStorage.getItem(this.smartcarStorageKey);
+            return stored ? JSON.parse(stored) : null;
+        } catch (error) {
+            console.error('Error reading stored Smartcar auth:', error);
+            return null;
+        }
+    }
+
+    clearSmartcarAuth() {
+        localStorage.removeItem(this.smartcarStorageKey);
+    }
+
+    isSmartcarTokenValid(smartcarData) {
+        if (!smartcarData || !smartcarData.access_token || !smartcarData.expires_at) {
+            return false;
+        }
+        return Date.now() < smartcarData.expires_at;
+    }
+
+    isSmartcarConnected() {
+        const smartcarData = this.getStoredSmartcarAuth();
+        return smartcarData && this.isSmartcarTokenValid(smartcarData);
+    }
+
+    getSmartcarVehicleId() {
+        const smartcarData = this.getStoredSmartcarAuth();
+        return smartcarData && this.isSmartcarTokenValid(smartcarData) ? smartcarData.vehicle_id : null;
+    }
+
+    disconnectSmartcar() {
+        this.clearSmartcarAuth();
+        this.showSuccess('Vehicle disconnected successfully');
+        
+        // Update UI if on dashboard
+        if (window.location.pathname.includes('protected')) {
+            location.reload();
+        }
+    }
+
+    showSmartcarSuccess() {
+        if (typeof showCallbackSuccess === 'function') {
+            showCallbackSuccess();
+        } else {
+            this.showSuccess('Vehicle connected successfully!');
+        }
+    }
+
+    showSmartcarError(message) {
+        if (typeof showCallbackError === 'function') {
+            showCallbackError(message);
+        } else {
+            this.showError('Smartcar connection failed: ' + message);
+        }
     }
 }
 

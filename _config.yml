@@ -22,6 +22,12 @@ exclude:
 github:
   client_id: "" # To be configured in GitHub Pages settings
 
+# Smartcar API settings (these would be set as environment variables)
+smartcar:
+  client_id: "" # To be configured with actual Smartcar client ID
+  redirect_uri: "https://chatala1.github.io/BMW-Concierge/smartcar/callback"
+  scope: "read_vehicle_info read_location read_odometer control_security control_climate"
+
 # Site settings
 author: BMW Concierge Team
 email: ""

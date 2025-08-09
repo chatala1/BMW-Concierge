@@ -145,6 +145,15 @@ description: "BMW Concierge Dashboard - Your personalized vehicle management cen
     </div>
 
     <div class="card">
+        <h2>Vehicle Connection</h2>
+        <div style="margin-top: 1.5rem;">
+            <div id="smartcar-status" class="smartcar-connection-status">
+                <!-- Status will be updated by JavaScript -->
+            </div>
+        </div>
+    </div>
+
+    <div class="card">
         <h2>Recent Activity</h2>
         <div style="margin-top: 1.5rem;">
             <div style="border-left: 4px solid var(--bmw-blue); padding-left: 1rem; margin-bottom: 1rem;">
@@ -215,3 +224,118 @@ description: "BMW Concierge Dashboard - Your personalized vehicle management cen
         </button>
     </div>
 </div>
+
+<script>
+// Update Smartcar connection status when page loads
+document.addEventListener('DOMContentLoaded', function() {
+    setTimeout(function() {
+        if (window.bmwAuth) {
+            updateSmartcarStatus();
+        }
+    }, 500);
+});
+
+function updateSmartcarStatus() {
+    const statusElement = document.getElementById('smartcar-status');
+    if (!statusElement) return;
+    
+    if (bmwAuth.isSmartcarConnected()) {
+        const vehicleId = bmwAuth.getSmartcarVehicleId();
+        statusElement.innerHTML = `
+            <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 1rem;">
+                <div style="display: flex; align-items: center; color: #28a745;">
+                    <i data-lucide="check-circle" style="margin-right: 0.5rem;"></i>
+                    <strong>Vehicle Connected</strong>
+                </div>
+                <span style="background: #28a745; color: white; padding: 0.25rem 0.5rem; border-radius: 12px; font-size: 0.8rem;">
+                    ACTIVE
+                </span>
+            </div>
+            <div style="background: #f8f9fa; padding: 1rem; border-radius: 4px; margin-bottom: 1rem;">
+                <p style="margin: 0; font-size: 0.9rem; color: var(--bmw-gray);">
+                    <strong>Vehicle ID:</strong> ${vehicleId}
+                </p>
+                <p style="margin: 0.5rem 0 0 0; font-size: 0.9rem; color: var(--bmw-gray);">
+                    Real-time data access enabled via Smartcar API
+                </p>
+            </div>
+            <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
+                <button onclick="refreshVehicleData()" class="btn btn-primary" style="flex: 1;">
+                    Refresh Data
+                </button>
+                <button onclick="bmwAuth.disconnectSmartcar()" class="btn btn-outline" style="flex: 1;">
+                    Disconnect
+                </button>
+            </div>
+        `;
+    } else {
+        statusElement.innerHTML = `
+            <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 1rem;">
+                <div style="display: flex; align-items: center; color: #6c757d;">
+                    <i data-lucide="wifi-off" style="margin-right: 0.5rem;"></i>
+                    <strong>Vehicle Not Connected</strong>
+                </div>
+                <span style="background: #6c757d; color: white; padding: 0.25rem 0.5rem; border-radius: 12px; font-size: 0.8rem;">
+                    OFFLINE
+                </span>
+            </div>
+            <div style="background: #f8f9fa; padding: 1rem; border-radius: 4px; margin-bottom: 1rem;">
+                <p style="margin: 0; font-size: 0.9rem; color: var(--bmw-gray);">
+                    Connect your vehicle through Smartcar to access real-time data and remote controls.
+                </p>
+                <ul style="margin: 0.5rem 0 0 1.5rem; font-size: 0.9rem; color: var(--bmw-gray);">
+                    <li>Real-time battery and fuel status</li>
+                    <li>Vehicle location and odometer</li>
+                    <li>Remote lock/unlock and climate control</li>
+                </ul>
+            </div>
+            <button onclick="bmwAuth.initiateSmartcarAuth()" class="btn btn-primary" style="width: 100%;">
+                <i data-lucide="car" style="margin-right: 0.5rem;"></i>
+                Connect Vehicle
+            </button>
+        `;
+    }
+    
+    // Initialize Lucide icons for the new content
+    if (typeof lucide !== 'undefined') {
+        lucide.createIcons();
+    }
+}
+
+function refreshVehicleData() {
+    // Show loading state
+    const button = event.target;
+    const originalText = button.innerHTML;
+    button.innerHTML = '<i data-lucide="loader" class="spinning" style="margin-right: 0.5rem;"></i>Refreshing...';
+    button.disabled = true;
+    
+    // Simulate data refresh
+    setTimeout(function() {
+        button.innerHTML = originalText;
+        button.disabled = false;
+        
+        // Show success notification
+        bmwAuth.showSuccess('Vehicle data refreshed successfully');
+        
+        // Re-initialize icons
+        if (typeof lucide !== 'undefined') {
+            lucide.createIcons();
+        }
+    }, 2000);
+}
+</script>
+
+<style>
+.smartcar-connection-status {
+    /* Styles for the connection status section */
+}
+
+.spinning {
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+</style>

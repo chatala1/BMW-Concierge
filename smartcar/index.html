@@ -1,0 +1,90 @@
+---
+layout: default
+title: "Smartcar Integration"
+description: "Smartcar API integration documentation for BMW Concierge"
+---
+
+<div class="card">
+    <h1>Smartcar API Integration</h1>
+    <p>This page provides information about BMW Concierge's integration with the Smartcar API.</p>
+    
+    <div style="background: #e7f3ff; border: 1px solid #b3d7ff; border-radius: 4px; padding: 1.5rem; margin: 2rem 0;">
+        <h2 style="margin-top: 0; color: var(--bmw-blue);">OAuth Redirect URI</h2>
+        <p style="margin-bottom: 1rem;">Use this redirect URI when configuring your Smartcar application:</p>
+        <div style="background: white; border: 1px solid #ddd; border-radius: 4px; padding: 1rem; font-family: monospace; font-size: 0.9rem; word-break: break-all;">
+            https://chatala1.github.io/BMW-Concierge/smartcar/callback
+        </div>
+        <p style="margin-top: 1rem; margin-bottom: 0; font-size: 0.9rem; color: var(--bmw-gray);">
+            This endpoint is configured to handle OAuth authorization callbacks from Smartcar's API.
+        </p>
+    </div>
+</div>
+
+<div class="card">
+    <h2>Integration Features</h2>
+    <p>BMW Concierge uses Smartcar's API to provide the following features:</p>
+    
+    <ul style="margin: 1rem 0 1rem 1.5rem;">
+        <li><strong>Vehicle Information:</strong> Access basic vehicle details and specifications</li>
+        <li><strong>Location Services:</strong> Retrieve current vehicle location</li>
+        <li><strong>Odometer Readings:</strong> Get current mileage and trip data</li>
+        <li><strong>Security Controls:</strong> Remote lock and unlock functionality</li>
+        <li><strong>Climate Control:</strong> Remote climate system management</li>
+    </ul>
+</div>
+
+<div class="card">
+    <h2>OAuth Scopes</h2>
+    <p>BMW Concierge requests the following permissions from Smartcar:</p>
+    
+    <div style="background: #f8f9fa; border-radius: 4px; padding: 1rem; margin: 1rem 0;">
+        <ul style="margin: 0; list-style-type: none; padding-left: 0;">
+            <li style="margin-bottom: 0.5rem;"><code>read_vehicle_info</code> - Basic vehicle information</li>
+            <li style="margin-bottom: 0.5rem;"><code>read_location</code> - Vehicle location data</li>
+            <li style="margin-bottom: 0.5rem;"><code>read_odometer</code> - Mileage and trip information</li>
+            <li style="margin-bottom: 0.5rem;"><code>control_security</code> - Lock/unlock controls</li>
+            <li style="margin-bottom: 0.5rem;"><code>control_climate</code> - Climate system controls</li>
+        </ul>
+    </div>
+</div>
+
+<div class="card">
+    <h2>Getting Started</h2>
+    <p>To integrate your vehicle with BMW Concierge:</p>
+    
+    <ol style="margin: 1rem 0 1rem 1.5rem;">
+        <li>Log in to BMW Concierge using your GitHub account</li>
+        <li>Navigate to the Dashboard</li>
+        <li>Look for the "Vehicle Connection" section</li>
+        <li>Click "Connect Vehicle" to start the Smartcar OAuth flow</li>
+        <li>Authorize BMW Concierge to access your vehicle data</li>
+        <li>You'll be redirected back to complete the connection</li>
+    </ol>
+    
+    <div style="margin-top: 2rem;">
+        <a href="{{ '/' | relative_url }}" class="btn btn-primary" style="margin-right: 1rem;">
+            Go to Home
+        </a>
+        <a href="{{ '/protected.html' | relative_url }}" class="btn btn-outline">
+            View Dashboard
+        </a>
+    </div>
+</div>
+
+<div class="card">
+    <h2>Security & Privacy</h2>
+    <p>BMW Concierge takes your privacy and security seriously:</p>
+    
+    <ul style="margin: 1rem 0 1rem 1.5rem;">
+        <li><strong>OAuth 2.0:</strong> Industry-standard authorization protocol</li>
+        <li><strong>Minimal Data:</strong> Only requests necessary permissions</li>
+        <li><strong>No Storage:</strong> Vehicle data is not permanently stored</li>
+        <li><strong>Secure Transit:</strong> All data transmitted over encrypted connections</li>
+        <li><strong>User Control:</strong> You can revoke access at any time</li>
+    </ul>
+    
+    <p style="margin-top: 1.5rem;">
+        For more information about our privacy practices, please review our 
+        <a href="{{ '/privacy.html' | relative_url }}" style="color: var(--bmw-blue);">Privacy Policy</a>.
+    </p>
+</div>
