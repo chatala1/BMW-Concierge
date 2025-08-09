@@ -1,11 +1,7 @@
 # Jekyll build artifacts
 _site/
 
-# Dependency directories
-vendor/
-node_modules/
-
-# Temporary files
+# Sass cache
 .sass-cache/
 .jekyll-cache/
 .jekyll-metadata
