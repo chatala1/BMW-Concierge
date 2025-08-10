@@ -1073,6 +1073,9 @@ a:hover {
     margin-bottom: var(--spacing-lg);
     filter: drop-shadow(0 2px 4px rgba(0, 102, 204, 0.2));
     transition: all var(--transition-base);
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .icon:hover {
@@ -1085,6 +1088,10 @@ a:hover {
     height: 1.5rem;
     margin-bottom: 0;
     filter: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    vertical-align: middle;
 }
 
 .icon-medium {
@@ -1109,6 +1116,13 @@ a:hover {
     display: inline-flex;
     align-items: center;
     justify-content: center;
+}
+
+/* Feature card icon specific alignment */
+.feature-card .icon {
+    display: block;
+    margin: 0 auto var(--spacing-lg) auto;
+    text-align: center;
 }
 
 /* Loading Animation */
