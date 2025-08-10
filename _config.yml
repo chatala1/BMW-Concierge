@@ -18,15 +18,18 @@ exclude:
   - .gitignore
   - .github/
 
-# GitHub OAuth settings (these would be set as environment variables)
+# GitHub OAuth settings (configured for BMW Concierge)
 github:
-  client_id: "" # To be configured in GitHub Pages settings
+  client_id: "Ov23liNCmhgdtQrBTgfI" # GitHub OAuth App client ID
+  redirect_uri: "https://chatala1.github.io/BMW-Concierge/login.html"
 
-# Smartcar API settings (these would be set as environment variables)
+# Smartcar API settings (to be configured with actual credentials)
 smartcar:
   client_id: "" # To be configured with actual Smartcar client ID
   redirect_uri: "https://chatala1.github.io/BMW-Concierge/smartcar/callback"
   scope: "read_vehicle_info read_location read_odometer control_security control_climate"
+  # Add the allowlist URL mentioned in the issue
+  dashboard_config_url: "https://smartcar.com/docs/connect/dashboard-config"
 
 # Site settings
 author: BMW Concierge Team

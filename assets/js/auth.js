@@ -5,14 +5,32 @@
 
 class BMWAuth {
     constructor() {
-        this.clientId = 'Ov23liNCmhgdtQrBTgfI'; // This would normally be set in GitHub Pages environment
-        this.redirectUri = window.location.origin + window.location.pathname;
+        this.clientId = 'Ov23liNCmhgdtQrBTgfI'; // GitHub OAuth App client ID
+        
+        // Set redirect URI based on environment
+        if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
+            // Development environment
+            this.redirectUri = window.location.origin + '/BMW-Concierge/login.html';
+        } else {
+            // Production environment (GitHub Pages)
+            this.redirectUri = 'https://chatala1.github.io/BMW-Concierge/login.html';
+        }
+        
         this.storageKey = 'bmw_concierge_auth';
         this.smartcarStorageKey = 'bmw_concierge_smartcar_auth';
         
         // Smartcar configuration
         this.smartcarClientId = ''; // To be configured with actual Smartcar client ID
-        this.smartcarRedirectUri = window.location.origin + '/BMW-Concierge/smartcar/callback';
+        
+        // Set Smartcar redirect URI based on environment
+        if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
+            // Development environment
+            this.smartcarRedirectUri = window.location.origin + '/BMW-Concierge/smartcar/callback';
+        } else {
+            // Production environment (GitHub Pages)
+            this.smartcarRedirectUri = 'https://chatala1.github.io/BMW-Concierge/smartcar/callback';
+        }
+        
         this.smartcarScope = ['read_vehicle_info', 'read_location', 'read_odometer', 'control_security', 'control_climate'];
         
         this.init();
@@ -77,13 +95,27 @@ class BMWAuth {
     }
 
     login() {
-        // For GitHub Pages demo, we'll simulate the OAuth flow
-        // In a real implementation, this would redirect to GitHub OAuth
+        // Real GitHub OAuth flow
         const state = this.generateState();
         sessionStorage.setItem('oauth_state', state);
         
-        // For demo purposes, simulate authentication
-        this.simulateAuthentication();
+        // Check if we have a real client ID configured
+        if (!this.clientId || this.clientId === 'demo_client_id') {
+            console.warn('No GitHub client ID configured. Using demo authentication.');
+            this.simulateAuthentication();
+            return;
+        }
+        
+        // Build OAuth URL
+        const authUrl = new URL('https://github.com/login/oauth/authorize');
+        authUrl.searchParams.append('client_id', this.clientId);
+        authUrl.searchParams.append('redirect_uri', this.redirectUri);
+        authUrl.searchParams.append('state', state);
+        authUrl.searchParams.append('scope', 'user:email');
+        authUrl.searchParams.append('allow_signup', 'true');
+        
+        // Redirect to GitHub OAuth
+        window.location.href = authUrl.toString();
     }
 
     simulateAuthentication() {
@@ -118,17 +150,18 @@ class BMWAuth {
         const code = urlParams.get('code');
         const state = urlParams.get('state');
         const error = urlParams.get('error');
+        const errorDescription = urlParams.get('error_description');
 
         if (error) {
-            console.error('OAuth error:', error);
-            this.showError('Authentication failed. Please try again.');
+            console.error('OAuth error:', error, errorDescription);
+            this.showError(`Authentication failed: ${errorDescription || error}`);
             return;
         }
 
         if (code && state) {
             const storedState = sessionStorage.getItem('oauth_state');
             if (state !== storedState) {
-                console.error('State mismatch');
+                console.error('State mismatch:', state, 'vs', storedState);
                 this.showError('Security validation failed. Please try again.');
                 return;
             }
@@ -136,8 +169,8 @@ class BMWAuth {
             // Clean URL
             window.history.replaceState({}, document.title, window.location.pathname);
             
-            // In a real app, exchange code for token here
-            // For demo, we'll use the simulated authentication
+            // Exchange code for token
+            this.exchangeCodeForToken(code);
         }
     }
 
@@ -225,6 +258,133 @@ class BMWAuth {
         });
     }
 
+    async exchangeCodeForToken(code) {
+        // ⚠️  IMPORTANT: For GitHub Pages/static hosting production deployment ⚠️
+        // 
+        // This token exchange should be done server-side for security reasons.
+        // GitHub requires a client secret that should never be exposed in client-side code.
+        // 
+        // Production deployment options:
+        // 1. Use GitHub Apps instead of OAuth Apps (more secure for static sites)
+        // 2. Deploy a serverless function (Netlify Functions, Vercel, AWS Lambda)
+        // 3. Use a backend API service
+        // 4. Use a third-party OAuth proxy service
+        //
+        // For demonstration purposes, this falls back to demo mode.
+        
+        try {
+            this.showInfo('Authenticating with GitHub...');
+            
+            // Since we can't safely store client secrets in static sites,
+            // we'll need to use a different approach for production
+            const clientSecret = this.getClientSecret();
+            
+            if (!clientSecret) {
+                throw new Error('Client secret not configured. This is expected for static site deployment.');
+            }
+            
+            // This would work if we had a backend to handle the secret securely
+            const response = await fetch('https://github.com/login/oauth/access_token', {
+                method: 'POST',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: new URLSearchParams({
+                    client_id: this.clientId,
+                    client_secret: clientSecret,
+                    code: code,
+                    redirect_uri: this.redirectUri
+                })
+            });
+
+            if (!response.ok) {
+                throw new Error(`GitHub API error: ${response.status}`);
+            }
+
+            const tokenData = await response.json();
+            
+            if (tokenData.error) {
+                throw new Error(tokenData.error_description || tokenData.error);
+            }
+
+            // Get user info with the access token
+            const userResponse = await fetch('https://api.github.com/user', {
+                headers: {
+                    'Authorization': `Bearer ${tokenData.access_token}`,
+                    'Accept': 'application/vnd.github.v3+json'
+                }
+            });
+
+            if (!userResponse.ok) {
+                throw new Error(`Failed to fetch user info: ${userResponse.status}`);
+            }
+
+            const userData = await userResponse.json();
+
+            // Store authentication data
+            const authData = {
+                access_token: tokenData.access_token,
+                token_type: tokenData.token_type || 'bearer',
+                scope: tokenData.scope,
+                expires_at: Date.now() + (24 * 60 * 60 * 1000), // 24 hours default
+                user: {
+                    login: userData.login,
+                    name: userData.name || userData.login,
+                    avatar_url: userData.avatar_url,
+                    html_url: userData.html_url,
+                    email: userData.email,
+                    id: userData.id
+                },
+                isReal: true
+            };
+
+            this.handleAuthSuccess(authData);
+            
+        } catch (error) {
+            console.warn('Real GitHub OAuth not available for static site:', error.message);
+            
+            // For GitHub Pages deployment, fall back to demo mode with a clear explanation
+            this.showInfo('Using demo authentication (GitHub OAuth requires backend configuration)');
+            
+            // Create demo user data that looks like it came from the OAuth flow
+            const demoUser = {
+                access_token: 'demo_token_' + Date.now(),
+                token_type: 'bearer',
+                expires_at: Date.now() + (24 * 60 * 60 * 1000),
+                user: {
+                    login: 'demo_user',
+                    name: 'Demo User',
+                    avatar_url: 'https://github.com/identicons/demo.png',
+                    html_url: 'https://github.com/demo_user',
+                    email: 'demo@example.com',
+                    id: 12345
+                },
+                isDemo: true
+            };
+
+            setTimeout(() => {
+                this.handleAuthSuccess(demoUser);
+            }, 1000);
+        }
+    }
+
+    getClientSecret() {
+        // WARNING: Never expose client secrets in client-side code!
+        // This method exists for documentation purposes only
+        
+        // In production, this would be handled by:
+        // - Environment variables on a backend server
+        // - Serverless functions with secure environment configuration
+        // - GitHub Apps (which don't require client secrets for some flows)
+        
+        return null; // Always return null for static site safety
+    }
+
+    showInfo(message) {
+        this.showNotification(message, 'info');
+    }
+
     generateState() {
         return Math.random().toString(36).substring(2, 15) + 
                Math.random().toString(36).substring(2, 15);
@@ -242,14 +402,31 @@ class BMWAuth {
         // Create notification element
         const notification = document.createElement('div');
         notification.className = `notification notification-${type}`;
+        
+        let backgroundColor;
+        switch (type) {
+            case 'success':
+                backgroundColor = '#28a745';
+                break;
+            case 'error':
+                backgroundColor = '#dc3545';
+                break;
+            case 'info':
+                backgroundColor = '#007bff';
+                break;
+            default:
+                backgroundColor = '#6c757d';
+        }
+        
         notification.innerHTML = `
             <div style="
                 position: fixed;
                 top: 20px;
                 right: 20px;
-                background: ${type === 'success' ? '#28a745' : '#dc3545'};
+                background: ${backgroundColor};
                 color: white;
                 padding: 1rem 1.5rem;
+                border-radius: 4px;
                 box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
                 z-index: 1000;
                 max-width: 300px;
