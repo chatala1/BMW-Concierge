@@ -1,0 +1,279 @@
+---
+layout: default
+title: "Driving Analytics"
+description: "BMW Concierge Driving Analytics - Comprehensive insights into your driving patterns and efficiency"
+---
+
+<div class="hero" style="background: linear-gradient(135deg, #007bff, #0056b3);">
+    <h1>Driving Analytics</h1>
+    <p>Comprehensive insights into your driving patterns and efficiency</p>
+</div>
+
+<div id="analytics-error"></div>
+
+<div class="auth-required">
+    <!-- Period Selector -->
+    <div class="card">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
+            <h2 id="period-display">This Month</h2>
+            <div style="display: flex; gap: 0.5rem;">
+                <button class="btn btn-outline period-selector active" data-period="month">Month</button>
+                <button class="btn btn-outline period-selector" data-period="week">Week</button>
+                <button class="btn btn-outline period-selector" data-period="year">Year</button>
+                <button class="btn btn-primary analytics-refresh-btn">
+                    <i data-lucide="refresh-cw"></i>
+                    Refresh
+                </button>
+            </div>
+        </div>
+
+        <!-- Summary Cards -->
+        <div class="features-grid" style="margin-bottom: 2rem;">
+            <div class="feature-card" style="text-align: center;">
+                <i data-lucide="map" class="icon"></i>
+                <h3>Total Distance</h3>
+                <div id="total-miles" style="font-size: 1.5rem; font-weight: 600; color: var(--bmw-blue); margin-top: 0.5rem;">
+                    Loading...
+                </div>
+            </div>
+            
+            <div class="feature-card" style="text-align: center;">
+                <i data-lucide="zap" class="icon"></i>
+                <h3>Avg Efficiency</h3>
+                <div id="avg-efficiency" style="font-size: 1.5rem; font-weight: 600; color: #28a745; margin-top: 0.5rem;">
+                    Loading...
+                </div>
+            </div>
+            
+            <div class="feature-card" style="text-align: center;">
+                <i data-lucide="award" class="icon"></i>
+                <h3>Eco Score</h3>
+                <div id="eco-score" style="font-size: 1.5rem; font-weight: 600; color: #28a745; margin-top: 0.5rem;">
+                    Loading...
+                </div>
+            </div>
+            
+            <div class="feature-card" style="text-align: center;">
+                <i data-lucide="route" class="icon"></i>
+                <h3>Total Trips</h3>
+                <div id="total-trips" style="font-size: 1.5rem; font-weight: 600; color: var(--bmw-blue); margin-top: 0.5rem;">
+                    Loading...
+                </div>
+            </div>
+        </div>
+
+        <!-- Analytics Chart -->
+        <div id="analytics-chart" style="background: white; padding: 1.5rem; border-radius: 8px; margin-bottom: 2rem;">
+            <div style="text-align: center; padding: 2rem; color: var(--bmw-gray);">
+                <i data-lucide="loader" class="spinning" style="margin-bottom: 1rem;"></i>
+                <div>Loading analytics chart...</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Driving Patterns -->
+    <div class="card">
+        <h2>Driving Patterns</h2>
+        <div class="features-grid" style="margin-top: 1.5rem;">
+            <div class="feature-card">
+                <h3>Driving Environment</h3>
+                <div style="margin-top: 1rem;">
+                    <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                        <span>City Driving:</span>
+                        <span id="city-driving" style="font-weight: 600; color: var(--bmw-blue);">Loading...</span>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                        <span>Highway Driving:</span>
+                        <span id="highway-driving" style="font-weight: 600; color: var(--bmw-blue);">Loading...</span>
+                    </div>
+                    <div style="display: flex; justify-content: space-between;">
+                        <span>Combined:</span>
+                        <span id="combined-driving" style="font-weight: 600; color: var(--bmw-blue);">Loading...</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="feature-card">
+                <h3>Activity Patterns</h3>
+                <div style="margin-top: 1rem;">
+                    <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                        <span>Most Active Day:</span>
+                        <span id="most-active-day" style="font-weight: 600; color: var(--bmw-blue);">Loading...</span>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                        <span>Peak Time:</span>
+                        <span id="most-active-time" style="font-weight: 600; color: var(--bmw-blue);">Loading...</span>
+                    </div>
+                    <div style="display: flex; justify-content: space-between;">
+                        <span>Avg Trip Distance:</span>
+                        <span id="avg-trip-distance" style="font-weight: 600; color: var(--bmw-blue);">Loading...</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Efficiency Metrics -->
+    <div class="card">
+        <h2>Energy Efficiency</h2>
+        <div class="features-grid" style="margin-top: 1.5rem;">
+            <div class="feature-card">
+                <i data-lucide="battery" class="icon"></i>
+                <h3>Energy Consumption</h3>
+                <div style="margin-top: 1rem;">
+                    <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                        <span>Energy Used:</span>
+                        <span id="energy-used" style="font-weight: 600; color: var(--bmw-blue);">Loading...</span>
+                    </div>
+                    <div style="display: flex; justify-content: space-between;">
+                        <span>Regenerated:</span>
+                        <span id="regen-energy" style="font-weight: 600; color: #28a745;">Loading...</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="feature-card">
+                <i data-lucide="dollar-sign" class="icon"></i>
+                <h3>Cost Analysis</h3>
+                <div style="margin-top: 1rem;">
+                    <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                        <span>Cost per Mile:</span>
+                        <span id="cost-per-mile" style="font-weight: 600; color: var(--bmw-blue);">Loading...</span>
+                    </div>
+                    <div style="display: flex; justify-content: space-between;">
+                        <span>CO₂ Saved:</span>
+                        <span id="co2-saved" style="font-weight: 600; color: #28a745;">Loading...</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Driving Insights -->
+    <div class="card">
+        <h2>Intelligent Insights</h2>
+        <div id="insights-container" style="margin-top: 1.5rem;">
+            <div style="text-align: center; padding: 2rem; color: var(--bmw-gray);">
+                <i data-lucide="loader" class="spinning" style="margin-bottom: 1rem;"></i>
+                <div>Analyzing your driving patterns...</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Recent Trips -->
+    <div class="card">
+        <h2>Recent Trips</h2>
+        <div style="margin-top: 1.5rem;">
+            <div style="background: white; border-radius: 8px; overflow: hidden;">
+                <div id="recent-trips-container">
+                    <div style="text-align: center; padding: 2rem; color: var(--bmw-gray);">
+                        <i data-lucide="loader" class="spinning" style="margin-bottom: 1rem;"></i>
+                        <div>Loading recent trips...</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Quick Actions -->
+    <div class="card">
+        <h2>Quick Actions</h2>
+        <div style="display: flex; gap: 1rem; margin-top: 1.5rem; flex-wrap: wrap;">
+            <button onclick="window.location.href='{{ "/protected.html" | relative_url }}'" class="btn btn-outline">
+                <i data-lucide="home" style="margin-right: 0.5rem;"></i>
+                Back to Dashboard
+            </button>
+            <button class="btn btn-outline" onclick="analyticsManager.refreshAnalytics()">
+                <i data-lucide="download" style="margin-right: 0.5rem;"></i>
+                Export Data
+            </button>
+            <button class="btn btn-outline" onclick="analyticsManager.handlePeriodChange('month')">
+                <i data-lucide="calendar" style="margin-right: 0.5rem;"></i>
+                View Monthly Report
+            </button>
+        </div>
+    </div>
+</div>
+
+<div class="auth-only">
+    <div class="card">
+        <h2>Authentication Required</h2>
+        <p>Please log in to view your personalized driving analytics and insights.</p>
+        
+        <div style="background: var(--bmw-light-gray); padding: 1.5rem; margin: 1.5rem 0;">
+            <h3>What you'll see after logging in:</h3>
+            <ul style="margin: 1rem 0 0 1.5rem;">
+                <li>Comprehensive driving pattern analysis</li>
+                <li>Energy efficiency trends and insights</li>
+                <li>Historical trip data and comparisons</li>
+                <li>Personalized recommendations for improvement</li>
+                <li>Cost analysis and environmental impact</li>
+            </ul>
+        </div>
+
+        <div style="text-align: center;">
+            <a href="{{ '/login.html' | relative_url }}" class="btn btn-primary" style="margin-right: 1rem;">
+                Go to Login Page
+            </a>
+            <button onclick="bmwAuth.login()" class="btn btn-outline">
+                Quick Login
+            </button>
+        </div>
+    </div>
+</div>
+
+<script>
+// Load analytics data when page loads
+document.addEventListener('DOMContentLoaded', function() {
+    // Small delay to ensure all scripts are loaded
+    setTimeout(function() {
+        if (window.analyticsManager && window.bmwAuth && window.bmwAuth.isAuthenticated()) {
+            window.analyticsManager.loadAnalyticsPage();
+        }
+    }, 500);
+});
+</script>
+
+<style>
+.period-selector.active {
+    background: var(--bmw-blue);
+    color: white;
+    border-color: var(--bmw-blue);
+}
+
+.simple-chart {
+    background: var(--bmw-light-gray);
+    padding: 1.5rem;
+    border-radius: 8px;
+}
+
+.chart-bars {
+    height: 220px;
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-around;
+    margin-top: 1rem;
+}
+
+.insight-card {
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.insight-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.trip-item:hover {
+    background: var(--bmw-light-gray);
+}
+
+.spinning {
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+</style>
