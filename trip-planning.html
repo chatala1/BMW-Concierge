@@ -1,0 +1,442 @@
+---
+layout: default
+title: "Trip Planning"
+description: "BMW Concierge Trip Planning - Plan your next journey with optimized routes"
+---
+
+<div class="hero" style="background: linear-gradient(135deg, #007fff, #0056b3);">
+    <h1>Trip Planning</h1>
+    <p>Plan your next journey with optimized routes and charging stops</p>
+</div>
+
+<div class="auth-required">
+    <div class="card">
+        <h2>Plan Your Trip</h2>
+        <p style="margin-bottom: 2rem; color: var(--bmw-gray);">Enter your departure and destination details to create an optimized route with charging stops and travel recommendations.</p>
+        
+        <form id="trip-planning-form" style="margin-bottom: 2rem;">
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1rem;">
+                <div>
+                    <label for="departure" style="display: block; margin-bottom: 0.5rem; font-weight: 600;">From:</label>
+                    <input type="text" id="departure" name="departure" placeholder="Enter departure location" 
+                           style="width: 100%; padding: 0.75rem; border: 1px solid #ddd; border-radius: 4px;">
+                </div>
+                <div>
+                    <label for="destination" style="display: block; margin-bottom: 0.5rem; font-weight: 600;">To:</label>
+                    <input type="text" id="destination" name="destination" placeholder="Enter destination" 
+                           style="width: 100%; padding: 0.75rem; border: 1px solid #ddd; border-radius: 4px;">
+                </div>
+            </div>
+            
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1rem;">
+                <div>
+                    <label for="departure-date" style="display: block; margin-bottom: 0.5rem; font-weight: 600;">Departure Date:</label>
+                    <input type="date" id="departure-date" name="departure-date" 
+                           style="width: 100%; padding: 0.75rem; border: 1px solid #ddd; border-radius: 4px;">
+                </div>
+                <div>
+                    <label for="departure-time" style="display: block; margin-bottom: 0.5rem; font-weight: 600;">Departure Time:</label>
+                    <input type="time" id="departure-time" name="departure-time" 
+                           style="width: 100%; padding: 0.75rem; border: 1px solid #ddd; border-radius: 4px;">
+                </div>
+            </div>
+            
+            <div style="margin-bottom: 1.5rem;">
+                <label style="display: block; margin-bottom: 0.5rem; font-weight: 600;">Preferences:</label>
+                <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
+                    <label style="display: flex; align-items: center;">
+                        <input type="checkbox" id="eco-route" name="eco-route" checked style="margin-right: 0.5rem;">
+                        <span>Eco-friendly route</span>
+                    </label>
+                    <label style="display: flex; align-items: center;">
+                        <input type="checkbox" id="fast-charging" name="fast-charging" checked style="margin-right: 0.5rem;">
+                        <span>Fast charging stations only</span>
+                    </label>
+                    <label style="display: flex; align-items: center;">
+                        <input type="checkbox" id="avoid-tolls" name="avoid-tolls" style="margin-right: 0.5rem;">
+                        <span>Avoid tolls</span>
+                    </label>
+                </div>
+            </div>
+            
+            <div style="display: flex; gap: 1rem;">
+                <button type="submit" class="btn btn-primary" style="flex: 1;">
+                    <i data-lucide="map-pin" style="margin-right: 0.5rem;"></i>
+                    Plan Trip
+                </button>
+                <button type="button" onclick="clearForm()" class="btn btn-outline">
+                    Clear
+                </button>
+            </div>
+        </form>
+        
+        <div id="trip-results" style="display: none;">
+            <!-- Trip results will be populated here -->
+        </div>
+    </div>
+    
+    <div class="card">
+        <h2>Recent Trips</h2>
+        <div style="margin-top: 1.5rem;">
+            <div style="border-left: 4px solid var(--bmw-blue); padding-left: 1rem; margin-bottom: 1rem;">
+                <strong>San Francisco → Los Angeles</strong>
+                <p style="margin: 0.25rem 0; color: var(--bmw-gray); font-size: 0.9rem;">380 miles • 2 charging stops • 6h 15m</p>
+                <div style="display: flex; gap: 1rem; margin-top: 0.5rem;">
+                    <span style="font-size: 0.8rem; color: var(--bmw-gray);">Completed 3 days ago</span>
+                    <button onclick="loadSavedTrip('sf-la')" style="background: none; border: none; color: var(--bmw-blue); font-size: 0.8rem; cursor: pointer; text-decoration: underline;">
+                        Use as template
+                    </button>
+                </div>
+            </div>
+            
+            <div style="border-left: 4px solid #28a745; padding-left: 1rem; margin-bottom: 1rem;">
+                <strong>San Francisco → Palo Alto</strong>
+                <p style="margin: 0.25rem 0; color: var(--bmw-gray); font-size: 0.9rem;">35 miles • No charging needed • 45m</p>
+                <div style="display: flex; gap: 1rem; margin-top: 0.5rem;">
+                    <span style="font-size: 0.8rem; color: var(--bmw-gray);">Completed 1 week ago</span>
+                    <button onclick="loadSavedTrip('sf-pa')" style="background: none; border: none; color: var(--bmw-blue); font-size: 0.8rem; cursor: pointer; text-decoration: underline;">
+                        Use as template
+                    </button>
+                </div>
+            </div>
+            
+            <div style="border-left: 4px solid #ffc107; padding-left: 1rem;">
+                <strong>San Jose → Monterey</strong>
+                <p style="margin: 0.25rem 0; color: var(--bmw-gray); font-size: 0.9rem;">95 miles • 1 charging stop • 2h 30m</p>
+                <div style="display: flex; gap: 1rem; margin-top: 0.5rem;">
+                    <span style="font-size: 0.8rem; color: var(--bmw-gray);">Completed 2 weeks ago</span>
+                    <button onclick="loadSavedTrip('sj-mt')" style="background: none; border: none; color: var(--bmw-blue); font-size: 0.8rem; cursor: pointer; text-decoration: underline;">
+                        Use as template
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="auth-only">
+    <div class="card">
+        <h2>Authentication Required</h2>
+        <p>Please log in to access the trip planning features.</p>
+        <div style="margin-top: 1.5rem;">
+            <a href="{{ '/login.html' | relative_url }}" class="btn btn-primary" style="margin-right: 1rem;">
+                Go to Login Page
+            </a>
+            <button onclick="bmwAuth.login()" class="btn btn-outline">
+                Quick Login
+            </button>
+        </div>
+    </div>
+</div>
+
+<script>
+// Initialize form with current date/time
+document.addEventListener('DOMContentLoaded', function() {
+    const now = new Date();
+    const dateInput = document.getElementById('departure-date');
+    const timeInput = document.getElementById('departure-time');
+    
+    if (dateInput) {
+        dateInput.value = now.toISOString().split('T')[0];
+    }
+    
+    if (timeInput) {
+        const hours = now.getHours().toString().padStart(2, '0');
+        const minutes = now.getMinutes().toString().padStart(2, '0');
+        timeInput.value = `${hours}:${minutes}`;
+    }
+    
+    // Initialize icons
+    if (typeof bmwIcons !== 'undefined') {
+        bmwIcons.createIcons();
+    }
+});
+
+// Handle form submission
+document.getElementById('trip-planning-form').addEventListener('submit', function(e) {
+    e.preventDefault();
+    planTrip();
+});
+
+function planTrip() {
+    const form = document.getElementById('trip-planning-form');
+    const formData = new FormData(form);
+    const departure = formData.get('departure');
+    const destination = formData.get('destination');
+    
+    if (!departure || !destination) {
+        showNotification('Please enter both departure and destination locations.', 'error');
+        return;
+    }
+    
+    // Show loading state
+    const submitBtn = form.querySelector('button[type="submit"]');
+    const originalText = submitBtn.innerHTML;
+    submitBtn.innerHTML = '<i data-lucide="loader" class="spinning" style="margin-right: 0.5rem;"></i>Planning...';
+    submitBtn.disabled = true;
+    
+    // Simulate trip planning (demo functionality)
+    setTimeout(() => {
+        const tripResults = generateTripPlan(departure, destination, formData);
+        displayTripResults(tripResults);
+        
+        // Restore button
+        submitBtn.innerHTML = originalText;
+        submitBtn.disabled = false;
+        
+        // Re-initialize icons
+        if (typeof bmwIcons !== 'undefined') {
+            bmwIcons.createIcons();
+        }
+        
+        showNotification('Trip planned successfully!', 'success');
+    }, 2000);
+}
+
+function generateTripPlan(departure, destination, formData) {
+    // Demo trip planning logic
+    const ecoRoute = formData.get('eco-route');
+    const fastCharging = formData.get('fast-charging');
+    const avoidTolls = formData.get('avoid-tolls');
+    
+    // Simulate distance calculation
+    const distance = Math.floor(Math.random() * 300) + 50; // 50-350 miles
+    const duration = Math.floor(distance / 60 * 60) + Math.floor(Math.random() * 60); // Roughly 60mph + random
+    const chargingStops = distance > 200 ? Math.floor(distance / 150) : 0;
+    
+    return {
+        departure,
+        destination,
+        distance,
+        duration,
+        chargingStops,
+        ecoRoute,
+        fastCharging,
+        avoidTolls,
+        estimatedCost: Math.floor(distance * 0.12 * 100) / 100, // $0.12 per mile estimate
+        co2Saved: ecoRoute ? Math.floor(distance * 0.4) : 0 // lbs CO2 saved with eco route
+    };
+}
+
+function displayTripResults(trip) {
+    const resultsDiv = document.getElementById('trip-results');
+    const hours = Math.floor(trip.duration / 60);
+    const minutes = trip.duration % 60;
+    
+    resultsDiv.innerHTML = `
+        <div style="background: var(--bmw-light-gray); padding: 1.5rem; border-radius: 8px; margin-bottom: 1rem;">
+            <h3 style="color: var(--bmw-blue); margin-bottom: 1rem;">
+                <i data-lucide="route" style="margin-right: 0.5rem;"></i>
+                Trip Plan: ${trip.departure} → ${trip.destination}
+            </h3>
+            
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin-bottom: 1.5rem;">
+                <div style="text-align: center; padding: 1rem; background: white; border-radius: 4px;">
+                    <i data-lucide="map-pin" style="color: var(--bmw-blue); margin-bottom: 0.5rem;"></i>
+                    <div style="font-size: 1.2rem; font-weight: 600; color: var(--bmw-blue);">${trip.distance} miles</div>
+                    <div style="font-size: 0.9rem; color: var(--bmw-gray);">Total Distance</div>
+                </div>
+                
+                <div style="text-align: center; padding: 1rem; background: white; border-radius: 4px;">
+                    <i data-lucide="clock" style="color: var(--bmw-blue); margin-bottom: 0.5rem;"></i>
+                    <div style="font-size: 1.2rem; font-weight: 600; color: var(--bmw-blue);">${hours}h ${minutes}m</div>
+                    <div style="font-size: 0.9rem; color: var(--bmw-gray);">Travel Time</div>
+                </div>
+                
+                <div style="text-align: center; padding: 1rem; background: white; border-radius: 4px;">
+                    <i data-lucide="battery-charging" style="color: var(--bmw-blue); margin-bottom: 0.5rem;"></i>
+                    <div style="font-size: 1.2rem; font-weight: 600; color: var(--bmw-blue);">${trip.chargingStops}</div>
+                    <div style="font-size: 0.9rem; color: var(--bmw-gray);">Charging Stops</div>
+                </div>
+                
+                <div style="text-align: center; padding: 1rem; background: white; border-radius: 4px;">
+                    <i data-lucide="dollar-sign" style="color: var(--bmw-blue); margin-bottom: 0.5rem;"></i>
+                    <div style="font-size: 1.2rem; font-weight: 600; color: var(--bmw-blue);">$${trip.estimatedCost}</div>
+                    <div style="font-size: 0.9rem; color: var(--bmw-gray);">Estimated Cost</div>
+                </div>
+            </div>
+            
+            ${trip.ecoRoute ? `
+                <div style="background: #d4edda; border: 1px solid #c3e6cb; padding: 1rem; border-radius: 4px; margin-bottom: 1rem;">
+                    <strong style="color: #155724;">🌱 Eco-Friendly Route Selected</strong>
+                    <p style="margin: 0.5rem 0 0 0; color: #155724; font-size: 0.9rem;">
+                        This route saves approximately ${trip.co2Saved} lbs of CO2 emissions compared to the fastest route.
+                    </p>
+                </div>
+            ` : ''}
+            
+            ${trip.chargingStops > 0 ? `
+                <div style="margin-bottom: 1rem;">
+                    <h4 style="margin-bottom: 0.5rem;">Recommended Charging Stops:</h4>
+                    ${Array.from({length: trip.chargingStops}, (_, i) => {
+                        const stopDistance = Math.floor((trip.distance / (trip.chargingStops + 1)) * (i + 1));
+                        return `
+                            <div style="display: flex; justify-content: space-between; align-items: center; padding: 0.5rem; background: white; margin-bottom: 0.5rem; border-radius: 4px;">
+                                <div>
+                                    <strong>Stop ${i + 1}: Demo Charging Station</strong>
+                                    <div style="font-size: 0.9rem; color: var(--bmw-gray);">At ${stopDistance} miles • ${trip.fastCharging ? 'Fast' : 'Standard'} charging</div>
+                                </div>
+                                <div style="color: var(--bmw-blue); font-weight: 600;">20-30 min</div>
+                            </div>
+                        `;
+                    }).join('')}
+                </div>
+            ` : ''}
+            
+            <div style="display: flex; gap: 1rem; margin-top: 1rem;">
+                <button onclick="saveTrip()" class="btn btn-primary" style="flex: 1;">
+                    <i data-lucide="bookmark" style="margin-right: 0.5rem;"></i>
+                    Save Trip
+                </button>
+                <button onclick="shareTrip()" class="btn btn-outline">
+                    <i data-lucide="share-2" style="margin-right: 0.5rem;"></i>
+                    Share
+                </button>
+                <button onclick="startNavigation()" class="btn btn-outline">
+                    <i data-lucide="navigation" style="margin-right: 0.5rem;"></i>
+                    Start Navigation
+                </button>
+            </div>
+        </div>
+    `;
+    
+    resultsDiv.style.display = 'block';
+    resultsDiv.scrollIntoView({ behavior: 'smooth' });
+    
+    // Re-initialize icons for the new content
+    if (typeof bmwIcons !== 'undefined') {
+        bmwIcons.createIcons();
+    }
+}
+
+function clearForm() {
+    document.getElementById('trip-planning-form').reset();
+    document.getElementById('trip-results').style.display = 'none';
+    
+    // Reset to current date/time
+    const now = new Date();
+    const dateInput = document.getElementById('departure-date');
+    const timeInput = document.getElementById('departure-time');
+    
+    if (dateInput) {
+        dateInput.value = now.toISOString().split('T')[0];
+    }
+    
+    if (timeInput) {
+        const hours = now.getHours().toString().padStart(2, '0');
+        const minutes = now.getMinutes().toString().padStart(2, '0');
+        timeInput.value = `${hours}:${minutes}`;
+    }
+}
+
+function loadSavedTrip(tripId) {
+    const trips = {
+        'sf-la': { departure: 'San Francisco, CA', destination: 'Los Angeles, CA' },
+        'sf-pa': { departure: 'San Francisco, CA', destination: 'Palo Alto, CA' },
+        'sj-mt': { departure: 'San Jose, CA', destination: 'Monterey, CA' }
+    };
+    
+    const trip = trips[tripId];
+    if (trip) {
+        document.getElementById('departure').value = trip.departure;
+        document.getElementById('destination').value = trip.destination;
+        
+        showNotification('Trip template loaded successfully!', 'success');
+        
+        // Scroll to form
+        document.getElementById('trip-planning-form').scrollIntoView({ behavior: 'smooth' });
+    }
+}
+
+function saveTrip() {
+    showNotification('Trip saved to your trip history!', 'success');
+}
+
+function shareTrip() {
+    if (navigator.share) {
+        navigator.share({
+            title: 'BMW Concierge Trip Plan',
+            text: 'Check out my trip plan created with BMW Concierge',
+            url: window.location.href
+        });
+    } else {
+        // Fallback for browsers that don't support Web Share API
+        navigator.clipboard.writeText(window.location.href).then(() => {
+            showNotification('Trip link copied to clipboard!', 'success');
+        }).catch(() => {
+            showNotification('Trip sharing feature coming soon!', 'info');
+        });
+    }
+}
+
+function startNavigation() {
+    showNotification('Redirecting to navigation app...', 'info');
+    // In a real implementation, this would integrate with navigation apps
+}
+
+function showNotification(message, type) {
+    // Create notification element
+    const notification = document.createElement('div');
+    notification.className = `notification notification-${type}`;
+    
+    let backgroundColor;
+    switch (type) {
+        case 'success':
+            backgroundColor = '#28a745';
+            break;
+        case 'error':
+            backgroundColor = '#dc3545';
+            break;
+        case 'info':
+            backgroundColor = '#007bff';
+            break;
+        default:
+            backgroundColor = '#6c757d';
+    }
+    
+    notification.innerHTML = `
+        <div style="
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: ${backgroundColor};
+            color: white;
+            padding: 1rem 1.5rem;
+            border-radius: 4px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+            max-width: 300px;
+            word-wrap: break-word;
+        ">
+            ${message}
+        </div>
+    `;
+
+    document.body.appendChild(notification);
+
+    // Remove after 3 seconds
+    setTimeout(() => {
+        if (notification.parentNode) {
+            notification.parentNode.removeChild(notification);
+        }
+    }, 3000);
+}
+</script>
+
+<style>
+.spinning {
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+/* Responsive form styling */
+@media (max-width: 768px) {
+    #trip-planning-form > div[style*="grid-template-columns"] {
+        grid-template-columns: 1fr !important;
+    }
+}
+</style>
