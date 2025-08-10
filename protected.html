@@ -105,18 +105,18 @@ description: "BMW Concierge Dashboard - Your personalized vehicle management cen
             <div style="text-align: left; margin-top: 1rem;">
                 <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
                     <span>This Month:</span>
-                    <span style="color: var(--bmw-blue); font-weight: 600;">1,245 miles</span>
+                    <span id="dashboard-monthly-miles" style="color: var(--bmw-blue); font-weight: 600;">1,245 miles</span>
                 </div>
                 <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
                     <span>Avg Efficiency:</span>
-                    <span style="color: #28a745; font-weight: 600;">3.2 mi/kWh</span>
+                    <span id="dashboard-avg-efficiency" style="color: #28a745; font-weight: 600;">3.2 mi/kWh</span>
                 </div>
                 <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
                     <span>Eco Score:</span>
-                    <span style="color: #28a745; font-weight: 600;">92/100</span>
+                    <span id="dashboard-eco-score" style="color: #28a745; font-weight: 600;">92/100</span>
                 </div>
             </div>
-            <button class="btn btn-outline" style="width: 100%; margin-top: 1rem;">
+            <button onclick="window.location.href='{{ "/analytics.html" | relative_url }}'" class="btn btn-outline view-details-btn" style="width: 100%; margin-top: 1rem;">
                 View Details
             </button>
         </div>
@@ -235,6 +235,9 @@ document.addEventListener('DOMContentLoaded', function() {
         if (window.vehicleAPI) {
             loadInitialVehicleData();
             updateApiModeIndicator();
+        }
+        if (window.analyticsManager) {
+            window.analyticsManager.updateDashboardAnalytics();
         }
     }, 500);
 });
