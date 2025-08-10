@@ -1,0 +1,520 @@
+---
+layout: default
+title: "Settings"
+description: "BMW Concierge Settings - Manage your preferences, vehicles, and account settings"
+---
+
+<div class="hero" style="background: linear-gradient(135deg, #007BFF, #0056CC);">
+    <h1>Settings</h1>
+    <p>Manage your BMW Concierge preferences and vehicle connections</p>
+</div>
+
+<div class="protected-content">
+    <!-- Content will be dynamically updated by auth.js based on authentication status -->
+    <h3>Authentication Required</h3>
+    <p>Please log in with your GitHub account to access your settings.</p>
+    <button onclick="bmwAuth.login()" class="btn btn-primary mt-lg">
+        Login with GitHub
+    </button>
+</div>
+
+<div class="auth-required">
+    <div class="card">
+        <h2>Account Settings</h2>
+        <div class="features-grid" style="grid-template-columns: 1fr; gap: 2rem; margin-top: 1.5rem;">
+            
+            <!-- Profile Settings -->
+            <div class="feature-card">
+                <i data-lucide="user" class="icon"></i>
+                <h3>Profile Information</h3>
+                <div style="text-align: left; margin-top: 1rem;">
+                    <div style="display: flex; justify-content: space-between; margin-bottom: 1rem; align-items: center;">
+                        <span>GitHub Account:</span>
+                        <span id="profile-username" style="color: var(--bmw-blue); font-weight: 600;">Loading...</span>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; margin-bottom: 1rem; align-items: center;">
+                        <span>Member Since:</span>
+                        <span id="profile-member-since" style="color: var(--bmw-gray);">Loading...</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Notification Settings -->
+            <div class="feature-card">
+                <i data-lucide="bell" class="icon"></i>
+                <h3>Notification Preferences</h3>
+                <div style="text-align: left; margin-top: 1rem;">
+                    <div style="margin-bottom: 1rem;">
+                        <label style="display: flex; align-items: center; margin-bottom: 0.75rem; cursor: pointer;">
+                            <input type="checkbox" id="notifications-push" checked style="margin-right: 0.75rem;">
+                            <div>
+                                <strong style="display: block;">Push Notifications</strong>
+                                <small style="color: var(--bmw-gray);">Receive instant updates about your vehicle</small>
+                            </div>
+                        </label>
+                        <label style="display: flex; align-items: center; margin-bottom: 0.75rem; cursor: pointer;">
+                            <input type="checkbox" id="notifications-service" checked style="margin-right: 0.75rem;">
+                            <div>
+                                <strong style="display: block;">Service Reminders</strong>
+                                <small style="color: var(--bmw-gray);">Get notified about upcoming maintenance</small>
+                            </div>
+                        </label>
+                        <label style="display: flex; align-items: center; margin-bottom: 0.75rem; cursor: pointer;">
+                            <input type="checkbox" id="notifications-security" style="margin-right: 0.75rem;">
+                            <div>
+                                <strong style="display: block;">Security Alerts</strong>
+                                <small style="color: var(--bmw-gray);">Important security notifications</small>
+                            </div>
+                        </label>
+                        <label style="display: flex; align-items: center; cursor: pointer;">
+                            <input type="checkbox" id="notifications-location" style="margin-right: 0.75rem;">
+                            <div>
+                                <strong style="display: block;">Location Sharing</strong>
+                                <small style="color: var(--bmw-gray);">Share location for improved services</small>
+                            </div>
+                        </label>
+                    </div>
+                </div>
+                <button onclick="saveNotificationSettings()" class="btn btn-primary" style="width: 100%; margin-top: 1rem;">
+                    Save Preferences
+                </button>
+            </div>
+
+            <!-- Vehicle Management -->
+            <div class="feature-card">
+                <i data-lucide="car" class="icon"></i>
+                <h3>Vehicle Management</h3>
+                <div style="text-align: left; margin-top: 1rem;">
+                    <div id="vehicle-list" style="margin-bottom: 1.5rem;">
+                        <!-- Vehicles will be populated by JavaScript -->
+                    </div>
+                    <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
+                        <button onclick="addVehicle()" class="btn btn-primary" style="flex: 1;">
+                            <i data-lucide="plus" style="margin-right: 0.5rem;"></i>
+                            Add Vehicle
+                        </button>
+                        <button onclick="connectSmartcar()" class="btn btn-outline" style="flex: 1;">
+                            <i data-lucide="wifi" style="margin-right: 0.5rem;"></i>
+                            Connect Smartcar
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Privacy Settings -->
+            <div class="feature-card">
+                <i data-lucide="shield" class="icon"></i>
+                <h3>Privacy & Security</h3>
+                <div style="text-align: left; margin-top: 1rem;">
+                    <div style="margin-bottom: 1rem;">
+                        <label style="display: flex; align-items: center; margin-bottom: 0.75rem; cursor: pointer;">
+                            <input type="checkbox" id="privacy-analytics" style="margin-right: 0.75rem;">
+                            <div>
+                                <strong style="display: block;">Usage Analytics</strong>
+                                <small style="color: var(--bmw-gray);">Help improve the app with anonymous usage data</small>
+                            </div>
+                        </label>
+                        <label style="display: flex; align-items: center; margin-bottom: 0.75rem; cursor: pointer;">
+                            <input type="checkbox" id="privacy-data-sharing" style="margin-right: 0.75rem;">
+                            <div>
+                                <strong style="display: block;">Data Sharing</strong>
+                                <small style="color: var(--bmw-gray);">Share data with BMW partners for enhanced services</small>
+                            </div>
+                        </label>
+                    </div>
+                    <div style="background: var(--bmw-light-gray); padding: 1rem; border-radius: 4px; margin-bottom: 1rem;">
+                        <strong>Data Export</strong>
+                        <p style="margin: 0.5rem 0; font-size: 0.9rem; color: var(--bmw-gray);">
+                            Download your personal data and settings
+                        </p>
+                        <button onclick="exportData()" class="btn btn-outline" style="font-size: 0.9rem; padding: 0.5rem 1rem;">
+                            Export Data
+                        </button>
+                    </div>
+                </div>
+                <button onclick="savePrivacySettings()" class="btn btn-primary" style="width: 100%; margin-top: 1rem;">
+                    Save Privacy Settings
+                </button>
+            </div>
+
+            <!-- App Settings -->
+            <div class="feature-card">
+                <i data-lucide="settings" class="icon"></i>
+                <h3>Application Settings</h3>
+                <div style="text-align: left; margin-top: 1rem;">
+                    <div style="margin-bottom: 1rem;">
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 0.75rem; align-items: center;">
+                            <span>Theme:</span>
+                            <select id="app-theme" style="padding: 0.5rem; border: 1px solid var(--bmw-light-gray); border-radius: 4px;">
+                                <option value="auto">Auto</option>
+                                <option value="light">Light</option>
+                                <option value="dark">Dark</option>
+                            </select>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 0.75rem; align-items: center;">
+                            <span>Language:</span>
+                            <select id="app-language" style="padding: 0.5rem; border: 1px solid var(--bmw-light-gray); border-radius: 4px;">
+                                <option value="en">English</option>
+                                <option value="de">Deutsch</option>
+                                <option value="fr">Français</option>
+                            </select>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 0.75rem; align-items: center;">
+                            <span>Auto-refresh:</span>
+                            <select id="app-refresh" style="padding: 0.5rem; border: 1px solid var(--bmw-light-gray); border-radius: 4px;">
+                                <option value="30">30 seconds</option>
+                                <option value="60">1 minute</option>
+                                <option value="300">5 minutes</option>
+                                <option value="0">Never</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <button onclick="saveAppSettings()" class="btn btn-primary" style="width: 100%; margin-top: 1rem;">
+                    Save Application Settings
+                </button>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Quick Actions -->
+    <div class="card">
+        <h2>Quick Actions</h2>
+        <div class="features-grid" style="grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin-top: 1.5rem;">
+            <button onclick="window.location.href='{{ "/protected.html" | relative_url }}'" class="btn btn-outline" style="padding: 1rem;">
+                <i data-lucide="arrow-left" style="margin-right: 0.5rem;"></i>
+                Back to Dashboard
+            </button>
+            <button onclick="resetAllSettings()" class="btn btn-outline" style="padding: 1rem;">
+                <i data-lucide="refresh-ccw" style="margin-right: 0.5rem;"></i>
+                Reset All Settings
+            </button>
+            <button onclick="window.location.href='{{ "/privacy.html" | relative_url }}'" class="btn btn-outline" style="padding: 1rem;">
+                <i data-lucide="info" style="margin-right: 0.5rem;"></i>
+                Privacy Policy
+            </button>
+        </div>
+    </div>
+</div>
+
+<div class="card auth-only">
+    <h2>Access Required</h2>
+    <p>Your BMW Concierge settings contain personalized preferences and require authentication to ensure your data privacy and security.</p>
+    
+    <div style="background: var(--bmw-light-gray); padding: 1.5rem; margin: 1.5rem 0;">
+        <h3>Why do we require login?</h3>
+        <ul style="margin: 1rem 0 0 1.5rem;">
+            <li>Protect your personal preferences and settings</li>
+            <li>Secure vehicle connection information</li>
+            <li>Maintain your notification and privacy preferences</li>
+            <li>Ensure data integrity and account security</li>
+        </ul>
+    </div>
+
+    <div style="text-align: center;">
+        <a href="{{ '/login.html' | relative_url }}" class="btn btn-primary" style="margin-right: 1rem;">
+            Go to Login Page
+        </a>
+        <button onclick="bmwAuth.login()" class="btn btn-outline">
+            Quick Login
+        </button>
+    </div>
+</div>
+
+<script>
+// Settings page functionality
+document.addEventListener('DOMContentLoaded', function() {
+    if (window.bmwAuth && window.bmwAuth.isAuthenticated()) {
+        loadUserProfile();
+        loadVehicles();
+        loadSettings();
+    }
+});
+
+// Demo vehicles data
+const demoVehicles = [
+    {
+        id: 'demo_vehicle_1',
+        name: 'BMW i4 M50',
+        vin: 'WBA4XXXX2HEK12345',
+        year: 2023,
+        status: 'connected',
+        lastConnected: '2024-01-15T10:30:00Z'
+    }
+];
+
+function loadUserProfile() {
+    const user = window.bmwAuth.getCurrentUser();
+    if (user) {
+        document.getElementById('profile-username').textContent = user.name || user.login;
+        
+        // Simulate member since date
+        const memberSince = new Date();
+        memberSince.setFullYear(memberSince.getFullYear() - 2);
+        document.getElementById('profile-member-since').textContent = memberSince.toLocaleDateString();
+    }
+}
+
+function loadVehicles() {
+    const vehicleList = document.getElementById('vehicle-list');
+    if (!vehicleList) return;
+
+    if (demoVehicles.length === 0) {
+        vehicleList.innerHTML = `
+            <div style="background: var(--bmw-light-gray); padding: 1rem; border-radius: 4px; text-align: center;">
+                <i data-lucide="car" style="margin-bottom: 0.5rem; color: var(--bmw-gray);"></i>
+                <p style="margin: 0; color: var(--bmw-gray);">No vehicles connected</p>
+                <small style="color: var(--bmw-gray);">Add your first vehicle to get started</small>
+            </div>
+        `;
+    } else {
+        vehicleList.innerHTML = demoVehicles.map(vehicle => `
+            <div style="border: 1px solid var(--bmw-light-gray); border-radius: 4px; padding: 1rem; margin-bottom: 1rem;">
+                <div style="display: flex; justify-content: between; align-items: center; margin-bottom: 0.5rem;">
+                    <strong style="color: var(--bmw-blue);">${vehicle.name}</strong>
+                    <span style="background: ${vehicle.status === 'connected' ? '#28a745' : '#6c757d'}; color: white; padding: 0.25rem 0.5rem; border-radius: 12px; font-size: 0.8rem; text-transform: uppercase;">
+                        ${vehicle.status}
+                    </span>
+                </div>
+                <div style="font-size: 0.9rem; color: var(--bmw-gray); margin-bottom: 0.5rem;">
+                    <strong>VIN:</strong> ${vehicle.vin}
+                </div>
+                <div style="font-size: 0.9rem; color: var(--bmw-gray); margin-bottom: 1rem;">
+                    <strong>Year:</strong> ${vehicle.year}
+                </div>
+                <div style="display: flex; gap: 0.5rem;">
+                    <button onclick="editVehicle('${vehicle.id}')" class="btn btn-outline" style="flex: 1; font-size: 0.9rem; padding: 0.5rem;">
+                        Edit
+                    </button>
+                    <button onclick="removeVehicle('${vehicle.id}')" class="btn btn-outline" style="flex: 1; font-size: 0.9rem; padding: 0.5rem; color: #dc3545; border-color: #dc3545;">
+                        Remove
+                    </button>
+                </div>
+            </div>
+        `).join('');
+    }
+    
+    // Re-initialize Lucide icons
+    if (typeof lucide !== 'undefined') {
+        lucide.createIcons();
+    }
+}
+
+function loadSettings() {
+    // Load saved settings from localStorage
+    const settings = JSON.parse(localStorage.getItem('bmw_concierge_settings') || '{}');
+    
+    // Apply notification settings
+    if (settings.notifications) {
+        document.getElementById('notifications-push').checked = settings.notifications.push !== false;
+        document.getElementById('notifications-service').checked = settings.notifications.service !== false;
+        document.getElementById('notifications-security').checked = settings.notifications.security === true;
+        document.getElementById('notifications-location').checked = settings.notifications.location === true;
+    }
+    
+    // Apply privacy settings
+    if (settings.privacy) {
+        document.getElementById('privacy-analytics').checked = settings.privacy.analytics === true;
+        document.getElementById('privacy-data-sharing').checked = settings.privacy.dataSharing === true;
+    }
+    
+    // Apply app settings
+    if (settings.app) {
+        document.getElementById('app-theme').value = settings.app.theme || 'auto';
+        document.getElementById('app-language').value = settings.app.language || 'en';
+        document.getElementById('app-refresh').value = settings.app.refresh || '60';
+    }
+}
+
+function saveNotificationSettings() {
+    const settings = JSON.parse(localStorage.getItem('bmw_concierge_settings') || '{}');
+    
+    settings.notifications = {
+        push: document.getElementById('notifications-push').checked,
+        service: document.getElementById('notifications-service').checked,
+        security: document.getElementById('notifications-security').checked,
+        location: document.getElementById('notifications-location').checked
+    };
+    
+    localStorage.setItem('bmw_concierge_settings', JSON.stringify(settings));
+    
+    if (window.bmwAuth) {
+        window.bmwAuth.showSuccess('Notification preferences saved successfully!');
+    }
+}
+
+function savePrivacySettings() {
+    const settings = JSON.parse(localStorage.getItem('bmw_concierge_settings') || '{}');
+    
+    settings.privacy = {
+        analytics: document.getElementById('privacy-analytics').checked,
+        dataSharing: document.getElementById('privacy-data-sharing').checked
+    };
+    
+    localStorage.setItem('bmw_concierge_settings', JSON.stringify(settings));
+    
+    if (window.bmwAuth) {
+        window.bmwAuth.showSuccess('Privacy settings saved successfully!');
+    }
+}
+
+function saveAppSettings() {
+    const settings = JSON.parse(localStorage.getItem('bmw_concierge_settings') || '{}');
+    
+    settings.app = {
+        theme: document.getElementById('app-theme').value,
+        language: document.getElementById('app-language').value,
+        refresh: document.getElementById('app-refresh').value
+    };
+    
+    localStorage.setItem('bmw_concierge_settings', JSON.stringify(settings));
+    
+    if (window.bmwAuth) {
+        window.bmwAuth.showSuccess('Application settings saved successfully!');
+    }
+}
+
+function addVehicle() {
+    // Show modal or navigate to add vehicle flow
+    const vehicleName = prompt('Enter vehicle name (e.g., "BMW X5 2023"):');
+    if (vehicleName) {
+        const newVehicle = {
+            id: 'demo_vehicle_' + Math.random().toString(36).substr(2, 9),
+            name: vehicleName,
+            vin: 'WBA' + Math.random().toString(36).substr(2, 9).toUpperCase(),
+            year: new Date().getFullYear(),
+            status: 'disconnected',
+            lastConnected: null
+        };
+        
+        demoVehicles.push(newVehicle);
+        loadVehicles();
+        
+        if (window.bmwAuth) {
+            window.bmwAuth.showSuccess('Vehicle "' + vehicleName + '" added successfully!');
+        }
+    }
+}
+
+function editVehicle(vehicleId) {
+    const vehicle = demoVehicles.find(v => v.id === vehicleId);
+    if (vehicle) {
+        const newName = prompt('Edit vehicle name:', vehicle.name);
+        if (newName && newName !== vehicle.name) {
+            vehicle.name = newName;
+            loadVehicles();
+            
+            if (window.bmwAuth) {
+                window.bmwAuth.showSuccess('Vehicle updated successfully!');
+            }
+        }
+    }
+}
+
+function removeVehicle(vehicleId) {
+    const vehicle = demoVehicles.find(v => v.id === vehicleId);
+    if (vehicle && confirm('Are you sure you want to remove "' + vehicle.name + '"?')) {
+        const index = demoVehicles.findIndex(v => v.id === vehicleId);
+        if (index > -1) {
+            demoVehicles.splice(index, 1);
+            loadVehicles();
+            
+            if (window.bmwAuth) {
+                window.bmwAuth.showSuccess('Vehicle removed successfully!');
+            }
+        }
+    }
+}
+
+function connectSmartcar() {
+    if (window.bmwAuth) {
+        window.bmwAuth.initiateSmartcarAuth();
+    }
+}
+
+function exportData() {
+    const data = {
+        profile: window.bmwAuth ? window.bmwAuth.getCurrentUser() : null,
+        vehicles: demoVehicles,
+        settings: JSON.parse(localStorage.getItem('bmw_concierge_settings') || '{}'),
+        exportDate: new Date().toISOString()
+    };
+    
+    const dataStr = JSON.stringify(data, null, 2);
+    const dataBlob = new Blob([dataStr], {type: 'application/json'});
+    const url = URL.createObjectURL(dataBlob);
+    
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = 'bmw_concierge_data_export.json';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    URL.revokeObjectURL(url);
+    
+    if (window.bmwAuth) {
+        window.bmwAuth.showSuccess('Data exported successfully!');
+    }
+}
+
+function resetAllSettings() {
+    if (confirm('Are you sure you want to reset all settings to defaults? This action cannot be undone.')) {
+        localStorage.removeItem('bmw_concierge_settings');
+        
+        // Reset form values
+        document.getElementById('notifications-push').checked = true;
+        document.getElementById('notifications-service').checked = true;
+        document.getElementById('notifications-security').checked = false;
+        document.getElementById('notifications-location').checked = false;
+        document.getElementById('privacy-analytics').checked = false;
+        document.getElementById('privacy-data-sharing').checked = false;
+        document.getElementById('app-theme').value = 'auto';
+        document.getElementById('app-language').value = 'en';
+        document.getElementById('app-refresh').value = '60';
+        
+        if (window.bmwAuth) {
+            window.bmwAuth.showSuccess('All settings have been reset to defaults!');
+        }
+    }
+}
+</script>
+
+<style>
+.features-grid .feature-card {
+    background: white;
+    border: 1px solid var(--bmw-light-gray);
+    border-radius: 8px;
+    padding: 1.5rem;
+    text-align: center;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.features-grid .feature-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.feature-card .icon {
+    width: 48px;
+    height: 48px;
+    color: var(--bmw-blue);
+    margin-bottom: 1rem;
+}
+
+input[type="checkbox"] {
+    width: 18px;
+    height: 18px;
+    accent-color: var(--bmw-blue);
+}
+
+select {
+    color: var(--bmw-dark);
+    background: white;
+}
+
+select:focus {
+    outline: 2px solid var(--bmw-blue);
+    outline-offset: 2px;
+}
+</style>
