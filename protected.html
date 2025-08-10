@@ -296,9 +296,9 @@ function updateApiModeIndicator() {
         `;
     }
     
-    // Re-initialize Lucide icons for the new content
-    if (typeof lucide !== 'undefined') {
-        lucide.createIcons();
+    // Re-initialize BMW icons for the new content
+    if (typeof bmwIcons !== 'undefined') {
+        bmwIcons.createIcons();
     }
 }
 
@@ -364,8 +364,8 @@ function updateSmartcarStatus() {
     }
     
     // Initialize Lucide icons for the new content
-    if (typeof lucide !== 'undefined') {
-        lucide.createIcons();
+    if (typeof bmwIcons !== 'undefined') {
+        bmwIcons.createIcons();
     }
 }
 
@@ -385,8 +385,8 @@ function refreshVehicleData() {
         bmwAuth.showSuccess('Vehicle data refreshed successfully');
         
         // Re-initialize icons
-        if (typeof lucide !== 'undefined') {
-            lucide.createIcons();
+        if (typeof bmwIcons !== 'undefined') {
+            bmwIcons.createIcons();
         }
     }, 2000);
 }
@@ -430,8 +430,8 @@ async function refreshVehicleStatus() {
         button.disabled = false;
         
         // Re-initialize icons
-        if (typeof lucide !== 'undefined') {
-            lucide.createIcons();
+        if (typeof bmwIcons !== 'undefined') {
+            bmwIcons.createIcons();
         }
     }
 }
@@ -515,8 +515,8 @@ function updateVehicleStatusDisplay(data, metadata = {}) {
         }
         
         // Re-initialize Lucide icons for the new content
-        if (typeof lucide !== 'undefined') {
-            lucide.createIcons();
+        if (typeof bmwIcons !== 'undefined') {
+            bmwIcons.createIcons();
         }
     }
 }
@@ -540,8 +540,8 @@ function showDataError(message) {
             </div>
         `;
         
-        if (typeof lucide !== 'undefined') {
-            lucide.createIcons();
+        if (typeof bmwIcons !== 'undefined') {
+            bmwIcons.createIcons();
         }
     }
 }

@@ -1065,23 +1065,50 @@ a:hover {
 .shadow-lg { box-shadow: var(--shadow-lg); }
 .shadow-xl { box-shadow: var(--shadow-xl); }
 
-/* SVG Icons */
+/* SVG Icons - Enhanced BMW Styling */
 .icon {
     width: 4rem;
     height: 4rem;
     color: var(--bmw-blue);
     margin-bottom: var(--spacing-lg);
     filter: drop-shadow(0 2px 4px rgba(0, 102, 204, 0.2));
+    transition: all var(--transition-base);
+}
+
+.icon:hover {
+    transform: translateY(-2px);
+    filter: drop-shadow(0 4px 8px rgba(0, 102, 204, 0.3));
 }
 
 .icon-small {
     width: 1.5rem;
     height: 1.5rem;
+    margin-bottom: 0;
+    filter: none;
 }
 
 .icon-medium {
     width: 2rem;
     height: 2rem;
+    margin-bottom: 0;
+    filter: none;
+}
+
+/* Ensure SVG icons inherit color and sizing properly */
+.icon svg,
+.icon-small svg,
+.icon-medium svg {
+    width: 100%;
+    height: 100%;
+    stroke: currentColor;
+    transition: all var(--transition-base);
+}
+
+/* Icon wrapper for proper positioning */
+.icon-wrapper {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
 }
 
 /* Loading Animation */
