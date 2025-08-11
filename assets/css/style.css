@@ -115,6 +115,14 @@ body {
     transform: translateY(-1px);
 }
 
+/* Ensure navigation logo/icon is visible (white) against black nav background */
+.nav-brand .icon-small,
+.nav-brand img,
+.nav-brand svg {
+    color: var(--bmw-white);
+    filter: brightness(0) invert(1);
+}
+
 /* Mobile Hamburger Button */
 .nav-toggle {
     display: none;

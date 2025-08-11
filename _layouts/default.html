@@ -23,13 +23,13 @@
                     <img src="{{ '/assets/images/concierge-icon.svg' | relative_url }}" alt="Concierge Icon" class="icon-small" 
                          onerror="this.style.display='none'; this.nextElementSibling.style.display='inline-block';">
                     <!-- Inline SVG fallback -->
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon-small" style="display: none;" aria-label="Concierge Icon">
-                        <circle cx="12" cy="12" r="10"/>
-                        <circle cx="12" cy="8" r="2"/>
-                        <path d="M8 18c0-2.5 1.8-4.5 4-4.5s4 2 4 4.5"/>
-                        <circle cx="7" cy="12" r="1"/>
-                        <circle cx="17" cy="12" r="1"/>
-                        <circle cx="12" cy="5" r="0.8"/>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" class="icon-small" style="display: none;" aria-label="Scope Icon">
+                        <!-- Scope-style design: Circle with cross in center -->
+                        <!-- Outer circle with thick stroke -->
+                        <circle cx="12" cy="12" r="9" stroke-width="3" fill="none"/>
+                        <!-- Cross in center with thinner stroke -->
+                        <line x1="12" y1="6" x2="12" y2="18" stroke-width="1.5"/>
+                        <line x1="6" y1="12" x2="18" y2="12" stroke-width="1.5"/>
                     </svg>
                     My Concierge
                 </a>
