@@ -1111,7 +1111,7 @@ a:hover {
     filter: none;
 }
 
-/* Ensure SVG icons inherit color and sizing properly */
+/* Ensure SVG icons inherit color and sizing properly with proper aspect ratio preservation */
 .icon svg,
 .icon-small svg,
 .icon-medium svg {
@@ -1119,6 +1119,11 @@ a:hover {
     height: 100%;
     stroke: currentColor;
     transition: all var(--transition-base);
+    /* Preserve aspect ratio and prevent distortion */
+    object-fit: contain;
+    /* Ensure SVG scales correctly */
+    max-width: 100%;
+    max-height: 100%;
 }
 
 /* Icon wrapper for proper positioning */
