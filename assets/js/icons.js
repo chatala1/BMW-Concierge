@@ -156,6 +156,38 @@ const BMW_ICONS = {
     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
       <path d="M14 4v10.54a4 4 0 1 1-4 0V4a2 2 0 0 1 4 0Z"/>
     </svg>
+  `,
+  // Enhanced BMW-specific icons for privacy and vehicle features
+  'bmw-shield': `
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <!-- BMW-styled shield with enhanced security symbolism -->
+      <path d="M12 2L4 6c0 8 3.5 12 8 16 4.5-4 8-8 8-16l-8-4z"/>
+      <!-- Central lock symbol -->
+      <rect x="9" y="10" width="6" height="5" rx="1"/>
+      <circle cx="12" cy="12.5" r="0.8"/>
+      <!-- Shield reinforcement lines -->
+      <path d="M12 6v2M8 8l1.5 1.5M16 8l-1.5 1.5"/>
+    </svg>
+  `,
+  'bmw-car': `
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <!-- BMW-styled car with kidney grille and distinctive features -->
+      <path d="M3 17h2l.5-2h13l.5 2h2"/>
+      <!-- Car body with BMW proportions -->
+      <path d="M5 17h-.5A2.5 2.5 0 0 1 2 14.5v-2A2.5 2.5 0 0 1 4.5 10h1L6 8h12l.5 2h1a2.5 2.5 0 0 1 2.5 2.5v2a2.5 2.5 0 0 1-2.5 2.5H19"/>
+      <!-- BMW kidney grille -->
+      <ellipse cx="9" cy="11" rx="1.2" ry="0.8"/>
+      <ellipse cx="15" cy="11" rx="1.2" ry="0.8"/>
+      <!-- Wheels -->
+      <circle cx="7" cy="17" r="2"/>
+      <circle cx="17" cy="17" r="2"/>
+      <!-- Wheel centers -->
+      <circle cx="7" cy="17" r="0.7"/>
+      <circle cx="17" cy="17" r="0.7"/>
+      <!-- Headlights -->
+      <circle cx="6" cy="9.5" r="0.5"/>
+      <circle cx="18" cy="9.5" r="0.5"/>
+    </svg>
   `
 };
 
