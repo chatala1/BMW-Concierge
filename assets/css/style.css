@@ -72,7 +72,7 @@ body {
 
 /* Header and Navigation */
 .site-header {
-    background: var(--bmw-white);
+    background: var(--bmw-black);
     border-bottom: 1px solid var(--bmw-light-gray);
     box-shadow: var(--shadow-sm);
     position: sticky;
@@ -102,7 +102,7 @@ body {
     gap: var(--spacing-sm);
     font-size: 1.75rem;
     font-weight: var(--font-weight-bold);
-    color: var(--bmw-blue);
+    color: var(--bmw-white);
     text-decoration: none;
     transition: all var(--transition-base);
     letter-spacing: -0.02em;
