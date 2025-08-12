@@ -178,7 +178,7 @@ body {
 }
 
 .nav-toggle:hover .hamburger-line {
-    background: var(--bmw-dark-blue);
+    background: transparent;
 }
 
 .nav-toggle:focus {
@@ -217,7 +217,7 @@ body {
 
 .nav-link:hover {
     color: var(--bmw-blue);
-    background: rgba(0, 102, 204, 0.05);
+    background: transparent;
 }
 
 .nav-link::after {
@@ -227,7 +227,7 @@ body {
     left: 50%;
     width: 0;
     height: 2px;
-    background: var(--bmw-blue);
+    background: transparent;
     transition: all var(--transition-base);
     transform: translateX(-50%);
 }
@@ -246,6 +246,13 @@ body {
     color: var(--bmw-gray);
     font-weight: var(--font-weight-medium);
     font-size: 0.9rem;
+}
+/* Footer */
+.copyright {
+    font-size: 11px;
+}
+.legal {
+    font-size: 10px;
 }
 
 /* Buttons */
