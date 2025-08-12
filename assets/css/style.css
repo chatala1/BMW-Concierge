@@ -44,8 +44,8 @@
     --bmw-carbon: #1A1A1A; /* Carbon Black */
     
     /* Typography */
-    --font-family: "BMW Helvetica", "Helvetica Neue", Helvetica, Arial, sans-serif;
-    --font-family-headings: "InriaSans", "BMW Helvetica", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    --font-family: "InriaSans", Arial, sans-serif;
+    --font-family-headings: "InriaSans", Arial, sans-serif;
     --font-size-base: 16px;
     --font-weight-light: 300;
     --font-weight-normal: 400;
@@ -89,7 +89,7 @@
 body {
     font-family: var(--font-family);
     font-size: var(--font-size-base);
-    font-weight: var(--font-weight-normal);
+    font-weight: var(--font-weight-light);
     line-height: 1.6;
     color: var(--bmw-dark-gray);
     background-color: var(--bmw-off-white);
@@ -212,7 +212,6 @@ body {
     font-size: 0.95rem;
     transition: all var(--transition-base);
     padding: var(--spacing-xs) var(--spacing-sm);
-    border-radius: var(--border-radius);
     position: relative;
 }
 
@@ -253,7 +252,6 @@ body {
 .btn {
     padding: var(--spacing-sm) var(--spacing-lg);
     border: none;
-    border-radius: var(--border-radius);
     font-weight: var(--font-weight-semibold);
     font-size: 0.95rem;
     text-decoration: none;
@@ -620,7 +618,6 @@ body {
     background: linear-gradient(135deg, var(--bmw-dark-gray) 0%, var(--bmw-carbon) 100%);
     color: var(--bmw-white);
     border: none;
-    border-radius: 4px;
     cursor: pointer;
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     display: flex;
@@ -729,7 +726,6 @@ body {
 .bmw-btn {
     padding: 1rem 2rem;
     border: none;
-    border-radius: 4px;
     font-size: 1rem;
     font-weight: 600;
     text-decoration: none;
