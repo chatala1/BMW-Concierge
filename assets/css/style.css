@@ -908,6 +908,7 @@ a:hover {
     padding: var(--spacing-xl) 0;
     margin-top: auto;
     position: relative;
+    font-family: Helvetica, sans-serif;
 }
 
 .site-footer::before {
