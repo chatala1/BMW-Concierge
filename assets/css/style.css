@@ -261,6 +261,7 @@ body {
 .btn {
     padding: var(--spacing-sm) var(--spacing-lg);
     border: none;
+    font-family: var(--font-family);
     font-weight: var(--font-weight-semibold);
     font-size: 0.95rem;
     text-decoration: none;
