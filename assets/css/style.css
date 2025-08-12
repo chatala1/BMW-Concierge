@@ -1075,17 +1075,23 @@ a:hover {
 .shadow-lg { box-shadow: var(--shadow-lg); }
 .shadow-xl { box-shadow: var(--shadow-xl); }
 
-/* SVG Icons - Enhanced BMW Styling */
+/* Emoji Icons - Clean and Simple BMW Styling */
 .icon {
     width: 4rem;
     height: 4rem;
+    font-size: 4rem;
+    line-height: 1;
     color: var(--bmw-blue);
     margin-bottom: var(--spacing-lg);
     filter: drop-shadow(0 2px 4px rgba(0, 102, 204, 0.2));
     transition: all var(--transition-base);
-    display: block;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
     margin-left: auto;
     margin-right: auto;
+    text-align: center;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
 }
 
 .icon:hover {
@@ -1096,34 +1102,28 @@ a:hover {
 .icon-small {
     width: 1.5rem;
     height: 1.5rem;
+    font-size: 1.5rem;
     margin-bottom: 0;
     filter: none;
     display: inline-flex;
     align-items: center;
     justify-content: center;
     vertical-align: middle;
+    text-align: center;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
 }
 
 .icon-medium {
     width: 2rem;
     height: 2rem;
+    font-size: 2rem;
     margin-bottom: 0;
     filter: none;
-}
-
-/* Ensure SVG icons inherit color and sizing properly with proper aspect ratio preservation */
-.icon svg,
-.icon-small svg,
-.icon-medium svg {
-    width: 100%;
-    height: 100%;
-    stroke: currentColor;
-    transition: all var(--transition-base);
-    /* Preserve aspect ratio and prevent distortion */
-    object-fit: contain;
-    /* Ensure SVG scales correctly */
-    max-width: 100%;
-    max-height: 100%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
 }
 
 /* Icon wrapper for proper positioning */
@@ -1135,7 +1135,7 @@ a:hover {
 
 /* Feature card icon specific alignment */
 .feature-card .icon {
-    display: block;
+    display: inline-flex;
     margin: 0 auto var(--spacing-lg) auto;
     text-align: center;
 }
