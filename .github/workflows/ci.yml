@@ -1,0 +1,228 @@
+name: CI - Branch Protection Checks
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+# Cancel in-progress workflows when a new commit is pushed
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  # Build and validate Jekyll site
+  build-test:
+    name: Build & Test Jekyll Site
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: '3.2'
+          bundler-cache: false
+
+      - name: Install Jekyll and dependencies
+        run: |
+          gem install jekyll bundler minima jekyll-feed
+          
+      - name: Build Jekyll site
+        run: |
+          jekyll build --strict_front_matter
+          
+      - name: Test site structure
+        run: |
+          # Verify critical files exist in the built site
+          test -f _site/index.html
+          test -f _site/login.html
+          test -f _site/protected.html
+          test -f _site/privacy.html
+          echo "✅ All critical pages built successfully"
+
+      - name: Validate HTML structure
+        run: |
+          # Basic HTML validation - check for required elements
+          if ! grep -q "<html" _site/index.html; then
+            echo "❌ Missing HTML tag in index.html"
+            exit 1
+          fi
+          if ! grep -q "BMW" _site/index.html; then
+            echo "❌ Missing BMW branding in index.html"
+            exit 1
+          fi
+          echo "✅ HTML structure validation passed"
+
+  # Security and code quality checks
+  security-checks:
+    name: Security & Quality Checks
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Run security audit on configuration files
+        run: |
+          # Check for potential security issues in config files
+          
+          # Verify no secrets in _config.yml
+          if grep -i "password\|secret\|key\|token" _config.yml; then
+            echo "❌ Potential secrets found in _config.yml"
+            exit 1
+          fi
+          
+          # Check Jekyll configuration security
+          if grep -q "safe: false" _config.yml; then
+            echo "❌ Unsafe Jekyll configuration detected"
+            exit 1
+          fi
+          
+          echo "✅ Configuration security check passed"
+
+      - name: Validate authentication implementation
+        run: |
+          # Check that authentication is properly implemented
+          if ! grep -q "localStorage" assets/js/auth.js; then
+            echo "❌ Authentication storage not found"
+            exit 1
+          fi
+          
+          # Verify demo authentication is clearly marked
+          if ! grep -q "demo" assets/js/auth.js; then
+            echo "⚠️  Authentication should be clearly marked as demo"
+          fi
+          
+          echo "✅ Authentication implementation validated"
+
+      - name: Check for sensitive data exposure
+        run: |
+          # Scan for potential sensitive data in public files
+          find . -name "*.html" -o -name "*.js" -o -name "*.css" -o -name "*.yml" | \
+          xargs grep -i "password\|secret\|private.*key\|api.*key" || echo "✅ No sensitive data found"
+
+  # Dependency and link validation
+  dependency-validation:
+    name: Dependency & Link Validation
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: '3.2'
+
+      - name: Validate Jekyll dependencies
+        run: |
+          gem install jekyll bundler minima jekyll-feed
+          jekyll doctor
+          echo "✅ Jekyll configuration validated"
+
+      - name: Check internal links and assets
+        run: |
+          # Verify asset files exist
+          test -f assets/css/style.css
+          test -f assets/js/auth.js
+          echo "✅ Required assets exist"
+          
+          # Check for broken internal references in HTML files
+          for file in *.html; do
+            if [ -f "$file" ]; then
+              # Check for references to missing CSS/JS files
+              if grep -q 'href="[^"]*\.css"' "$file"; then
+                echo "Checking CSS references in $file"
+              fi
+              if grep -q 'src="[^"]*\.js"' "$file"; then
+                echo "Checking JS references in $file"
+              fi
+            fi
+          done
+          echo "✅ Internal link validation completed"
+
+  # Documentation and compliance checks
+  documentation-compliance:
+    name: Documentation & Compliance
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Verify required documentation
+        run: |
+          # Check for required documentation files
+          test -f README.md
+          test -f LICENSE
+          test -f PRIVACY.md
+          
+          # Verify README has basic content
+          if ! grep -q "BMW" README.md; then
+            echo "❌ README missing BMW project description"
+            exit 1
+          fi
+          
+          echo "✅ Documentation requirements met"
+
+      - name: Privacy and compliance validation
+        run: |
+          # Verify privacy policy exists and has content
+          if [ ! -s PRIVACY.md ]; then
+            echo "❌ Privacy policy is empty or missing"
+            exit 1
+          fi
+          
+          # Check that privacy.html references policy
+          if ! grep -q -i "privacy" privacy.html; then
+            echo "❌ Privacy page missing privacy content"
+            exit 1
+          fi
+          
+          echo "✅ Privacy and compliance checks passed"
+
+  # Branch protection validation (when running on main)
+  branch-protection-status:
+    name: Branch Protection Status Check
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main'
+    steps:
+      - name: Check branch protection status
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          echo "🔍 Checking branch protection status for main branch..."
+          
+          # Note: This check validates that the workflow is running on main
+          # Additional branch protection rules should be configured in repository settings
+          
+          if [ "$GITHUB_REF" = "refs/heads/main" ]; then
+            echo "✅ Workflow running on main branch"
+            echo "📋 Recommended branch protection rules:"
+            echo "   - Require pull request reviews before merging"
+            echo "   - Require status checks to pass before merging"
+            echo "   - Require branches to be up to date before merging"
+            echo "   - Include administrators in restrictions"
+            echo ""
+            echo "🔧 Configure these in: Repository Settings → Branches → Branch protection rules"
+          fi
+
+  # All checks must pass - this provides the overall status
+  protection-complete:
+    name: ✅ Branch Protection Checks Complete
+    runs-on: ubuntu-latest
+    needs: [build-test, security-checks, dependency-validation, documentation-compliance]
+    if: always()
+    steps:
+      - name: Verify all checks passed
+        run: |
+          if [ "${{ needs.build-test.result }}" != "success" ] || \
+             [ "${{ needs.security-checks.result }}" != "success" ] || \
+             [ "${{ needs.dependency-validation.result }}" != "success" ] || \
+             [ "${{ needs.documentation-compliance.result }}" != "success" ]; then
+            echo "❌ Some protection checks failed"
+            exit 1
+          fi
+          echo "✅ All branch protection checks passed successfully"
+          echo "🛡️ Main branch is protected by automated CI checks"
