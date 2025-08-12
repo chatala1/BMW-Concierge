@@ -132,6 +132,7 @@ body {
     display: flex;
     align-items: center;
     gap: var(--spacing-sm);
+    font-family: var(--font-family-headings);
     font-size: 1.75rem;
     font-weight: var(--font-weight-bold);
     color: var(--bmw-white);
@@ -208,6 +209,7 @@ body {
 .nav-link {
     color: var(--bmw-gray);
     text-decoration: none;
+    font-family: var(--font-family-headings);
     font-weight: var(--font-weight-medium);
     font-size: 0.95rem;
     transition: all var(--transition-base);
