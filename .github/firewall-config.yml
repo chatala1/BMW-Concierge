@@ -1,0 +1,130 @@
+# GitHub Actions Firewall Configuration for BMW Concierge
+# This file defines the network allowlist required for the BMW Concierge application
+# to function properly during GitHub Actions workflows and runtime operation.
+
+name: BMW Concierge Firewall Configuration
+description: Network allowlist for BMW Concierge dependencies and external services
+
+# Core GitHub Services - Required for GitHub Actions and Git operations
+github_services:
+  - domain: github.com
+    description: Main GitHub domain for authentication and repository access
+    ports: [80, 443]
+    protocols: [HTTP, HTTPS]
+    
+  - domain: api.github.com  
+    description: GitHub API for OAuth authentication and user data
+    ports: [443]
+    protocols: [HTTPS]
+    
+  - domain: raw.githubusercontent.com
+    description: Raw GitHub content delivery
+    ports: [443]
+    protocols: [HTTPS]
+    
+  - domain: objects.githubusercontent.com
+    description: Git object storage and retrieval
+    ports: [443] 
+    protocols: [HTTPS]
+    
+  - domain: github.githubassets.com
+    description: GitHub static assets and resources
+    ports: [443]
+    protocols: [HTTPS]
+
+# Authentication Services - OAuth and user authentication flows  
+authentication:
+  - domain: github.com
+    path: /login/oauth/*
+    description: GitHub OAuth authentication endpoints
+    ports: [443]
+    protocols: [HTTPS]
+    
+# External APIs - Third-party integrations
+external_apis:
+  - domain: smartcar.com
+    description: Smartcar API for vehicle integration
+    ports: [443]
+    protocols: [HTTPS]
+    
+  - domain: api.smartcar.com
+    description: Smartcar API endpoints
+    ports: [443]
+    protocols: [HTTPS]
+
+# BMW Brand Resources - Official BMW website links
+bmw_resources:
+  - domain: bmw.com
+    description: BMW official website for brand links and resources
+    ports: [80, 443]
+    protocols: [HTTP, HTTPS]
+    
+  - domain: www.bmw.com
+    description: BMW official website with www subdomain
+    ports: [80, 443]
+    protocols: [HTTP, HTTPS]
+
+# Ruby/Jekyll Dependencies - Build and runtime dependencies
+ruby_dependencies:
+  - domain: rubygems.org
+    description: Ruby gems repository for Jekyll and dependencies
+    ports: [443]
+    protocols: [HTTPS]
+    
+  - domain: bundler.rubygems.org
+    description: Bundler gem repository
+    ports: [443]
+    protocols: [HTTPS]
+    
+  - domain: index.rubygems.org
+    description: RubyGems index for package discovery
+    ports: [443]
+    protocols: [HTTPS]
+
+# GitHub Pages - Deployment and hosting
+github_pages:
+  - domain: pages.github.com
+    description: GitHub Pages hosting service
+    ports: [443]
+    protocols: [HTTPS]
+    
+  - domain: githubusercontent.com
+    description: GitHub user content delivery network
+    ports: [443]
+    protocols: [HTTPS]
+    
+  - domain: "*.github.io"
+    description: GitHub Pages custom domains
+    ports: [80, 443]
+    protocols: [HTTP, HTTPS]
+
+# Security Configuration
+security_settings:
+  enforce_https: true
+  allow_redirects: true
+  validate_certificates: true
+  
+# Environment-specific configurations
+environments:
+  production:
+    strict_mode: true
+    log_blocked_requests: true
+    
+  development:
+    strict_mode: false
+    allow_localhost: true
+    additional_ports: [3000, 4000]
+
+# Usage Notes
+usage_notes: |
+  This configuration should be applied before any firewall restrictions are enabled
+  in GitHub Actions workflows. The setup steps in the Jekyll workflow will ensure
+  these allowlist entries are configured properly before the application attempts
+  to access external resources.
+  
+  Key dependencies:
+  - GitHub services for authentication and API access
+  - Smartcar API for vehicle integration features  
+  - BMW.com for official brand link resources
+  - RubyGems for Jekyll build dependencies
+  - GitHub Pages for deployment and hosting

@@ -1,0 +1,144 @@
+# GitHub Actions Setup Steps Configuration for BMW Concierge
+# This file defines the environment setup steps that must be executed
+# before any firewall restrictions are applied in GitHub Actions workflows.
+
+name: BMW Concierge Actions Setup Steps
+description: Pre-firewall environment configuration for BMW Concierge workflows
+
+# Version and metadata
+version: "1.0.0"
+last_updated: "2024-08-12"
+maintained_by: "BMW Concierge Team"
+
+# Environment setup steps - executed in order before firewall enablement
+setup_steps:
+  
+  # Step 1: Environment Variables Configuration
+  - name: "Configure Environment Variables"
+    description: "Set up essential environment variables for BMW Concierge build"
+    type: "environment"
+    required: true
+    actions:
+      - export JEKYLL_ENV=production
+      - export BMW_CONCIERGE_VERSION=1.0.0
+      - export GEM_PATH="$HOME/.local/share/gem/ruby/3.2.0:$GEM_PATH"
+      - export PATH="$HOME/.local/share/gem/ruby/3.2.0/bin:$PATH"
+    
+  # Step 2: Network Allowlist Configuration  
+  - name: "Configure Firewall Allowlist"
+    description: "Apply network allowlist for BMW Concierge dependencies"
+    type: "network"
+    required: true
+    config_file: ".github/firewall-config.yml"
+    actions:
+      - "Apply GitHub services allowlist (github.com, api.github.com)"
+      - "Allow authentication endpoints (github.com/login/oauth/)"
+      - "Enable Smartcar API access (smartcar.com, api.smartcar.com)"
+      - "Allow BMW brand resources (bmw.com, www.bmw.com)"
+      - "Enable Ruby/Jekyll dependencies (rubygems.org, bundler.rubygems.org)"
+      - "Configure GitHub Pages access (pages.github.com, githubusercontent.com)"
+    
+  # Step 3: Dependency Pre-validation
+  - name: "Pre-validate Dependencies"
+    description: "Verify network connectivity to critical services before build"
+    type: "validation"
+    required: false
+    timeout: 30
+    actions:
+      - test_url: "https://api.github.com/zen"
+        description: "GitHub API connectivity check"
+        required: true
+      - test_url: "https://rubygems.org"
+        description: "RubyGems repository access check"
+        required: true  
+      - test_url: "https://smartcar.com"
+        description: "Smartcar API availability check"
+        required: false
+        
+  # Step 4: Build Environment Preparation
+  - name: "Prepare Build Environment"
+    description: "Configure Ruby/Jekyll build environment"
+    type: "build_prep"
+    required: true
+    actions:
+      - "Verify Ruby version compatibility (>= 3.0)"
+      - "Set Jekyll environment to production mode"
+      - "Configure gem installation paths"
+      - "Prepare asset compilation environment"
+
+# Dependencies that require network access during setup
+network_dependencies:
+  critical:
+    - service: "GitHub API"
+      endpoint: "https://api.github.com"
+      purpose: "OAuth authentication and user data"
+      
+    - service: "RubyGems"
+      endpoint: "https://rubygems.org"
+      purpose: "Jekyll and gem dependencies"
+      
+  optional:
+    - service: "Smartcar API"
+      endpoint: "https://smartcar.com"
+      purpose: "Vehicle integration features"
+      
+    - service: "BMW Resources"
+      endpoint: "https://www.bmw.com"
+      purpose: "Brand links and resources"
+
+# Security considerations for setup phase
+security:
+  verify_tls: true
+  allow_redirects: true
+  validate_certificates: true
+  log_network_requests: true
+  
+# Error handling during setup
+error_handling:
+  on_network_failure:
+    action: "retry"
+    max_retries: 3
+    backoff_strategy: "exponential"
+    
+  on_dependency_failure:
+    critical_dependencies: "fail_workflow"
+    optional_dependencies: "log_warning"
+    
+  on_timeout:
+    action: "proceed_with_warning"
+    fallback_mode: "offline_build"
+
+# Monitoring and logging
+monitoring:
+  log_setup_duration: true
+  track_network_requests: true
+  report_dependency_status: true
+  
+# Integration with workflows
+workflow_integration:
+  target_workflows:
+    - "jekyll-gh-pages.yml"
+  execution_phase: "pre_firewall"
+  required_permissions:
+    - "contents: read"
+    - "network: configure"
+    
+# Usage instructions
+usage_instructions: |
+  These setup steps must be executed before any firewall restrictions are applied
+  in GitHub Actions workflows. The steps ensure that:
+  
+  1. Environment variables are properly configured
+  2. Network allowlist is applied for all required services
+  3. Critical dependencies are validated for connectivity
+  4. Build environment is prepared for Jekyll compilation
+  
+  Integration with existing workflows:
+  - Add these steps at the beginning of the build job
+  - Execute before the 'Checkout' action when possible
+  - Ensure network allowlist is applied before any external requests
+  
+  Troubleshooting:
+  - Check network connectivity if builds fail
+  - Verify firewall configuration is properly applied
+  - Review dependency status in workflow logs
