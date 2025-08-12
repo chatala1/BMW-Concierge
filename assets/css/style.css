@@ -250,9 +250,11 @@ body {
 /* Footer */
 .copyright {
     font-size: 11px;
+    color: var(--bmw-gray);
 }
 .legal {
     font-size: 10px;
+    color: var(--bmw-gray);
 }
 
 /* Buttons */
