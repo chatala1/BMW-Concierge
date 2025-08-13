@@ -129,19 +129,61 @@ body {
 
 /* Header and Navigation */
 .site-header {
-    background: var(--bmw-black);
-    border-bottom: 1px solid var(--bmw-light-gray);
-    box-shadow: var(--shadow-sm);
+    background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 25%, #2a2a2a 50%, #1a1a1a 75%, #0a0a0a 100%);
+    background-size: 400% 400%;
+    animation: bmwMGradientShift 20s ease infinite;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(255, 255, 255, 0.05);
     position: sticky;
     top: 0;
     z-index: 100;
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    position: relative;
+    overflow: hidden;
+}
+
+.site-header::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: 
+        radial-gradient(circle at 20% 80%, rgba(0, 102, 204, 0.15) 0%, transparent 50%),
+        radial-gradient(circle at 80% 20%, rgba(0, 163, 173, 0.1) 0%, transparent 50%),
+        linear-gradient(135deg, rgba(0, 0, 0, 0.8) 0%, rgba(26, 26, 26, 0.9) 100%);
+    pointer-events: none;
+}
+
+.site-header::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, transparent 0%, var(--bmw-blue) 20%, var(--bmw-light-blue) 50%, var(--bmw-blue) 80%, transparent 100%);
+    background-size: 200% 100%;
+    animation: bmwMShimmer 4s ease infinite;
+}
+
+@keyframes bmwMGradientShift {
+    0%, 100% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+}
+
+@keyframes bmwMShimmer {
+    0%, 100% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
 }
 
 .navbar {
     padding: var(--spacing-md) 0;
-    background: var(--bmw-black);
+    background: transparent;
+    position: relative;
+    z-index: 1;
 }
 
 .nav-container {
@@ -152,7 +194,7 @@ body {
     align-items: center;
     justify-content: space-between;
     position: relative;
-    background: var(--bmw-black);
+    background: transparent;
 }
 
 .nav-brand {
