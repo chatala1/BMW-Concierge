@@ -448,13 +448,13 @@ body {
 
 /* Cards */
 .card {
-    background: var(--bmw-gray);
+    background: var(--bmw-dark-gray);
     color: var(--bmw-white);
     border-radius: var(--border-radius);
     padding: var(--spacing-xl);
     box-shadow: var(--shadow-md);
     margin-bottom: var(--spacing-xl);
-    border: 1px solid var(--bmw-gray);
+    border: 1px solid var(--bmw-dark-gray);
     transition: all var(--transition-base);
     position: relative;
 }
