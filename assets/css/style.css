@@ -475,7 +475,7 @@ body {
 .card h2 {
     color: var(--bmw-dark-gray);
     margin-bottom: var(--spacing-lg);
-    font-weight: var(--font-weight-bold);
+    font-weight: var(--font-weight-normal);
     font-size: 1.75rem;
     letter-spacing: -0.01em;
 }
@@ -891,7 +891,7 @@ h1 {
 }
 h2 { 
     font-size: 2rem; 
-    font-weight: 700; /* Bold for strong hierarchy */
+    font-weight: 400; /* Normal weight */
 }
 h3 { 
     font-size: 1.5rem; 
