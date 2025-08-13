@@ -24,18 +24,25 @@
         <nav class="navbar">
             <div class="nav-container">
                 <a href="{{ '/' | relative_url }}" class="nav-brand">
-                    <img src="{{ '/assets/images/bmw.png' | relative_url }}" alt="BMW Logo" class="icon-small bmw-logo" 
-                         onerror="this.style.display='none'; this.nextElementSibling.style.display='inline-block';">
-                    <!-- Inline SVG fallback -->
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" class="icon-small" style="display: none;" aria-label="Scope Icon">
-                        <!-- Scope-style design: Circle with cross in center -->
-                        <!-- Outer circle with thick stroke -->
-                        <circle cx="12" cy="12" r="9" stroke-width="3" fill="none"/>
-                        <!-- Cross in center with thinner stroke -->
-                        <line x1="12" y1="6" x2="12" y2="18" stroke-width="1.5"/>
-                        <line x1="6" y1="12" x2="18" y2="12" stroke-width="1.5"/>
-                    </svg>
-                    MyConcierge
+                    <div class="nav-brand-logo">
+                        <img src="{{ '/assets/images/bmw.png' | relative_url }}" alt="BMW Logo" class="icon-small bmw-logo" 
+                             onerror="this.style.display='none'; this.nextElementSibling.style.display='inline-block';">
+                        <!-- Inline SVG fallback -->
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" class="icon-small" style="display: none;" aria-label="Scope Icon">
+                            <!-- Scope-style design: Circle with cross in center -->
+                            <!-- Outer circle with thick stroke -->
+                            <circle cx="12" cy="12" r="9" stroke-width="3" fill="none"/>
+                            <!-- Cross in center with thinner stroke -->
+                            <line x1="12" y1="6" x2="12" y2="18" stroke-width="1.5"/>
+                            <line x1="6" y1="12" x2="18" y2="12" stroke-width="1.5"/>
+                        </svg>
+                        <div class="nav-brand-text">
+                            <div class="nav-brand-title">
+                                <span class="nav-brand-m">/M</span>
+                            </div>
+                            <div class="nav-brand-tagline">The Ultimate Driving Machine</div>
+                        </div>
+                    </div>
                 </a>
                 
                 <!-- Mobile Hamburger Button -->
@@ -46,8 +53,19 @@
                 </button>
                 
                 <div class="nav-menu" id="nav-menu">
-                    <a href="{{ '/' | relative_url }}" class="nav-link">Home</a>
-                    <a href="{{ '/protected.html' | relative_url }}" class="nav-link auth-required">Dashboard</a>
+                    <div class="nav-links">
+                        <a href="{{ '/' | relative_url }}" class="nav-link">Home</a>
+                        <a href="#" class="nav-link">Magazine</a>
+                        <a href="#" class="nav-link">Models</a>
+                        <a href="#" class="nav-link">M Motorsport</a>
+                        <a href="#" class="nav-link">M Driving Experience</a>
+                        <a href="#" class="nav-link">More</a>
+                    </div>
+                    <div class="nav-search">
+                        <svg class="search-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m21 21-6-6m2-5a7 7 0 1 1-14 0 7 7 0 0 1 14 0z"></path>
+                        </svg>
+                    </div>
                     <div class="auth-section">
                         <span id="user-info" class="user-info" style="display: none;"></span>
                         <button id="login-btn" class="btn btn-primary">My Garage</button>
