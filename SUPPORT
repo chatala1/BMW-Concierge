@@ -1,3 +1,12 @@
+## Support
+
+For technical issues or questions:
+1. Review the troubleshooting section above
+2. Check existing [GitHub Issues](https://github.com/chatala1/BMW-Concierge/issues)
+3. Create a new issue with detailed information about the problem
+4. For deployment issues, review the GitHub Actions logs and deployment status
+
+---
 
 ## Features, Development & Deployment
 
@@ -6,7 +15,7 @@
 - **Session Management**: Robust user session handling and privacy protection
 - **Demo Mode**: Transparent simulation for demonstration and development purposes
 
-### 4. Transparent Operation
+### 2. Transparent Operation
 - **Demo Mode Indicators**: Clear labeling when viewing simulated data
 - **API Abstraction**: Clean separation between demo and production functionality
 - **Future Ready**: Easy configuration switch for real API integration
