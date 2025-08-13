@@ -480,6 +480,12 @@ body {
     letter-spacing: -0.01em;
 }
 
+.card-h2 {
+    font-weight: var(--font-weight-bold);
+    font-size: 1.35rem;
+    letter-spacing: 0.01em;
+}
+
 .card h3 {
     color: var(--bmw-blue);
     margin-bottom: var(--spacing-md);
