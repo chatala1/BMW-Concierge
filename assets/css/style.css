@@ -180,6 +180,15 @@ body {
     filter: brightness(0) invert(1);
 }
 
+/* BMW logo specific styling - optimized dimensions */
+.nav-brand .bmw-logo {
+    max-width: 32px; /* Optimized dimensions for better header proportions */
+    max-height: 32px;
+    width: auto;
+    height: auto;
+    object-fit: contain; /* Maintain aspect ratio */
+}
+
 /* Mobile Hamburger Button */
 .nav-toggle {
     display: none;
