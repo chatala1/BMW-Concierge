@@ -57,10 +57,4 @@ BMW Concierge is a modern web application that provides a comprehensive dashboar
 [^1]: All logos and brand names are property of their respective owners, and the use does not imply endorsement of or affiliation with Smartcar.
 [^2]: This project is not affiliated with BMW Group, BMW M GmbH, BMW AG or any subsidiaries.
 
-## Support
 
-For technical issues or questions:
-1. Review the troubleshooting section above
-2. Check existing [GitHub Issues](https://github.com/chatala1/BMW-Concierge/issues)
-3. Create a new issue with detailed information about the problem
-4. For deployment issues, review the GitHub Actions logs and deployment status
