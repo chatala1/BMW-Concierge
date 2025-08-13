@@ -1,31 +1,58 @@
 /* BMW Concierge - Premium Design System */
 
-/* InriaSans Font Imports */
-@font-face {
-    font-family: 'InriaSans';
-    src: url('../fonts/InriaSans_webkit/inriasans-regular-webfont.woff2') format('woff2'),
-         url('../fonts/InriaSans_webkit/inriasans-regular-webfont.woff') format('woff');
-    font-weight: 400;
-    font-style: normal;
-    font-display: swap;
+/* Google Fonts - Blinker and Yellowtail Font Classes */
+.yellowtail-regular {
+  font-family: "Yellowtail", cursive;
+  font-weight: 400;
+  font-style: normal;
 }
 
-@font-face {
-    font-family: 'InriaSans';
-    src: url('../fonts/InriaSans_webkit/inriasans-bold-webfont.woff2') format('woff2'),
-         url('../fonts/InriaSans_webkit/inriasans-bold-webfont.woff') format('woff');
-    font-weight: 700;
-    font-style: normal;
-    font-display: swap;
+.blinker-thin {
+  font-family: "Blinker", sans-serif;
+  font-weight: 100;
+  font-style: normal;
 }
 
-@font-face {
-    font-family: 'InriaSans';
-    src: url('../fonts/InriaSans_webkit/inriasans-light-webfont.woff2') format('woff2'),
-         url('../fonts/InriaSans_webkit/inriasans-light-webfont.woff') format('woff');
-    font-weight: 300;
-    font-style: normal;
-    font-display: swap;
+.blinker-extralight {
+  font-family: "Blinker", sans-serif;
+  font-weight: 200;
+  font-style: normal;
+}
+
+.blinker-light {
+  font-family: "Blinker", sans-serif;
+  font-weight: 300;
+  font-style: normal;
+}
+
+.blinker-regular {
+  font-family: "Blinker", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+}
+
+.blinker-semibold {
+  font-family: "Blinker", sans-serif;
+  font-weight: 600;
+  font-style: normal;
+}
+
+.blinker-bold {
+  font-family: "Blinker", sans-serif;
+  font-weight: 700;
+  font-style: normal;
+}
+
+.blinker-extrabold {
+  font-family: "Blinker", sans-serif;
+  font-weight: 800;
+  font-style: normal;
+}
+
+.blinker-black {
+  font-family: "Blinker", sans-serif;
+  font-weight: 900;
+  font-style: normal;
 }
 
 :root {
@@ -44,8 +71,8 @@
     --bmw-carbon: #1A1A1A; /* Carbon Black */
     
     /* Typography */
-    --font-family: "InriaSans", Arial, sans-serif;
-    --font-family-headings: "InriaSans", Arial, sans-serif;
+    --font-family: "Blinker", Arial, sans-serif;
+    --font-family-headings: "Blinker", Arial, sans-serif;
     --font-size-base: 16px;
     --font-weight-light: 300;
     --font-weight-normal: 400;
