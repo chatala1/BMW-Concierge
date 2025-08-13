@@ -153,17 +153,13 @@ body {
     filter: brightness(0) invert(1);
 }
 
-/* BMW logo specific styling - preserve original colors */
+/* BMW logo specific styling - optimized dimensions */
 .nav-brand .bmw-logo {
-    filter: none; /* Remove the invert filter to preserve BMW colors */
-    max-width: 32px; /* Slightly larger than default icon-small */
+    max-width: 32px; /* Optimized dimensions for better header proportions */
     max-height: 32px;
     width: auto;
     height: auto;
     object-fit: contain; /* Maintain aspect ratio */
-    background: var(--bmw-white); /* White background for better visibility */
-    border-radius: 4px; /* Slight rounded corners */
-    padding: 2px; /* Small padding around the logo */
 }
 
 /* Mobile Hamburger Button */
