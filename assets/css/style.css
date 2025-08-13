@@ -131,7 +131,7 @@ body {
 /* Header and Navigation */
 .site-header {
     background: var(--bmw-charcoal);
-    border-bottom: 1px solid var(--bmw-light-gray);
+    border-bottom: 1px solid var(--bmw-charcoal);
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
     position: sticky;
     top: 0;
@@ -169,8 +169,10 @@ body {
 }
 
 .nav-brand:hover {
-    color: var(--bmw-dark-blue);
+    color: var(--bmw-white);
+    background: var(--bmw-blue);
     transform: translateY(-1px);
+    text-decoration: none;
 }
 
 /* Ensure navigation logo/icon is visible (white) against black nav background */
@@ -243,7 +245,7 @@ body {
 }
 
 .nav-link {
-    color: var(--bmw-gray);
+    color: var(--bmw-white);
     text-decoration: none;
     font-weight: var(--font-weight-medium);
     font-size: 0.95rem;
@@ -253,8 +255,8 @@ body {
 }
 
 .nav-link:hover {
-    color: var(--bmw-blue);
-    background: transparent;
+    color: var(--bmw-white);
+    background: var(--bmw-blue);
 }
 
 .nav-link::after {
@@ -402,7 +404,7 @@ body {
     padding: var(--spacing-xxl) var(--spacing-lg);
     background: linear-gradient(135deg, var(--bmw-blue) 0%, var(--bmw-dark-blue) 50%, var(--bmw-light-blue) 100%);
     color: var(--bmw-white);
-    border-radius: var(--border-radius-xl);
+    border-radius: var(--border-radius);
     margin-bottom: var(--spacing-xxl);
     position: relative;
     overflow: hidden;
@@ -446,8 +448,9 @@ body {
 
 /* Cards */
 .card {
-    background: var(--bmw-white);
-    border-radius: var(--border-radius-lg);
+    background: var(--bmw-gray);
+    color: var(--bmw-white);
+    border-radius: var(--border-radius);
     padding: var(--spacing-xl);
     box-shadow: var(--shadow-md);
     margin-bottom: var(--spacing-xl);
@@ -470,11 +473,11 @@ body {
     right: 0;
     height: 4px;
     background: linear-gradient(90deg, var(--bmw-blue), var(--bmw-light-blue));
-    border-radius: var(--border-radius-lg) var(--border-radius-lg) 0 0;
+    border-radius: var(--border-radius) var(--border-radius) 0 0;
 }
 
 .card h2 {
-    color: var(--bmw-dark-gray);
+    color: var(--bmw-white);
     margin-bottom: var(--spacing-lg);
     font-weight: var(--font-weight-normal);
     font-size: 1.75rem;
@@ -496,7 +499,7 @@ body {
 
 .card p {
     line-height: 1.7;
-    color: var(--bmw-gray);
+    color: var(--bmw-white);
 }
 
 .features-grid {
@@ -508,13 +511,14 @@ body {
 }
 
 .feature-card {
-    background: var(--bmw-white);
+    background: var(--bmw-gray);
+    color: var(--bmw-white);
     padding: var(--spacing-xl);
-    border-radius: var(--border-radius-lg);
+    border-radius: var(--border-radius);
     box-shadow: var(--shadow-md);
     text-align: center;
     transition: all var(--transition-base);
-    border: 1px solid var(--bmw-light-gray);
+    border: 1px solid var(--bmw-gray);
     position: relative;
     overflow: hidden;
 }
