@@ -11,94 +11,19 @@ BMW Concierge is a modern web application that provides a comprehensive dashboar
 
 ## Core Features
 
-### 1. Secure Authentication System
-- **GitHub OAuth Integration**: Secure access control with GitHub authentication
-- **Session Management**: Robust user session handling and privacy protection
-- **Demo Mode**: Transparent simulation for demonstration and development purposes
-
-### 2. Vehicle Dashboard
+### 1. Vehicle Dashboard
 - **Demo Mode**: Transparent simulation of vehicle data for demonstration
 - **API Ready**: Structured for future integration with real vehicle APIs  
 - **Clear Indicators**: Always shows whether data is simulated or live
 - **Real-time Updates**: Dynamic data display with status indicators
 
-### 3. Analytics & Insights
+### 2. Analytics & Insights
 - **Driving Pattern Tracking**: Monitor and analyze driving behavior
 - **Efficiency Monitoring**: Track vehicle performance metrics
 - **Service Reminders**: Maintenance scheduling and notifications
 - **Trip Planning**: Route optimization with charging station integration
 
-### 4. Transparent Operation
-- **Demo Mode Indicators**: Clear labeling when viewing simulated data
-- **API Abstraction**: Clean separation between demo and production functionality
-- **Future Ready**: Easy configuration switch for real API integration
 
-For detailed information about API transparency and demo mode implementation, see [API_TRANSPARENCY.md](API_TRANSPARENCY.md).
-
-## Development & Deployment
-
-### GitHub Actions Setup Implementation
-
-The BMW Concierge application uses GitHub Actions for automated deployment with specific setup requirements to ensure proper functionality before any firewall restrictions are applied.
-
-### 1. Deployment Configuration Files
-
-#### `.github/workflows/jekyll-gh-pages.yml`
-Enhanced Jekyll workflow with pre-firewall setup steps including:
-- Environment variable configuration
-- Firewall allowlist setup
-- Dependency pre-validation
-- Network connectivity checks
-
-#### `.github/firewall-config.yml`
-Comprehensive firewall configuration defining network allowlist for:
-- GitHub services (github.com, api.github.com)
-- Authentication endpoints (OAuth flows)
-- External APIs (Smartcar, BMW resources)
-- Build dependencies (RubyGems, Jekyll)
-- GitHub Pages deployment
-
-#### `.github/actions-setup-steps.yml`
-Detailed setup steps configuration including:
-- Ordered execution steps
-- Environment preparation
-- Network validation
-- Error handling strategies
-- Security configurations
-
-### 2. Setup Steps Execution Order
-
-1. **Environment Variables Configuration**
-   - Set JEKYLL_ENV=production
-   - Configure BMW_CONCIERGE_VERSION
-   - Set Ruby gem paths
-
-2. **Firewall Allowlist Application**
-   - GitHub services allowlist
-   - Authentication endpoints
-   - External API access
-   - Build dependencies
-
-3. **Dependency Pre-validation**
-   - GitHub API connectivity check
-   - RubyGems repository access
-   - Optional service availability
-
-4. **Build Environment Preparation**
-   - Ruby version verification
-   - Jekyll environment setup
-   - Asset compilation preparation
-
-### 3. Network Dependencies
-
-#### Critical (Required)
-- **GitHub API** (`api.github.com`) - OAuth authentication
-- **RubyGems** (`rubygems.org`) - Jekyll dependencies
-- **GitHub Services** (`github.com`) - Repository access
-
-#### Optional (Non-blocking)
-- **Smartcar API** (`smartcar.com`) - Vehicle integration
-- **BMW Resources** (`bmw.com`) - Brand links
 
 ### 4. Security Considerations
 
