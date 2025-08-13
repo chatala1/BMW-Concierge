@@ -66,6 +66,7 @@
     --bmw-gray: #666666; /* Medium Gray */
     --bmw-dark-gray: #333333; /* Dark Gray */
     --bmw-black: #000000; /* Pure Black */
+    --bmw-charcoal: #262626; /* Charcoal Gray */
     --bmw-red: #E31E24; /* BMW Red */
     --bmw-silver: #C4C4C4; /* BMW Silver */
     --bmw-carbon: #1A1A1A; /* Carbon Black */
@@ -119,7 +120,7 @@ body {
     font-weight: var(--font-weight-light);
     line-height: 1.6;
     color: var(--bmw-dark-gray);
-    background-color: var(--bmw-off-white);
+    background-color: var(--bmw-charcoal);
     min-height: 100vh;
     display: flex;
     flex-direction: column;
@@ -129,9 +130,9 @@ body {
 
 /* Header and Navigation */
 .site-header {
-    background: var(--bmw-black);
+    background: var(--bmw-charcoal);
     border-bottom: 1px solid var(--bmw-light-gray);
-    box-shadow: var(--shadow-sm);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
     position: sticky;
     top: 0;
     z-index: 100;
@@ -141,7 +142,7 @@ body {
 
 .navbar {
     padding: var(--spacing-md) 0;
-    background: var(--bmw-black);
+    background: var(--bmw-charcoal);
 }
 
 .nav-container {
@@ -152,7 +153,7 @@ body {
     align-items: center;
     justify-content: space-between;
     position: relative;
-    background: var(--bmw-black);
+    background: var(--bmw-charcoal);
 }
 
 .nav-brand {
