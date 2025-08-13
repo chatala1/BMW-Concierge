@@ -454,7 +454,7 @@ body {
     padding: var(--spacing-xl);
     box-shadow: var(--shadow-md);
     margin-bottom: var(--spacing-xl);
-    border: 1px solid var(--bmw-light-gray);
+    border: 1px solid var(--bmw-gray);
     transition: all var(--transition-base);
     position: relative;
 }
@@ -511,14 +511,14 @@ body {
 }
 
 .feature-card {
-    background: var(--bmw-gray);
+    background: var(--bmw-dark-gray);
     color: var(--bmw-white);
     padding: var(--spacing-xl);
     border-radius: var(--border-radius);
     box-shadow: var(--shadow-md);
     text-align: center;
     transition: all var(--transition-base);
-    border: 1px solid var(--bmw-gray);
+    border: 1px solid var(--bmw-dark-gray);
     position: relative;
     overflow: hidden;
 }
