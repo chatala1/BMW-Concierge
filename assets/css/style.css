@@ -508,7 +508,7 @@ body {
 }
 
 .feature-card {
-    background: var(--bmw-white);
+    background: #2e2e2e;
     padding: var(--spacing-xl);
     border-radius: var(--border-radius-lg);
     box-shadow: var(--shadow-md);
@@ -517,6 +517,14 @@ body {
     border: 1px solid var(--bmw-light-gray);
     position: relative;
     overflow: hidden;
+}
+
+.feature-card h3 {
+    color: var(--bmw-white);
+}
+
+.feature-card p {
+    color: var(--bmw-light-gray);
 }
 
 .feature-card::before {
