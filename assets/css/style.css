@@ -307,7 +307,7 @@ body {
     align-items: center;
     justify-content: center;
     gap: var(--spacing-xs);
-    min-height: 48px;
+    max-height: 42px;
     position: relative;
     overflow: hidden;
     letter-spacing: 0.025em;
