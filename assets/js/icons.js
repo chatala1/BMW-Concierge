@@ -16,14 +16,7 @@ const BMW_ICONS = {
     <path d="M12 4h2"/>
   </svg>`,
   
-  'bmw-car': `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#0066CC" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-    <path d="M5 12V7a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v5"/>
-    <path d="M5 12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2"/>
-    <circle cx="7" cy="16" r="2"/>
-    <circle cx="17" cy="16" r="2"/>
-    <path d="M8 7h8"/>
-    <circle cx="12" cy="4" r="2"/>
-  </svg>`,
+  'bmw-car': `<img src="/BMW-Concierge/assets/images/icons/icons8-garage-100.png" alt="Vehicle management icon" style="width: 100%; height: 100%; object-fit: contain;">`,
   
   // Status & Alerts
   'alert-circle': `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#0066CC" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
@@ -58,9 +51,7 @@ const BMW_ICONS = {
     <path d="m4.93 19.07 4.24-4.24m5.66-5.66 4.24-4.24"/>
   </svg>`,
   
-  'wrench': `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#0066CC" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-    <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/>
-  </svg>`,
+  'wrench': `<img src="/BMW-Concierge/assets/images/icons/icons8-engine-100.png" alt="Service integration icon" style="width: 100%; height: 100%; object-fit: contain;">`,
   
   'battery': `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#0066CC" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
     <rect x="2" y="6" width="16" height="12" rx="2"/>
