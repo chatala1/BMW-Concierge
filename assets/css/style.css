@@ -194,7 +194,7 @@ body {
 
 /* MyConcierge logo specific styling */
 .nav-brand .myconcierge-logo {
-    max-height: 28px; /* Slightly smaller than BMW logo to maintain proportion */
+    max-height: 34px; /* Slightly smaller than BMW logo to maintain proportion */
     width: auto;
     object-fit: contain;
     filter: none; /* Override the invert filter for this logo */
