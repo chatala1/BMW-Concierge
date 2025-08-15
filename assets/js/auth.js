@@ -5,7 +5,14 @@
 
 class BMWAuth {
     constructor() {
-        this.clientId = 'Ov23liNCmhgdtQrBTgfI'; // GitHub OAuth App client ID
+        // Use demo mode for local development, real OAuth for production
+        if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
+            // Development environment - use demo mode
+            this.clientId = 'demo_client_id';
+        } else {
+            // Production environment - use real GitHub OAuth
+            this.clientId = 'Ov23liNCmhgdtQrBTgfI'; // GitHub OAuth App client ID
+        }
         
         // Set redirect URI based on environment
         if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
@@ -242,9 +249,9 @@ class BMWAuth {
                 element.innerHTML = `
                     <h3>Authentication Required</h3>
                     <p>Please log in with your GitHub account to access this content.</p>
-                    <button onclick="bmwAuth.login()" class="btn btn-primary mt-lg">
+                    <a href="${window.location.origin + '/BMW-Concierge/login.html'}" class="btn btn-primary mt-lg">
                         Login with GitHub
-                    </button>
+                    </a>
                 `;
             }
         });
