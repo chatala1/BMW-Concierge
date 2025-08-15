@@ -452,8 +452,8 @@ body {
 /* Garage Hero Background */
 .hero-garage {
     background: url('../images/garage2.jpg');
-    background-size: contain;
-    background-position: center center;
+    background-size: cover;
+    background-position: bottom;
     background-repeat: no-repeat;
     background-attachment: fixed;
 }
