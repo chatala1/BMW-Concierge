@@ -469,6 +469,7 @@ body {
 @media (max-width: 768px) {
     .hero-garage {
         background-attachment: scroll;
+        background-size: cover;
     }
 }
 
