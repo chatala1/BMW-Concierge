@@ -5,22 +5,27 @@
 
 class BMWAuth {
     constructor() {
-        // Use demo mode for local development, real OAuth for production
-        if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
-            // Development environment - use demo mode
+        // Use demo mode for static site deployment (GitHub Pages)
+        // Real OAuth requires backend server for client secret handling
+        if (window.location.hostname === 'localhost' || 
+            window.location.hostname === '127.0.0.1' ||
+            window.location.hostname.includes('github.io')) {
+            // Development environment or GitHub Pages - use demo mode
             this.clientId = 'demo_client_id';
         } else {
-            // Production environment - use real GitHub OAuth
+            // Custom domain with backend - use real GitHub OAuth
             this.clientId = 'Ov23liNCmhgdtQrBTgfI'; // GitHub OAuth App client ID
         }
         
         // Set redirect URI based on environment
-        if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
-            // Development environment
+        if (window.location.hostname === 'localhost' || 
+            window.location.hostname === '127.0.0.1' ||
+            window.location.hostname.includes('github.io')) {
+            // Development environment or GitHub Pages
             this.redirectUri = window.location.origin + '/BMW-Concierge/login.html';
         } else {
-            // Production environment (GitHub Pages)
-            this.redirectUri = 'https://chatala1.github.io/BMW-Concierge/login.html';
+            // Custom domain with backend
+            this.redirectUri = window.location.origin + '/BMW-Concierge/login.html';
         }
         
         this.storageKey = 'bmw_concierge_auth';
@@ -108,7 +113,8 @@ class BMWAuth {
         
         // Check if we have a real client ID configured
         if (!this.clientId || this.clientId === 'demo_client_id') {
-            console.warn('No GitHub client ID configured. Using demo authentication.');
+            console.info('Using demo authentication for static site deployment');
+            this.showInfo('Demo authentication - perfect for GitHub Pages!');
             this.simulateAuthentication();
             return;
         }
@@ -148,7 +154,7 @@ class BMWAuth {
         
         // Redirect to home page if on a protected page
         if (window.location.pathname.includes('protected')) {
-            window.location.href = '/';
+            window.location.href = window.location.origin + '/BMW-Concierge/';
         }
     }
 
@@ -162,14 +168,42 @@ class BMWAuth {
         if (error) {
             console.error('OAuth error:', error, errorDescription);
             this.showError(`Authentication failed: ${errorDescription || error}`);
+            // Clean URL and redirect to login form
+            window.history.replaceState({}, document.title, window.location.pathname);
             return;
         }
 
         if (code && state) {
             const storedState = sessionStorage.getItem('oauth_state');
+            
+            // For static site deployment (GitHub Pages), we can't safely handle real OAuth callbacks
+            // because there's no backend to securely exchange codes for tokens
+            if (this.clientId === 'demo_client_id') {
+                console.info('GitHub Pages deployment detected - using demo authentication');
+                // Clean URL first
+                window.history.replaceState({}, document.title, window.location.pathname);
+                // Simulate successful authentication
+                this.simulateAuthentication();
+                return;
+            }
+            
+            // For real OAuth (custom domains with backend), validate state
             if (state !== storedState) {
                 console.error('State mismatch:', state, 'vs', storedState);
+                
+                // If state is missing entirely, user probably accessed callback URL directly
+                if (!storedState) {
+                    console.info('No stored OAuth state found - initiating fresh authentication');
+                    // Clean URL and start fresh login
+                    window.history.replaceState({}, document.title, window.location.pathname);
+                    this.showInfo('Starting fresh authentication...');
+                    setTimeout(() => this.login(), 1000);
+                    return;
+                }
+                
                 this.showError('Security validation failed. Please try again.');
+                // Clean URL and redirect to login form
+                window.history.replaceState({}, document.title, window.location.pathname);
                 return;
             }
 
