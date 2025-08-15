@@ -134,21 +134,21 @@ class VehicleAPI {
     }
 
     /**
-     * Demo mode: Get vehicle status with simulated data
+     * Demo mode: Return no vehicle connection status instead of fake data
      */
     getDemoVehicleStatus() {
         return new Promise((resolve) => {
             setTimeout(() => {
                 resolve({
-                    success: true,
-                    data: {
-                        ...this.demoData.vehicle,
-                        source: 'demo'
-                    },
+                    success: false,
+                    connected: false,
+                    data: null,
+                    message: 'No vehicle connected. Connect your vehicle via Smartcar to view live data.',
                     metadata: {
                         isDemoMode: true,
                         lastFetched: new Date().toISOString(),
-                        dataSource: 'Simulated Demo Data'
+                        dataSource: 'No Vehicle Connection',
+                        requiresConnection: true
                     }
                 });
             }, 300); // Simulate network delay
@@ -156,45 +156,24 @@ class VehicleAPI {
     }
 
     /**
-     * Demo mode: Refresh with new simulated data
+     * Demo mode: Return refresh failure instead of generating fake data
      */
     refreshDemoVehicleStatus() {
         return new Promise((resolve) => {
             setTimeout(() => {
-                // Generate realistic demo data with some variation
-                const batteryLevel = Math.floor(Math.random() * 30) + 70; // 70-100%
-                const fuelLevel = Math.floor(Math.random() * 40) + 60; // 60-100%
-                const range = Math.floor(Math.random() * 100) + 200; // 200-300 miles
-                const doorStates = ['Locked', 'Unlocked'];
-                const vehicleStates = ['Secure', 'Ready', 'Parked', 'Charging'];
-                
-                const doorStatus = doorStates[Math.floor(Math.random() * doorStates.length)];
-                const vehicleStatus = vehicleStates[Math.floor(Math.random() * vehicleStates.length)];
-                
-                // Update demo data
-                this.demoData.vehicle = {
-                    batteryLevel,
-                    fuelLevel,
-                    range,
-                    doorStatus,
-                    vehicleStatus,
-                    lastUpdated: new Date()
-                };
-                
                 resolve({
-                    success: true,
-                    data: {
-                        ...this.demoData.vehicle,
-                        source: 'demo'
-                    },
+                    success: false,
+                    connected: false,
+                    data: null,
+                    message: 'Cannot refresh vehicle data. No vehicle is connected via Smartcar API.',
                     metadata: {
                         isDemoMode: true,
                         lastFetched: new Date().toISOString(),
-                        dataSource: 'Simulated Demo Data',
-                        refreshed: true
+                        dataSource: 'No Vehicle Connection',
+                        requiresConnection: true
                     }
                 });
-            }, 1500); // Simulate longer network delay for refresh
+            }, 1000); // Simulate network delay
         });
     }
 
@@ -227,21 +206,21 @@ class VehicleAPI {
     }
 
     /**
-     * Demo analytics data
+     * Demo analytics data - return no data available
      */
     getDemoAnalytics() {
         return new Promise((resolve) => {
             setTimeout(() => {
                 resolve({
-                    success: true,
-                    data: {
-                        ...this.demoData.analytics,
-                        source: 'demo'
-                    },
+                    success: false,
+                    connected: false,
+                    data: null,
+                    message: 'Analytics data not available. Connect your vehicle via Smartcar to view driving analytics.',
                     metadata: {
                         isDemoMode: true,
                         lastFetched: new Date().toISOString(),
-                        dataSource: 'Simulated Demo Data'
+                        dataSource: 'No Vehicle Connection',
+                        requiresConnection: true
                     }
                 });
             }, 200);
@@ -283,64 +262,21 @@ class VehicleAPI {
     }
 
     /**
-     * Demo detailed analytics data
+     * Demo detailed analytics data - return no data available
      */
     getDetailedDemoAnalytics(period) {
         return new Promise((resolve) => {
             setTimeout(() => {
-                const analytics = this.demoData.analytics;
-                let data;
-                
-                switch (period) {
-                    case 'week':
-                        data = {
-                            summary: {
-                                totalMiles: 215,
-                                avgEfficiency: 3.1,
-                                ecoScore: 90,
-                                totalTrips: 12
-                            },
-                            chartData: analytics.weeklyData.slice(-1),
-                            period: 'This Week'
-                        };
-                        break;
-                    case 'year':
-                        data = {
-                            summary: {
-                                totalMiles: 16234,
-                                avgEfficiency: 3.3,
-                                ecoScore: 91,
-                                totalTrips: 487
-                            },
-                            chartData: analytics.monthlyData,
-                            period: 'This Year'
-                        };
-                        break;
-                    default: // month
-                        data = {
-                            summary: {
-                                totalMiles: analytics.monthlyMiles,
-                                avgEfficiency: analytics.avgEfficiency,
-                                ecoScore: analytics.ecoScore,
-                                totalTrips: analytics.drivingPatterns.totalTrips
-                            },
-                            chartData: analytics.weeklyData,
-                            period: 'This Month'
-                        };
-                }
-                
                 resolve({
-                    success: true,
-                    data: {
-                        ...data,
-                        drivingPatterns: analytics.drivingPatterns,
-                        efficiency: analytics.efficiency,
-                        source: 'demo'
-                    },
+                    success: false,
+                    connected: false,
+                    data: null,
+                    message: `Detailed analytics not available for ${period}. Connect your vehicle via Smartcar to view analytics.`,
                     metadata: {
                         isDemoMode: true,
                         lastFetched: new Date().toISOString(),
-                        dataSource: 'Simulated Demo Analytics'
+                        dataSource: 'No Vehicle Connection',
+                        requiresConnection: true
                     }
                 });
             }, 400);
@@ -348,44 +284,21 @@ class VehicleAPI {
     }
 
     /**
-     * Demo driving insights
+     * Demo driving insights - return no data available
      */
     getDemoDrivingInsights() {
         return new Promise((resolve) => {
             setTimeout(() => {
                 resolve({
-                    success: true,
-                    data: {
-                        ...this.demoData.analytics.drivingPatterns,
-                        insights: [
-                            {
-                                type: 'efficiency',
-                                title: 'Optimal Speed Range',
-                                description: 'Your best efficiency is achieved at 45-55 mph',
-                                recommendation: 'Try to maintain steady speeds in this range for maximum efficiency',
-                                impact: 'Up to 15% better efficiency'
-                            },
-                            {
-                                type: 'timing',
-                                title: 'Peak Driving Times',
-                                description: 'Most driving occurs Tuesday mornings around 8-9 AM',
-                                recommendation: 'Consider alternative routes during peak traffic',
-                                impact: 'Reduce travel time by 20%'
-                            },
-                            {
-                                type: 'eco',
-                                title: 'Eco Score Improvement',
-                                description: 'Your eco score has improved 8% over last month',
-                                recommendation: 'Continue using eco mode for city driving',
-                                impact: 'Save $12/month on energy costs'
-                            }
-                        ],
-                        source: 'demo'
-                    },
+                    success: false,
+                    connected: false,
+                    data: null,
+                    message: 'Driving insights not available. Connect your vehicle via Smartcar to view personalized insights.',
                     metadata: {
                         isDemoMode: true,
                         lastFetched: new Date().toISOString(),
-                        dataSource: 'Simulated Demo Insights'
+                        dataSource: 'No Vehicle Connection',
+                        requiresConnection: true
                     }
                 });
             }, 300);
@@ -393,23 +306,27 @@ class VehicleAPI {
     }
 
     /**
-     * Demo recent trips
+     * Demo recent trips - return no data available
      */
     getDemoRecentTrips(limit) {
         return new Promise((resolve) => {
             setTimeout(() => {
                 resolve({
-                    success: true,
-                    data: {
-                        trips: this.demoData.analytics.recentTrips.slice(0, limit),
-                        totalTrips: this.demoData.analytics.recentTrips.length,
-                        source: 'demo'
-                    },
+                    success: false,
+                    connected: false,
+                    data: null,
+                    message: 'Trip history not available. Connect your vehicle via Smartcar to view recent trips.',
                     metadata: {
                         isDemoMode: true,
                         lastFetched: new Date().toISOString(),
-                        dataSource: 'Simulated Demo Trips'
+                        dataSource: 'No Vehicle Connection',
+                        requiresConnection: true
                     }
+                });
+            }, 250);
+        });
+    }
+
     /**
      * Real analytics placeholder
      */
@@ -455,26 +372,17 @@ class VehicleAPI {
     executeDemoCommand(command, params) {
         return new Promise((resolve) => {
             setTimeout(() => {
-                const commandActions = {
-                    lock: 'Vehicle locked',
-                    unlock: 'Vehicle unlocked', 
-                    climate_on: 'Climate control started',
-                    climate_off: 'Climate control stopped',
-                    locate: 'Vehicle location updated',
-                    refresh: 'Vehicle status refreshed'
-                };
-
-                const message = commandActions[command] || `Command '${command}' executed`;
-                
                 resolve({
-                    success: true,
-                    message: message,
+                    success: false,
+                    connected: false,
+                    message: `Cannot execute '${command}' command. No vehicle is connected via Smartcar API.`,
                     command: command,
                     params: params,
                     metadata: {
                         isDemoMode: true,
                         executedAt: new Date().toISOString(),
-                        dataSource: 'Simulated Demo Response'
+                        dataSource: 'No Vehicle Connection',
+                        requiresConnection: true
                     }
                 });
             }, 1000); // Simulate command execution delay
