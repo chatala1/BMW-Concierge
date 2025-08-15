@@ -1017,6 +1017,11 @@ a:hover {
         font-size: 1rem;
     }
     
+    /* Show auth-required links in mobile menu regardless of authentication state */
+    .nav-menu .nav-link.auth-required {
+        display: block !important;
+    }
+    
     .nav-menu .nav-link:last-of-type {
         border-bottom: none;
     }
