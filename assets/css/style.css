@@ -192,6 +192,14 @@ body {
     object-fit: contain; /* Maintain aspect ratio */
 }
 
+/* MyConcierge logo specific styling */
+.nav-brand .myconcierge-logo {
+    max-height: 28px; /* Slightly smaller than BMW logo to maintain proportion */
+    width: auto;
+    object-fit: contain;
+    filter: none; /* Override the invert filter for this logo */
+}
+
 /* Mobile Hamburger Button */
 .nav-toggle {
     display: none;
