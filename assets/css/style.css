@@ -192,6 +192,23 @@ body {
     object-fit: contain; /* Maintain aspect ratio */
 }
 
+/* MyConcierge logo specific styling - larger than BMW icon for brand prominence */
+.nav-brand .concierge-logo {
+    max-width: 120px; /* Larger than BMW logo to make it the primary brand element */
+    max-height: 40px; /* Fit well within header height */
+    width: auto;
+    height: auto;
+    object-fit: contain; /* Maintain aspect ratio */
+    filter: none; /* Don't apply the white filter to maintain original logo colors */
+}
+
+/* Text fallback styling */
+.nav-brand .concierge-text {
+    font-size: 1.75rem;
+    font-weight: var(--font-weight-bold);
+    color: var(--bmw-white);
+}
+
 /* Mobile Hamburger Button */
 .nav-toggle {
     display: none;
@@ -1122,6 +1139,12 @@ a:hover {
 @media (max-width: 480px) {
     .nav-brand {
         font-size: 1.5rem;
+    }
+    
+    /* Scale down MyConcierge logo on mobile for better fit */
+    .nav-brand .concierge-logo {
+        max-width: 100px;
+        max-height: 32px;
     }
     
     .hero h1 {

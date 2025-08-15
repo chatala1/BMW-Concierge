@@ -35,7 +35,10 @@
                         <line x1="12" y1="6" x2="12" y2="18" stroke-width="1.5"/>
                         <line x1="6" y1="12" x2="18" y2="12" stroke-width="1.5"/>
                     </svg>
-                    MyConcierge
+                    <img src="{{ '/assets/images/MyConcierge.png' | relative_url }}" alt="MyConcierge" class="concierge-logo" 
+                         onerror="this.style.display='none'; this.nextElementSibling.style.display='inline-block';">
+                    <!-- Text fallback if image fails to load -->
+                    <span class="concierge-text" style="display: none;">MyConcierge</span>
                 </a>
                 
                 <!-- Mobile Hamburger Button -->
