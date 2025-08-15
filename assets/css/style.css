@@ -430,11 +430,6 @@ body {
     animation: float 6s ease-in-out infinite;
 }
 
-@keyframes float {
-    0%, 100% { transform: translateY(0px) rotate(0deg); }
-    50% { transform: translateY(-20px) rotate(180deg); }
-}
-
 .hero h1 {
     font-size: clamp(2.5rem, 5vw, 4rem);
     font-weight: var(--font-weight-light);
@@ -634,10 +629,6 @@ body {
     animation: bmwShimmer 3s ease infinite;
 }
 
-@keyframes bmwShimmer {
-    0%, 100% { background-position: 0% 50%; }
-    50% { background-position: 100% 50%; }
-}
 
 .bmw-login-header {
     text-align: center;
@@ -659,7 +650,7 @@ body {
 .bmw-welcome-title {
     font-size: 2.5rem;
     font-weight: 700;
-    color: va(--bmw-white);
+    color: var(--bmw-white);
     margin: 0;
     letter-spacing: -0.02em;
     line-height: 1.1;
