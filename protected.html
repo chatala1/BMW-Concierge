@@ -238,11 +238,11 @@ document.addEventListener('DOMContentLoaded', function() {
 async function loadInitialVehicleData() {
     try {
         const result = await window.vehicleAPI.getVehicleStatus();
-        if (result.success) {
+        if (result.success && result.data) {
             updateVehicleStatusDisplay(result.data, result.metadata);
         } else {
-            console.error('Failed to load vehicle data:', result);
-            showDataError('Failed to load vehicle data');
+            // Show no vehicle connected state
+            showNoVehicleConnectedState(result.message, result.metadata);
         }
     } catch (error) {
         console.error('Error loading vehicle data:', error);
@@ -270,7 +270,7 @@ function updateApiModeIndicator() {
                 font-size: 0.85rem;
             ">
                 <i data-lucide="info" style="width: 16px; height: 16px; color: #856404;"></i>
-                <span style="color: #856404;"><strong>Demo Mode:</strong> Displaying simulated vehicle data</span>
+                <span style="color: #856404;"><strong>No Vehicle Connected:</strong> Connect via Smartcar to view live data</span>
             </div>
         `;
     } else {
@@ -278,6 +278,24 @@ function updateApiModeIndicator() {
             <div style="
                 background: #d1ecf1; 
                 border: 1px solid #bee5eb; 
+                border-radius: 4px; 
+                padding: 0.5rem; 
+                display: flex; 
+                align-items: center; 
+                gap: 0.5rem;
+                font-size: 0.85rem;
+            ">
+                <i data-lucide="wifi" style="width: 16px; height: 16px; color: #0c5460;"></i>
+                <span style="color: #0c5460;"><strong>Live Mode:</strong> Connected to vehicle via Smartcar API</span>
+            </div>
+        `;
+    }
+    
+    // Re-initialize Lucide icons for the new content
+    if (typeof bmwIcons !== 'undefined') {
+        bmwIcons.createIcons();
+    }
+} 
                 border-radius: 4px; 
                 padding: 0.5rem; 
                 display: flex; 
@@ -398,7 +416,7 @@ async function refreshVehicleStatus() {
             // Use the new API system
             const result = await window.vehicleAPI.refreshVehicleStatus();
             
-            if (result.success) {
+            if (result.success && result.data) {
                 updateVehicleStatusDisplay(result.data, result.metadata);
                 
                 // Show appropriate notification based on demo mode
@@ -409,8 +427,16 @@ async function refreshVehicleStatus() {
                     bmwAuth.showSuccess('Vehicle status refreshed from live API');
                 }
             } else {
-                console.error('Failed to refresh vehicle status:', result);
-                bmwAuth.showError('Failed to refresh vehicle status');
+                // Show no vehicle connected state
+                showNoVehicleConnectedState(result.message, result.metadata);
+                
+                // Show appropriate error message
+                const config = window.vehicleAPI.getConfig();
+                if (config.isDemoMode) {
+                    bmwAuth.showError('No vehicle connected. Connect via Smartcar to refresh live data.');
+                } else {
+                    bmwAuth.showError('Failed to refresh vehicle status');
+                }
             }
         } else {
             // Fallback to old system if API not available
@@ -510,6 +536,50 @@ function updateVehicleStatusDisplay(data, metadata = {}) {
         }
         
         // Re-initialize Lucide icons for the new content
+        if (typeof bmwIcons !== 'undefined') {
+            bmwIcons.createIcons();
+        }
+    }
+}
+
+function showNoVehicleConnectedState(message, metadata = {}) {
+    // Clear all vehicle data fields and show connection prompt
+    const elements = [
+        { id: 'battery-level', text: 'Connect Vehicle' },
+        { id: 'fuel-level', text: 'Connect Vehicle' },
+        { id: 'vehicle-range', text: 'Connect Vehicle' },
+        { id: 'door-status', text: 'Connect Vehicle' },
+        { id: 'vehicle-status', text: 'Connect Vehicle' },
+        { id: 'last-updated', text: 'No vehicle connected' }
+    ];
+    
+    elements.forEach(item => {
+        const element = document.getElementById(item.id);
+        if (element) {
+            element.textContent = item.text;
+            element.style.color = '#6c757d'; // Muted gray color
+        }
+    });
+    
+    // Update data source information to show connection status
+    const sourceElement = document.getElementById('data-source-info');
+    if (sourceElement) {
+        sourceElement.innerHTML = `
+            <div style="
+                background: #f8f9fa; 
+                border: 1px solid #dee2e6; 
+                border-radius: 4px; 
+                padding: 0.75rem; 
+                display: flex; 
+                align-items: center; 
+                gap: 0.5rem;
+                font-size: 0.85rem;
+            ">
+                <i data-lucide="alert-circle" style="width: 16px; height: 16px; color: #6c757d;"></i>
+                <span style="color: #6c757d;">${message || 'No vehicle connected via Smartcar API'}</span>
+            </div>
+        `;
+        
         if (typeof bmwIcons !== 'undefined') {
             bmwIcons.createIcons();
         }
