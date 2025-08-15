@@ -13,9 +13,9 @@ description: "BMW Concierge Settings - Manage your preferences, vehicles, and ac
     <!-- Content will be dynamically updated by auth.js based on authentication status -->
     <h3>Authentication Required</h3>
     <p>Please log in with your GitHub account to access your settings.</p>
-    <button onclick="bmwAuth.login()" class="btn btn-primary mt-lg">
+    <a href="{{ '/login.html' | relative_url }}" class="btn btn-primary mt-lg">
         Login with GitHub
-    </button>
+    </a>
 </div>
 
 <div class="auth-required">
@@ -216,9 +216,9 @@ description: "BMW Concierge Settings - Manage your preferences, vehicles, and ac
         <a href="{{ '/login.html' | relative_url }}" class="btn btn-primary" style="margin-right: 1rem;">
             Go to Login Page
         </a>
-        <button onclick="bmwAuth.login()" class="btn btn-outline">
+        <a href="{{ '/login.html' | relative_url }}" class="btn btn-outline">
             Quick Login
-        </button>
+        </a>
     </div>
 </div>
 
