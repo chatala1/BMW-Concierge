@@ -454,6 +454,29 @@ body {
     margin-right: auto;
 }
 
+/* Garage Hero Background */
+.hero-garage {
+    background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.6)), url('../images/garage_background.png');
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+}
+
+/* Ensure text remains readable on the garage background */
+.hero-garage h1,
+.hero-garage p {
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+    color: var(--bmw-white);
+}
+
+/* Mobile optimization - remove fixed background for better performance */
+@media (max-width: 768px) {
+    .hero-garage {
+        background-attachment: scroll;
+    }
+}
+
 /* Cards */
 .card {
     background: var(--bmw-dark-gray);
