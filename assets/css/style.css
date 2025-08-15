@@ -560,10 +560,6 @@ body {
 
 /* BMW Login Page Styles */
 .bmw-login-page {
-    min-height: 100vh;
-    background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 25%, #2a2a2a 50%, #1a1a1a 75%, #0a0a0a 100%);
-    background-size: 400% 400%;
-    animation: bmwGradientShift 15s ease infinite;
     position: relative;
     display: flex;
     align-items: center;
@@ -578,16 +574,9 @@ body {
     left: 0;
     right: 0;
     bottom: 0;
-    background: 
-        radial-gradient(circle at 20% 80%, rgba(0, 102, 204, 0.1) 0%, transparent 50%),
-        radial-gradient(circle at 80% 20%, rgba(0, 163, 173, 0.1) 0%, transparent 50%),
-        linear-gradient(135deg, rgba(0, 0, 0, 0.8) 0%, rgba(26, 26, 26, 0.9) 100%);
     pointer-events: none;
 }
 
-@keyframes bmwGradientShift {
-    0%, 100% { background-position: 0% 50%; }
-    50% { background-position: 100% 50%; }
 }
 
 .bmw-login-container {
@@ -598,9 +587,7 @@ body {
 }
 
 .bmw-login-card {
-    background: rgba(255, 255, 255, 0.95);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
+    background: var(--bmw-dark-gray);
     border-radius: 4px;
     padding: 3rem;
     box-shadow: 
