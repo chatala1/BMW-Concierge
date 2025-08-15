@@ -48,9 +48,12 @@
                 <div class="nav-menu" id="nav-menu">
                     <a href="{{ '/' | relative_url }}" class="nav-link">Home</a>
                     <a href="{{ '/protected.html' | relative_url }}" class="nav-link auth-required">My Garage</a>
+                    <a href="{{ '/analytics.html' | relative_url }}" class="nav-link auth-required">Analytics</a>
+                    <a href="{{ '/settings.html' | relative_url }}" class="nav-link auth-required">Settings</a>
+                    <a href="{{ '/trip-planning.html' | relative_url }}" class="nav-link auth-required">Trip Planning</a>
                     <div class="auth-section">
                         <span id="user-info" class="user-info" style="display: none;"></span>
-                        <button id="logout-btn" class="btn btn-Primary">Login</button>
+                        <button id="login-btn" class="btn btn-primary">Login</button>
                         <button id="logout-btn" class="btn btn-secondary" style="display: none;">Logout</button>
                     </div>
                 </div>
