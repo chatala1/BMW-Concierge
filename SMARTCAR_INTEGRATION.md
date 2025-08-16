@@ -14,14 +14,20 @@ This endpoint is configured to handle OAuth authorization callbacks from Smartca
 
 ## Configuration
 
-To enable Smartcar integration, update the `_config.yml` file with your Smartcar client ID:
+The Smartcar integration is configured with the following settings in `_config.yml`:
 
 ```yaml
 smartcar:
-  client_id: "your_smartcar_client_id_here"
+  client_id: "37a67e2d-bc6d-42be-9b82-6ee450489d2b"
   redirect_uri: "https://chatala1.github.io/BMW-Concierge/smartcar/callback"
-  scope: "read_vehicle_info read_location read_odometer control_security control_climate"
+  scope: "control_charge control_climate control_navigation control_pin control_security control_trunk read_alerts read_battery read_charge read_charge_events read_charge_locations read_charge_records read_climate read_compass read_diagnostics read_engine_oil read_extended_vehicle_info read_fuel read_location read_odometer read_security read_service_history read_speedometer read_thermometer read_tires read_user_profile read_vehicle_info read_vin"
+  mode: "simulated"
 ```
+
+The comprehensive scope list includes permissions for:
+- **Control**: charge, climate, navigation, pin, security, trunk
+- **Read Vehicle Info**: battery, charge data, climate, diagnostics, fuel, location, odometer, security, service history, tires, VIN
+- **Read Sensor Data**: alerts, compass, speedometer, thermometer, engine oil
 
 ## Files Added/Modified
 
