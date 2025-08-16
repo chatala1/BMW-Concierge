@@ -134,45 +134,92 @@ class VehicleAPI {
     }
 
     /**
-     * Demo mode: Return no vehicle connection status instead of fake data
+     * Demo mode: Return vehicle data if Smartcar is connected, otherwise show connection required
      */
     getDemoVehicleStatus() {
         return new Promise((resolve) => {
             setTimeout(() => {
-                resolve({
-                    success: false,
-                    connected: false,
-                    data: null,
-                    message: 'No vehicle connected. Connect your vehicle via Smartcar to view live data.',
-                    metadata: {
-                        isDemoMode: true,
-                        lastFetched: new Date().toISOString(),
-                        dataSource: 'No Vehicle Connection',
-                        requiresConnection: true
-                    }
-                });
+                // Check if user has connected via Smartcar (even in demo mode)
+                const isSmartcarConnected = window.bmwAuth && window.bmwAuth.isSmartcarConnected();
+                
+                if (isSmartcarConnected) {
+                    // User has connected via Smartcar - show demo vehicle data
+                    resolve({
+                        success: true,
+                        connected: true,
+                        data: this.demoData.vehicle,
+                        message: 'Vehicle data retrieved from connected demo vehicle.',
+                        metadata: {
+                            isDemoMode: true,
+                            lastFetched: new Date().toISOString(),
+                            dataSource: 'Connected Demo Vehicle (Smartcar)',
+                            requiresConnection: false
+                        }
+                    });
+                } else {
+                    // No Smartcar connection - show connection required
+                    resolve({
+                        success: false,
+                        connected: false,
+                        data: null,
+                        message: 'No vehicle connected. Connect your vehicle via Smartcar to view live data.',
+                        metadata: {
+                            isDemoMode: true,
+                            lastFetched: new Date().toISOString(),
+                            dataSource: 'No Vehicle Connection',
+                            requiresConnection: true
+                        }
+                    });
+                }
             }, 300); // Simulate network delay
         });
     }
 
     /**
-     * Demo mode: Return refresh failure instead of generating fake data
+     * Demo mode: Return refresh data if Smartcar is connected, otherwise show connection required
      */
     refreshDemoVehicleStatus() {
         return new Promise((resolve) => {
             setTimeout(() => {
-                resolve({
-                    success: false,
-                    connected: false,
-                    data: null,
-                    message: 'Cannot refresh vehicle data. No vehicle is connected via Smartcar API.',
-                    metadata: {
-                        isDemoMode: true,
-                        lastFetched: new Date().toISOString(),
-                        dataSource: 'No Vehicle Connection',
-                        requiresConnection: true
-                    }
-                });
+                // Check if user has connected via Smartcar (even in demo mode)
+                const isSmartcarConnected = window.bmwAuth && window.bmwAuth.isSmartcarConnected();
+                
+                if (isSmartcarConnected) {
+                    // User has connected via Smartcar - refresh demo vehicle data
+                    // Slightly randomize some values to simulate real refresh
+                    const refreshedData = {
+                        ...this.demoData.vehicle,
+                        batteryLevel: Math.max(80, Math.min(100, this.demoData.vehicle.batteryLevel + Math.floor(Math.random() * 10 - 5))),
+                        lastUpdated: new Date().toISOString()
+                    };
+                    
+                    resolve({
+                        success: true,
+                        connected: true,
+                        data: refreshedData,
+                        message: 'Demo vehicle data refreshed successfully.',
+                        metadata: {
+                            isDemoMode: true,
+                            lastFetched: new Date().toISOString(),
+                            dataSource: 'Connected Demo Vehicle (Smartcar)',
+                            requiresConnection: false
+                        }
+                    });
+                } else {
+                    // No Smartcar connection - show connection required
+                    resolve({
+                        success: false,
+                        connected: false,
+                        data: null,
+                        message: 'Cannot refresh vehicle data. No vehicle is connected via Smartcar API.',
+                        metadata: {
+                            isDemoMode: true,
+                            lastFetched: new Date().toISOString(),
+                            dataSource: 'No Vehicle Connection',
+                            requiresConnection: true
+                        }
+                    });
+                }
             }, 1000); // Simulate network delay
         });
     }
