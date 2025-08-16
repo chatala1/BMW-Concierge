@@ -28,6 +28,8 @@ class VehicleManager {
             const storedVehicles = localStorage.getItem(this.storageKey);
             if (storedVehicles) {
                 this.vehicles = JSON.parse(storedVehicles);
+                // Migrate existing vehicles to include Smartcar fields
+                this.migrateVehiclesToSmartcarFields();
             } else {
                 // Initialize with default vehicle for new users
                 this.vehicles = this.getDefaultVehicles();
@@ -37,6 +39,28 @@ class VehicleManager {
             console.error('Error loading vehicles from storage:', error);
             this.vehicles = this.getDefaultVehicles();
             this.saveVehicles();
+        }
+    }
+
+    /**
+     * Migrate existing vehicles to include Smartcar connection fields
+     */
+    migrateVehiclesToSmartcarFields() {
+        let needsSave = false;
+        
+        this.vehicles.forEach(vehicle => {
+            if (vehicle.smartcarConnected === undefined) {
+                vehicle.smartcarConnected = false;
+                vehicle.smartcarToken = null;
+                vehicle.smartcarVehicleId = null;
+                vehicle.smartcarExpiresAt = null;
+                needsSave = true;
+            }
+        });
+        
+        if (needsSave) {
+            this.saveVehicles();
+            console.log('Migrated existing vehicles to include Smartcar connection fields');
         }
     }
 
@@ -62,7 +86,11 @@ class VehicleManager {
                 vin: 'WBA4XXXX2HEK12345',
                 year: 2023,
                 status: 'connected',
-                lastConnected: '2024-01-15T10:30:00Z'
+                lastConnected: '2024-01-15T10:30:00Z',
+                smartcarConnected: false,
+                smartcarToken: null,
+                smartcarVehicleId: null,
+                smartcarExpiresAt: null
             }
         ];
     }
@@ -91,7 +119,11 @@ class VehicleManager {
             vin: vehicleData.vin || 'WBA' + Math.random().toString(36).substr(2, 9).toUpperCase(),
             year: vehicleData.year || new Date().getFullYear(),
             status: vehicleData.status || 'disconnected',
-            lastConnected: vehicleData.lastConnected || null
+            lastConnected: vehicleData.lastConnected || null,
+            smartcarConnected: vehicleData.smartcarConnected || false,
+            smartcarToken: vehicleData.smartcarToken || null,
+            smartcarVehicleId: vehicleData.smartcarVehicleId || null,
+            smartcarExpiresAt: vehicleData.smartcarExpiresAt || null
         };
 
         this.vehicles.push(newVehicle);
@@ -203,6 +235,76 @@ class VehicleManager {
      */
     getVehicleCount() {
         return this.vehicles.length;
+    }
+
+    /**
+     * Connect vehicle to Smartcar
+     */
+    connectVehicleToSmartcar(vehicleId, smartcarData) {
+        const updates = {
+            smartcarConnected: true,
+            smartcarToken: smartcarData.access_token,
+            smartcarVehicleId: smartcarData.vehicle_id,
+            smartcarExpiresAt: smartcarData.expires_at,
+            status: 'connected',
+            lastConnected: new Date().toISOString()
+        };
+        return this.updateVehicle(vehicleId, updates);
+    }
+
+    /**
+     * Disconnect vehicle from Smartcar
+     */
+    disconnectVehicleFromSmartcar(vehicleId) {
+        const updates = {
+            smartcarConnected: false,
+            smartcarToken: null,
+            smartcarVehicleId: null,
+            smartcarExpiresAt: null,
+            status: 'disconnected',
+            lastConnected: null
+        };
+        return this.updateVehicle(vehicleId, updates);
+    }
+
+    /**
+     * Check if a specific vehicle is connected to Smartcar
+     */
+    isVehicleConnectedToSmartcar(vehicleId) {
+        const vehicle = this.getVehicleById(vehicleId);
+        if (!vehicle) return false;
+        
+        if (!vehicle.smartcarConnected || !vehicle.smartcarToken || !vehicle.smartcarExpiresAt) {
+            return false;
+        }
+        
+        // Check if token is still valid
+        return Date.now() < vehicle.smartcarExpiresAt;
+    }
+
+    /**
+     * Get Smartcar token for a specific vehicle
+     */
+    getVehicleSmartcarToken(vehicleId) {
+        const vehicle = this.getVehicleById(vehicleId);
+        if (!vehicle || !this.isVehicleConnectedToSmartcar(vehicleId)) {
+            return null;
+        }
+        return vehicle.smartcarToken;
+    }
+
+    /**
+     * Get connected vehicles count
+     */
+    getConnectedVehiclesCount() {
+        return this.vehicles.filter(v => this.isVehicleConnectedToSmartcar(v.id)).length;
+    }
+
+    /**
+     * Get all connected vehicles
+     */
+    getConnectedVehicles() {
+        return this.vehicles.filter(v => this.isVehicleConnectedToSmartcar(v.id));
     }
 }
 

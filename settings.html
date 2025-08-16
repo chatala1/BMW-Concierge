@@ -89,13 +89,9 @@ description: "BMW Concierge Settings - Manage your preferences, vehicles, and ac
                         <!-- Vehicles will be populated by JavaScript -->
                     </div>
                     <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
-                        <button onclick="addVehicle()" class="btn btn-primary" style="flex: 1;">
+                        <button onclick="addVehicle()" class="btn btn-primary" style="width: 100%;">
                             <i data-lucide="plus" style="margin-right: 0.5rem;"></i>
                             Add Vehicle
-                        </button>
-                        <button onclick="connectSmartcar()" class="btn btn-outline" style="flex: 1;">
-                            <i data-lucide="wifi" style="margin-right: 0.5rem;"></i>
-                            Connect Smartcar
                         </button>
                     </div>
                 </div>
@@ -264,21 +260,32 @@ function loadVehicles() {
             </div>
         `;
     } else {
-        vehicleList.innerHTML = vehicles.map(vehicle => `
+        vehicleList.innerHTML = vehicles.map(vehicle => {
+            const isConnected = window.vehicleManager.isVehicleConnectedToSmartcar(vehicle.id);
+            return `
             <div style="border: 1px solid var(--bmw-light-gray); border-radius: 4px; padding: 1rem; margin-bottom: 1rem;">
-                <div style="display: flex; justify-content: between; align-items: center; margin-bottom: 0.5rem;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
                     <strong style="color: var(--bmw-blue);">${vehicle.name}</strong>
-                    <span style="background: ${vehicle.status === 'connected' ? '#28a745' : '#6c757d'}; color: white; padding: 0.25rem 0.5rem; border-radius: 12px; font-size: 0.8rem; text-transform: uppercase;">
-                        ${vehicle.status}
+                    <span style="background: ${isConnected ? '#28a745' : '#6c757d'}; color: white; padding: 0.25rem 0.5rem; border-radius: 12px; font-size: 0.8rem; text-transform: uppercase;">
+                        ${isConnected ? 'Connected' : 'Disconnected'}
                     </span>
                 </div>
                 <div style="font-size: 0.9rem; color: var(--bmw-gray); margin-bottom: 0.5rem;">
                     <strong>VIN:</strong> ${vehicle.vin}
                 </div>
-                <div style="font-size: 0.9rem; color: var(--bmw-gray); margin-bottom: 1rem;">
+                <div style="font-size: 0.9rem; color: var(--bmw-gray); margin-bottom: 0.5rem;">
                     <strong>Year:</strong> ${vehicle.year}
                 </div>
-                <div style="display: flex; gap: 0.5rem;">
+                ${isConnected ? `
+                <div style="font-size: 0.9rem; color: var(--bmw-gray); margin-bottom: 1rem;">
+                    <strong>Connected:</strong> ${vehicle.lastConnected ? new Date(vehicle.lastConnected).toLocaleDateString() : 'Unknown'}
+                </div>
+                ` : `
+                <div style="font-size: 0.9rem; color: var(--bmw-gray); margin-bottom: 1rem;">
+                    <strong>Status:</strong> Not connected to Smartcar
+                </div>
+                `}
+                <div style="display: flex; gap: 0.5rem; margin-bottom: 0.5rem;">
                     <button onclick="editVehicle('${vehicle.id}')" class="btn btn-outline" style="flex: 1; font-size: 0.9rem; padding: 0.5rem;">
                         Edit
                     </button>
@@ -286,8 +293,22 @@ function loadVehicles() {
                         Remove
                     </button>
                 </div>
+                <div style="display: flex; gap: 0.5rem;">
+                    ${isConnected ? `
+                    <button onclick="disconnectVehicleFromSmartcar('${vehicle.id}')" class="btn btn-outline" style="width: 100%; font-size: 0.9rem; padding: 0.5rem; color: #dc3545; border-color: #dc3545;">
+                        <i data-lucide="wifi-off" style="margin-right: 0.5rem;"></i>
+                        Disconnect Smartcar
+                    </button>
+                    ` : `
+                    <button onclick="connectVehicleToSmartcar('${vehicle.id}')" class="btn btn-primary" style="width: 100%; font-size: 0.9rem; padding: 0.5rem;">
+                        <i data-lucide="wifi" style="margin-right: 0.5rem;"></i>
+                        Connect to Smartcar
+                    </button>
+                    `}
+                </div>
             </div>
-        `).join('');
+            `;
+        }).join('');
     }
     
     // Re-initialize Lucide icons
@@ -419,9 +440,64 @@ function removeVehicle(vehicleId) {
     }
 }
 
+function connectVehicleToSmartcar(vehicleId) {
+    if (!window.bmwAuth || !window.vehicleManager) return;
+    
+    const vehicle = window.vehicleManager.getVehicleById(vehicleId);
+    if (!vehicle) {
+        if (window.bmwAuth) {
+            window.bmwAuth.showError('Vehicle not found');
+        }
+        return;
+    }
+
+    // Check if vehicle is already connected
+    if (window.vehicleManager.isVehicleConnectedToSmartcar(vehicleId)) {
+        if (window.bmwAuth) {
+            window.bmwAuth.showError('Vehicle is already connected to Smartcar');
+        }
+        return;
+    }
+
+    // Initiate Smartcar auth for this specific vehicle
+    window.bmwAuth.initiateSmartcarAuth(vehicleId);
+}
+
+function disconnectVehicleFromSmartcar(vehicleId) {
+    if (!window.bmwAuth || !window.vehicleManager) return;
+    
+    const vehicle = window.vehicleManager.getVehicleById(vehicleId);
+    if (!vehicle) {
+        if (window.bmwAuth) {
+            window.bmwAuth.showError('Vehicle not found');
+        }
+        return;
+    }
+
+    if (!window.vehicleManager.isVehicleConnectedToSmartcar(vehicleId)) {
+        if (window.bmwAuth) {
+            window.bmwAuth.showError('Vehicle is not connected to Smartcar');
+        }
+        return;
+    }
+
+    if (confirm(`Are you sure you want to disconnect "${vehicle.name}" from Smartcar?`)) {
+        window.bmwAuth.disconnectVehicleFromSmartcar(vehicleId);
+        loadVehicles(); // Refresh the vehicle list
+    }
+}
+
+// Keep old function for backward compatibility
 function connectSmartcar() {
-    if (window.bmwAuth) {
-        window.bmwAuth.initiateSmartcarAuth();
+    // If there's only one vehicle, connect it automatically
+    if (window.vehicleManager && window.vehicleManager.getVehicleCount() === 1) {
+        const vehicles = window.vehicleManager.getAllVehicles();
+        connectVehicleToSmartcar(vehicles[0].id);
+    } else {
+        // Show error - user should use per-vehicle buttons
+        if (window.bmwAuth) {
+            window.bmwAuth.showError('Please use the connect button for each vehicle individually');
+        }
     }
 }
 

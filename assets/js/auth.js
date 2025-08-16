@@ -506,15 +506,32 @@ class BMWAuth {
     }
 
     // Smartcar OAuth methods
-    initiateSmartcarAuth() {
+    initiateSmartcarAuth(vehicleId = null) {
+        if (!vehicleId) {
+            this.showError('Vehicle ID is required for Smartcar connection');
+            return;
+        }
+
+        if (!window.vehicleManager) {
+            this.showError('Vehicle manager not available');
+            return;
+        }
+
+        const vehicle = window.vehicleManager.getVehicleById(vehicleId);
+        if (!vehicle) {
+            this.showError('Vehicle not found');
+            return;
+        }
+
         if (!this.smartcarClientId) {
             // No client ID configured - activate demo mode
-            this.simulateSmartcarConnection('demo_code');
+            this.simulateSmartcarConnection('demo_code', vehicleId);
             return;
         }
 
         const state = this.generateState();
         sessionStorage.setItem('smartcar_oauth_state', state);
+        sessionStorage.setItem('smartcar_target_vehicle_id', vehicleId);
         
         const authUrl = new URL('https://connect.smartcar.com/oauth/authorize');
         authUrl.searchParams.append('response_type', 'code');
@@ -566,10 +583,27 @@ class BMWAuth {
         
         // Exchange code for token (this would normally be done server-side)
         // For demo purposes, we'll simulate a successful connection
-        this.simulateSmartcarConnection(code);
+        const targetVehicleId = sessionStorage.getItem('smartcar_target_vehicle_id');
+        this.simulateSmartcarConnection(code, targetVehicleId);
     }
 
-    simulateSmartcarConnection(code) {
+    simulateSmartcarConnection(code, vehicleId = null) {
+        if (!vehicleId) {
+            this.showError('Vehicle ID is required for Smartcar connection');
+            return;
+        }
+
+        if (!window.vehicleManager) {
+            this.showError('Vehicle manager not available');
+            return;
+        }
+
+        const vehicle = window.vehicleManager.getVehicleById(vehicleId);
+        if (!vehicle) {
+            this.showError('Vehicle not found');
+            return;
+        }
+
         // Simulate API call to exchange code for tokens
         setTimeout(() => {
             const smartcarData = {
@@ -577,12 +611,18 @@ class BMWAuth {
                 refresh_token: 'sc_refresh_' + Date.now(),
                 expires_at: Date.now() + (60 * 60 * 1000), // 1 hour
                 token_type: 'Bearer',
-                vehicle_id: 'demo_vehicle_' + Math.random().toString(36).substr(2, 9),
+                vehicle_id: vehicleId + '_smartcar_' + Math.random().toString(36).substr(2, 9),
                 connected_at: new Date().toISOString()
             };
 
-            this.storeSmartcarAuth(smartcarData);
-            this.showSmartcarSuccess();
+            // Connect this specific vehicle to Smartcar
+            window.vehicleManager.connectVehicleToSmartcar(vehicleId, smartcarData);
+            
+            // Clear session storage
+            sessionStorage.removeItem('smartcar_target_vehicle_id');
+            sessionStorage.removeItem('smartcar_oauth_state');
+            
+            this.showSmartcarSuccess(vehicle.name);
         }, 2000); // Simulate network delay
     }
 
@@ -616,6 +656,12 @@ class BMWAuth {
     }
 
     isSmartcarConnected() {
+        // For backward compatibility, check if any vehicle is connected
+        if (window.vehicleManager) {
+            return window.vehicleManager.getConnectedVehiclesCount() > 0;
+        }
+        
+        // Fallback to old global method
         const smartcarData = this.getStoredSmartcarAuth();
         return smartcarData && this.isSmartcarTokenValid(smartcarData);
     }
@@ -635,11 +681,45 @@ class BMWAuth {
         }
     }
 
-    showSmartcarSuccess() {
+    /**
+     * Disconnect a specific vehicle from Smartcar
+     */
+    disconnectVehicleFromSmartcar(vehicleId) {
+        if (!window.vehicleManager) {
+            this.showError('Vehicle manager not available');
+            return;
+        }
+
+        const vehicle = window.vehicleManager.getVehicleById(vehicleId);
+        if (!vehicle) {
+            this.showError('Vehicle not found');
+            return;
+        }
+
+        // Disconnect the vehicle
+        window.vehicleManager.disconnectVehicleFromSmartcar(vehicleId);
+        this.showSuccess(`${vehicle.name} disconnected from Smartcar successfully`);
+        
+        // Update UI if on dashboard
+        if (window.location.pathname.includes('protected')) {
+            // Refresh dashboard to show updated connection status
+            if (typeof loadInitialVehicleData === 'function') {
+                loadInitialVehicleData();
+            }
+            if (typeof initializeVehicleConnectionStatus === 'function') {
+                initializeVehicleConnectionStatus();
+            }
+        }
+    }
+
+    showSmartcarSuccess(vehicleName = null) {
         if (typeof showCallbackSuccess === 'function') {
             showCallbackSuccess();
         } else {
-            this.showSuccess('Vehicle connected successfully!');
+            const message = vehicleName ? 
+                `${vehicleName} connected to Smartcar successfully!` : 
+                'Vehicle connected successfully!';
+            this.showSuccess(message);
         }
     }
 
