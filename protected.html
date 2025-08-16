@@ -15,6 +15,17 @@ description: "MyConcierge Dashboard"
         <div class="feature-card">
             <i data-lucide="bmw-car" class="icon"></i>
             <h3>Vehicle Status</h3>
+            
+            <!-- Vehicle Selector -->
+            <div id="vehicle-selector-container" style="margin-bottom: 1rem;">
+                <label for="vehicle-selector" style="display: block; margin-bottom: 0.5rem; font-weight: 600; color: var(--bmw-gray);">
+                    Select Vehicle:
+                </label>
+                <select id="vehicle-selector" onchange="onVehicleSelectionChange()" style="width: 100%; padding: 0.5rem; border: 1px solid var(--bmw-light-gray); border-radius: 4px; background: white;">
+                    <option value="">Loading vehicles...</option>
+                </select>
+            </div>
+            
             <div id="api-mode-indicator" class="api-mode-indicator" style="margin-bottom: 1rem;">
                 <!-- Will be populated by JavaScript -->
             </div>
@@ -218,9 +229,50 @@ description: "MyConcierge Dashboard"
 </div>
 
 <script>
+// Vehicle Selection Functions
+function loadVehicleSelector() {
+    const selector = document.getElementById('vehicle-selector');
+    if (!selector || !window.vehicleManager) return;
+    
+    const vehicles = window.vehicleManager.getAllVehicles();
+    const selectedVehicleId = window.vehicleManager.getSelectedVehicleId();
+    
+    if (vehicles.length === 0) {
+        selector.innerHTML = '<option value="">No vehicles available</option>';
+        selector.disabled = true;
+    } else {
+        selector.innerHTML = vehicles.map(vehicle => 
+            `<option value="${vehicle.id}" ${vehicle.id === selectedVehicleId ? 'selected' : ''}>${vehicle.name}</option>`
+        ).join('');
+        selector.disabled = false;
+    }
+}
+
+function onVehicleSelectionChange() {
+    const selector = document.getElementById('vehicle-selector');
+    if (!selector || !window.vehicleManager) return;
+    
+    const selectedVehicleId = selector.value;
+    window.vehicleManager.setSelectedVehicle(selectedVehicleId);
+    
+    // Refresh vehicle data for newly selected vehicle
+    if (window.vehicleAPI) {
+        loadInitialVehicleData();
+    }
+    
+    // Show success message
+    const selectedVehicle = window.vehicleManager.getSelectedVehicle();
+    if (selectedVehicle && window.bmwAuth) {
+        window.bmwAuth.showSuccess('Switched to ' + selectedVehicle.name);
+    }
+}
+
 // Update Smartcar connection status when page loads
 document.addEventListener('DOMContentLoaded', function() {
     setTimeout(function() {
+        // Load vehicle selector first
+        loadVehicleSelector();
+        
         // Initialize vehicle connection status
         initializeVehicleConnectionStatus();
         
@@ -594,10 +646,17 @@ function updateVehicleStatusDisplay(data, metadata = {}) {
         }
     }
     
-    // Update data source information
+    // Update data source information with selected vehicle name
     if (sourceElement && metadata) {
+        const selectedVehicle = window.vehicleManager ? window.vehicleManager.getSelectedVehicle() : null;
+        const vehicleName = selectedVehicle ? selectedVehicle.name : 'Demo Vehicle';
+        
         if (metadata.isDemoMode) {
             sourceElement.innerHTML = `
+                <div style="display: flex; align-items: center; gap: 0.25rem; margin-bottom: 0.25rem;">
+                    <i data-lucide="car" style="width: 12px; height: 12px;"></i>
+                    <span><strong>Vehicle:</strong> ${vehicleName}</span>
+                </div>
                 <div style="display: flex; align-items: center; gap: 0.25rem;">
                     <i data-lucide="database" style="width: 12px; height: 12px;"></i>
                     <span>Source: ${metadata.dataSource || 'Demo Data'}</span>
@@ -605,6 +664,10 @@ function updateVehicleStatusDisplay(data, metadata = {}) {
             `;
         } else {
             sourceElement.innerHTML = `
+                <div style="display: flex; align-items: center; gap: 0.25rem; margin-bottom: 0.25rem;">
+                    <i data-lucide="car" style="width: 12px; height: 12px;"></i>
+                    <span><strong>Vehicle:</strong> ${vehicleName}</span>
+                </div>
                 <div style="display: flex; align-items: center; gap: 0.25rem;">
                     <i data-lucide="wifi" style="width: 12px; height: 12px;"></i>
                     <span>Source: Live Vehicle API</span>
