@@ -165,28 +165,28 @@ description: "MyConcierge Dashboard"
 
     <div class="card">
         <h2>Recent Activity</h2>
-        <div style="margin-top: 1.5rem;">
+        <div style="margin-top: 1.5rem;" id="recent-activity-list">
             <div style="border-left: 4px solid var(--bmw-blue); padding-left: 1rem; margin-bottom: 1rem;">
                 <strong>Vehicle locked</strong>
-                <p style="margin: 0.25rem 0; color: var(--bmw-gray); font-size: 0.9rem;">Successfully locked your BMW via remote command</p>
+                <p style="margin: 0.25rem 0; color: var(--bmw-gray); font-size: 0.9rem;">Successfully locked BMW i4 M50 via remote command</p>
                 <small style="color: var(--bmw-gray);">2 hours ago</small>
             </div>
             
             <div style="border-left: 4px solid #28a745; padding-left: 1rem; margin-bottom: 1rem;">
                 <strong>Charging completed</strong>
-                <p style="margin: 0.25rem 0; color: var(--bmw-gray); font-size: 0.9rem;">Battery charged to 100% at home station</p>
+                <p style="margin: 0.25rem 0; color: var(--bmw-gray); font-size: 0.9rem;">BMW i4 M50 battery charged to 100% at home station</p>
                 <small style="color: var(--bmw-gray);">Yesterday, 11:30 PM</small>
             </div>
             
             <div style="border-left: 4px solid #ffc107; padding-left: 1rem; margin-bottom: 1rem;">
                 <strong>Service reminder</strong>
-                <p style="margin: 0.25rem 0; color: var(--bmw-gray); font-size: 0.9rem;">Oil change recommended within 500 miles</p>
+                <p style="margin: 0.25rem 0; color: var(--bmw-gray); font-size: 0.9rem;">BMW i4 M50 oil change recommended within 500 miles</p>
                 <small style="color: var(--bmw-gray);">2 days ago</small>
             </div>
             
             <div style="border-left: 4px solid var(--bmw-light-blue); padding-left: 1rem;">
                 <strong>Trip completed</strong>
-                <p style="margin: 0.25rem 0; color: var(--bmw-gray); font-size: 0.9rem;">San Francisco to Palo Alto • 35 miles • Eco score: 94</p>
+                <p style="margin: 0.25rem 0; color: var(--bmw-gray); font-size: 0.9rem;">BMW i4 M50 trip: San Francisco to Palo Alto • 35 miles • Eco score: 94</p>
                 <small style="color: var(--bmw-gray);">3 days ago</small>
             </div>
         </div>
@@ -617,6 +617,13 @@ function updateVehicleStatusDisplay(data, metadata = {}) {
             bmwIcons.createIcons();
         }
     }
+}
+
+// Get the current vehicle name for display in activities
+function getCurrentVehicleName() {
+    // In demo mode, use the default demo vehicle name
+    // In a real implementation, this would fetch from the connected vehicle
+    return 'BMW i4 M50';
 }
 
 function showNoVehicleConnectedState(message, metadata = {}) {
