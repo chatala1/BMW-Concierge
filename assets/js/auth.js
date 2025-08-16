@@ -31,8 +31,8 @@ class BMWAuth {
         this.storageKey = 'bmw_concierge_auth';
         this.smartcarStorageKey = 'bmw_concierge_smartcar_auth';
         
-        // Smartcar configuration
-        this.smartcarClientId = ''; // To be configured with actual Smartcar client ID
+        // Smartcar configuration (updated per issue requirements)
+        this.smartcarClientId = '37a67e2d-bc6d-42be-9b82-6ee450489d2b'; // Smartcar client ID from issue
         
         // Set Smartcar redirect URI based on environment
         if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
@@ -43,7 +43,19 @@ class BMWAuth {
             this.smartcarRedirectUri = 'https://chatala1.github.io/BMW-Concierge/smartcar/callback';
         }
         
-        this.smartcarScope = ['read_vehicle_info', 'read_location', 'read_odometer', 'control_security', 'control_climate'];
+        // Updated comprehensive scope list from issue requirements
+        this.smartcarScope = [
+            'control_charge', 'control_climate', 'control_navigation', 'control_pin', 
+            'control_security', 'control_trunk', 'read_alerts', 'read_battery', 
+            'read_charge', 'read_charge_events', 'read_charge_locations', 'read_charge_records',
+            'read_climate', 'read_compass', 'read_diagnostics', 'read_engine_oil',
+            'read_extended_vehicle_info', 'read_fuel', 'read_location', 'read_odometer',
+            'read_security', 'read_service_history', 'read_speedometer', 'read_thermometer',
+            'read_tires', 'read_user_profile', 'read_vehicle_info', 'read_vin'
+        ];
+        
+        // Mode setting for simulated environment
+        this.smartcarMode = 'simulated';
         
         this.init();
     }
@@ -539,6 +551,8 @@ class BMWAuth {
         authUrl.searchParams.append('redirect_uri', this.smartcarRedirectUri);
         authUrl.searchParams.append('scope', this.smartcarScope.join(' '));
         authUrl.searchParams.append('state', state);
+        // Add mode parameter as specified in issue requirements
+        authUrl.searchParams.append('mode', this.smartcarMode);
         
         window.location.href = authUrl.toString();
     }
