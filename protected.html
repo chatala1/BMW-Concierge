@@ -329,24 +329,46 @@ function updateApiModeIndicator() {
     if (!indicator || !window.vehicleAPI) return;
 
     const config = window.vehicleAPI.getConfig();
+    const isSmartcarConnected = window.bmwAuth && window.bmwAuth.isSmartcarConnected();
     
     if (config.isDemoMode) {
-        indicator.innerHTML = `
-            <div style="
-                background: #fff3cd; 
-                border: 1px solid #ffeaa7; 
-                border-radius: 4px; 
-                padding: 0.5rem; 
-                display: flex; 
-                align-items: center; 
-                gap: 0.5rem;
-                font-size: 0.85rem;
-            ">
-                <i data-lucide="info" style="width: 16px; height: 16px; color: #856404;"></i>
-                <span style="color: #856404;"><strong>No Vehicle Connected:</strong> Connect via Smartcar to view live data</span>
-            </div>
-        `;
+        if (isSmartcarConnected) {
+            // Demo mode but Smartcar is connected - show connected demo state
+            indicator.innerHTML = `
+                <div style="
+                    background: #d1ecf1; 
+                    border: 1px solid #bee5eb; 
+                    border-radius: 4px; 
+                    padding: 0.5rem; 
+                    display: flex; 
+                    align-items: center; 
+                    gap: 0.5rem;
+                    font-size: 0.85rem;
+                ">
+                    <i data-lucide="wifi" style="width: 16px; height: 16px; color: #0c5460;"></i>
+                    <span style="color: #0c5460;"><strong>Demo Mode - Vehicle Connected:</strong> Displaying demo vehicle data</span>
+                </div>
+            `;
+        } else {
+            // Demo mode and no Smartcar connection
+            indicator.innerHTML = `
+                <div style="
+                    background: #fff3cd; 
+                    border: 1px solid #ffeaa7; 
+                    border-radius: 4px; 
+                    padding: 0.5rem; 
+                    display: flex; 
+                    align-items: center; 
+                    gap: 0.5rem;
+                    font-size: 0.85rem;
+                ">
+                    <i data-lucide="info" style="width: 16px; height: 16px; color: #856404;"></i>
+                    <span style="color: #856404;"><strong>No Vehicle Connected:</strong> Connect via Smartcar to view demo data</span>
+                </div>
+            `;
+        }
     } else {
+        // Real API mode
         indicator.innerHTML = `
             <div style="
                 background: #d1ecf1; 
@@ -365,24 +387,6 @@ function updateApiModeIndicator() {
     }
     
     // Re-initialize Lucide icons for the new content
-    if (typeof bmwIcons !== 'undefined') {
-        bmwIcons.createIcons();
-    }
-} 
-                border-radius: 4px; 
-                padding: 0.5rem; 
-                display: flex; 
-                align-items: center; 
-                gap: 0.5rem;
-                font-size: 0.85rem;
-            ">
-                <i data-lucide="wifi" style="width: 16px; height: 16px; color: #0c5460;"></i>
-                <span style="color: #0c5460;"><strong>Live Mode:</strong> Connected to vehicle API</span>
-            </div>
-        `;
-    }
-    
-    // Re-initialize BMW icons for the new content
     if (typeof bmwIcons !== 'undefined') {
         bmwIcons.createIcons();
     }
