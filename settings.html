@@ -227,22 +227,15 @@ description: "BMW Concierge Settings - Manage your preferences, vehicles, and ac
 document.addEventListener('DOMContentLoaded', function() {
     if (window.bmwAuth && window.bmwAuth.isAuthenticated()) {
         loadUserProfile();
-        loadVehicles();
+        // Delay vehicle loading to ensure vehicleManager is ready
+        setTimeout(function() {
+            loadVehicles();
+        }, 100);
         loadSettings();
     }
 });
 
-// Demo vehicles data
-const demoVehicles = [
-    {
-        id: 'demo_vehicle_1',
-        name: 'BMW i4 M50',
-        vin: 'WBA4XXXX2HEK12345',
-        year: 2023,
-        status: 'connected',
-        lastConnected: '2024-01-15T10:30:00Z'
-    }
-];
+
 
 function loadUserProfile() {
     const user = window.bmwAuth.getCurrentUser();
@@ -258,9 +251,11 @@ function loadUserProfile() {
 
 function loadVehicles() {
     const vehicleList = document.getElementById('vehicle-list');
-    if (!vehicleList) return;
+    if (!vehicleList || !window.vehicleManager) return;
 
-    if (demoVehicles.length === 0) {
+    const vehicles = window.vehicleManager.getAllVehicles();
+
+    if (vehicles.length === 0) {
         vehicleList.innerHTML = `
             <div style="background: var(--bmw-light-gray); padding: 1rem; border-radius: 4px; text-align: center;">
                 <i data-lucide="car" style="margin-bottom: 0.5rem; color: var(--bmw-gray);"></i>
@@ -269,7 +264,7 @@ function loadVehicles() {
             </div>
         `;
     } else {
-        vehicleList.innerHTML = demoVehicles.map(vehicle => `
+        vehicleList.innerHTML = vehicles.map(vehicle => `
             <div style="border: 1px solid var(--bmw-light-gray); border-radius: 4px; padding: 1rem; margin-bottom: 1rem;">
                 <div style="display: flex; justify-content: between; align-items: center; margin-bottom: 0.5rem;">
                     <strong style="color: var(--bmw-blue);">${vehicle.name}</strong>
@@ -376,19 +371,15 @@ function saveAppSettings() {
 }
 
 function addVehicle() {
+    if (!window.vehicleManager) return;
+    
     // Show modal or navigate to add vehicle flow
     const vehicleName = prompt('Enter vehicle name (e.g., "BMW X5 2023"):');
     if (vehicleName) {
-        const newVehicle = {
-            id: 'demo_vehicle_' + Math.random().toString(36).substr(2, 9),
-            name: vehicleName,
-            vin: 'WBA' + Math.random().toString(36).substr(2, 9).toUpperCase(),
-            year: new Date().getFullYear(),
-            status: 'disconnected',
-            lastConnected: null
-        };
+        const newVehicle = window.vehicleManager.addVehicle({
+            name: vehicleName
+        });
         
-        demoVehicles.push(newVehicle);
         loadVehicles();
         
         if (window.bmwAuth) {
@@ -398,11 +389,13 @@ function addVehicle() {
 }
 
 function editVehicle(vehicleId) {
-    const vehicle = demoVehicles.find(v => v.id === vehicleId);
+    if (!window.vehicleManager) return;
+    
+    const vehicle = window.vehicleManager.getVehicleById(vehicleId);
     if (vehicle) {
         const newName = prompt('Edit vehicle name:', vehicle.name);
         if (newName && newName !== vehicle.name) {
-            vehicle.name = newName;
+            window.vehicleManager.updateVehicle(vehicleId, { name: newName });
             loadVehicles();
             
             if (window.bmwAuth) {
@@ -413,16 +406,15 @@ function editVehicle(vehicleId) {
 }
 
 function removeVehicle(vehicleId) {
-    const vehicle = demoVehicles.find(v => v.id === vehicleId);
+    if (!window.vehicleManager) return;
+    
+    const vehicle = window.vehicleManager.getVehicleById(vehicleId);
     if (vehicle && confirm('Are you sure you want to remove "' + vehicle.name + '"?')) {
-        const index = demoVehicles.findIndex(v => v.id === vehicleId);
-        if (index > -1) {
-            demoVehicles.splice(index, 1);
-            loadVehicles();
-            
-            if (window.bmwAuth) {
-                window.bmwAuth.showSuccess('Vehicle removed successfully!');
-            }
+        window.vehicleManager.removeVehicle(vehicleId);
+        loadVehicles();
+        
+        if (window.bmwAuth) {
+            window.bmwAuth.showSuccess('Vehicle removed successfully!');
         }
     }
 }
@@ -436,7 +428,8 @@ function connectSmartcar() {
 function exportData() {
     const data = {
         profile: window.bmwAuth ? window.bmwAuth.getCurrentUser() : null,
-        vehicles: demoVehicles,
+        vehicles: window.vehicleManager ? window.vehicleManager.getAllVehicles() : [],
+        selectedVehicle: window.vehicleManager ? window.vehicleManager.getSelectedVehicleId() : null,
         settings: JSON.parse(localStorage.getItem('bmw_concierge_settings') || '{}'),
         exportDate: new Date().toISOString()
     };
